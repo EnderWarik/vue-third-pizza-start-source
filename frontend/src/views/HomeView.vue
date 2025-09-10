@@ -1,32 +1,28 @@
 <template>
   <main class="content">
     <form action="#" method="post">
-
       <div class="content__wrapper">
         <h1 class="title title--big">Конструктор пиццы</h1>
 
         <div class="content__dough">
-
           <div class="sheet">
-            <h2 class="title title--small sheet__title">
-              Выберите тесто
-            </h2>
+            <h2 class="title title--small sheet__title">Выберите тесто</h2>
             <div class="sheet__content dough">
               <label
-                  v-for="dough of pizzaDoughs"
-                  :key="dough.id"
-                  :class="[
-                 'dough__input',
-                 `dough__input--${PizzaDoughEnum[dough.id]}`
-                 ]"
+                v-for="dough of pizzaDoughs"
+                :key="dough.id"
+                :class="[
+                  'dough__input',
+                  `dough__input--${PizzaDoughEnum[dough.id]}`,
+                ]"
               >
                 <input
-                    type="radio"
-                    name="dought"
-                    class="visually-hidden"
-                    :value="dough.name"
-                    v-model="selectedPizzaDough"
-                >
+                  v-model="selectedPizzaDough"
+                  type="radio"
+                  name="dought"
+                  class="visually-hidden"
+                  :value="dough.name"
+                />
                 <b>{{ dough.name }}</b>
                 <span>{{ dough.description }}</span>
               </label>
@@ -36,22 +32,23 @@
 
         <div class="content__diameter">
           <div class="sheet">
-            <h2 class="title title--small sheet__title">
-              Выберите размер
-            </h2>
+            <h2 class="title title--small sheet__title">Выберите размер</h2>
             <div class="sheet__content diameter">
               <label
-                  v-for="size of pizzaSizes"
-                  :key="size.id"
-                  :class="['diameter__input', `diameter__input--${PizzaSizeEnum[size.id]}`]"
+                v-for="size of pizzaSizes"
+                :key="size.id"
+                :class="[
+                  'diameter__input',
+                  `diameter__input--${PizzaSizeEnum[size.id]}`,
+                ]"
               >
                 <input
-                    type="radio"
-                    name="diameter"
-                    class="visually-hidden"
-                    :value="size.name"
-                    v-model="selectedPizzaSize"
-                  >
+                  v-model="selectedPizzaSize"
+                  type="radio"
+                  name="diameter"
+                  class="visually-hidden"
+                  :value="size.name"
+                />
                 <span>{{ size.name }}</span>
               </label>
             </div>
@@ -60,24 +57,25 @@
 
         <div class="content__ingredients">
           <div class="sheet">
-            <h2 class="title title--small sheet__title">Выберите ингредиенты</h2>
+            <h2 class="title title--small sheet__title">
+              Выберите ингредиенты
+            </h2>
 
             <div class="sheet__content ingredients">
-
               <div class="ingredients__sauce">
                 <p>Основной соус:</p>
 
                 <label
-                    v-for="sauce of sauces"
-                    :key="sauce.id"
-                    class="radio ingredients__input ">
-
+                  v-for="sauce of sauces"
+                  :key="sauce.id"
+                  class="radio ingredients__input"
+                >
                   <input
-                      type="radio"
-                      name="sauce"
-                      :value="sauce.name"
-                      v-model="selectedPizzaSauce"
-                  >
+                    v-model="selectedPizzaSauce"
+                    type="radio"
+                    name="sauce"
+                    :value="sauce.name"
+                  />
                   <span>{{ sauce.name }}</span>
                 </label>
               </div>
@@ -87,23 +85,36 @@
 
                 <ul class="ingredients__list">
                   <li
-                      v-for="ingredient of ingredients"
-                      class="ingredients__item"
-                      :key="ingredient.id"
+                    v-for="ingredient of ingredients"
+                    :key="ingredient.id"
+                    class="ingredients__item"
                   >
                     <span
-                        :class="[
-                            'filling',
-                            `filling--${PizzaIngredientEnum[ingredient.id]}`
-                            ]">
-                     {{ ingredient.name }}
+                      :class="[
+                        'filling',
+                        `filling--${PizzaIngredientEnum[ingredient.id]}`,
+                      ]"
+                    >
+                      {{ ingredient.name }}
                     </span>
                     <div class="counter counter--orange ingredients__counter">
-                      <button type="button" class="counter__button counter__button--minus" disabled>
+                      <button
+                        type="button"
+                        class="counter__button counter__button--minus"
+                        disabled
+                      >
                         <span class="visually-hidden">Меньше</span>
                       </button>
-                      <input type="text" name="counter" class="counter__input" value="0">
-                      <button type="button" class="counter__button counter__button--plus">
+                      <input
+                        type="text"
+                        name="counter"
+                        class="counter__input"
+                        value="0"
+                      />
+                      <button
+                        type="button"
+                        class="counter__button counter__button--plus"
+                      >
                         <span class="visually-hidden">Больше</span>
                       </button>
                     </div>
@@ -117,7 +128,11 @@
         <div class="content__pizza">
           <label class="input">
             <span class="visually-hidden">Название пиццы</span>
-            <input type="text" name="pizza_name" placeholder="Введите название пиццы">
+            <input
+              type="text"
+              name="pizza_name"
+              placeholder="Введите название пиццы"
+            />
           </label>
 
           <div class="content__constructor">
@@ -135,18 +150,16 @@
             <button type="button" class="button" disabled>Готовьте!</button>
           </div>
         </div>
-
       </div>
-
     </form>
   </main>
 </template>
 
 <script setup lang="ts">
-import doughJson from "@/mocks/dough.json"
-import ingredientsJson from "@/mocks/ingredients.json"
-import saucesJson from "@/mocks/sauces.json"
-import sizesJson from "@/mocks/sizes.json"
+import doughJson from "@/mocks/dough.json";
+import ingredientsJson from "@/mocks/ingredients.json";
+import saucesJson from "@/mocks/sauces.json";
+import sizesJson from "@/mocks/sizes.json";
 import {ref} from "vue";
 import {IPizzaDough} from "@/types/interfaces/IPizzaDough";
 import {IPizzaSauce} from "@/types/interfaces/IPizzaSauce";
@@ -156,15 +169,15 @@ import {PizzaSizeEnum} from "@/types/enums/PizzaSizeEnum";
 import {IPizzaIngredient} from "@/types/interfaces/IPizzaIngredient";
 import {PizzaIngredientEnum} from "@/types/enums/PizzaIngredientEnum";
 
-const pizzaDoughs = ref<IPizzaDough[]>(doughJson)
-const ingredients = ref<IPizzaIngredient[]>(ingredientsJson)
+const pizzaDoughs = ref<IPizzaDough[]>(doughJson);
+const ingredients = ref<IPizzaIngredient[]>(ingredientsJson);
 
-const sauces = ref<IPizzaSauce[]>(saucesJson)
-const pizzaSizes = ref<IPizzaSize[]>(sizesJson)
+const sauces = ref<IPizzaSauce[]>(saucesJson);
+const pizzaSizes = ref<IPizzaSize[]>(sizesJson);
 
-const selectedPizzaDough = ref<string | null>(null)
-const selectedPizzaSize= ref<string | null>(null)
-const selectedPizzaSauce = ref<string | null>(null)
+const selectedPizzaDough = ref<string | null>(null);
+const selectedPizzaSize = ref<string | null>(null);
+const selectedPizzaSauce = ref<string | null>(null);
 </script>
 
 <style scoped lang="scss">
@@ -383,7 +396,6 @@ const selectedPizzaSauce = ref<string | null>(null)
 //@use "@/assets/scss/ds-system/ds-shadows";
 //@use "@/assets/scss/mixins/m_center";
 
-
 .diameter__input {
   margin-right: 8.7%;
   margin-bottom: 20px;
@@ -450,7 +462,6 @@ const selectedPizzaSauce = ref<string | null>(null)
     }
   }
 }
-
 
 //
 //@use "@/assets/scss/ds-system/ds-typography";
@@ -539,7 +550,6 @@ const selectedPizzaSauce = ref<string | null>(null)
     background-repeat: no-repeat;
     background-position: center;
     background-size: 80% 80%;
-
   }
 
   &--tomatoes::before {
@@ -874,7 +884,7 @@ const selectedPizzaSauce = ref<string | null>(null)
     width: 100%;
     height: 100%;
 
-    content: '';
+    content: "";
 
     background-image: inherit;
   }
@@ -1169,7 +1179,4 @@ const selectedPizzaSauce = ref<string | null>(null)
     }
   }
 }
-
-
-
 </style>

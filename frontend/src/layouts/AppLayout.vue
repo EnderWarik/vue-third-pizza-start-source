@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import AppHeader from '@/layouts/AppHeader.vue'
+import AppHeader from "@/layouts/AppHeader.vue";
 </script>
 
 <style scoped lang="scss">
