@@ -16,14 +16,15 @@
 </template>
 <script setup lang="ts">
 import { PizzaDoughEnum } from "@/types/enums/PizzaDoughEnum";
-import { ref } from "vue";
 import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
-import doughJson from "@/mocks/dough.json";
 import DoughOption from "@/modules/constructor/dough/components/DoughOption.vue";
 import SheetComponent from "@/common/components/SheetComponent.vue";
 
 const modelValue = defineModel<number | null>();
-const pizzaDoughs = ref<IPizzaDough[]>(doughJson);
+
+defineProps<{
+  pizzaDoughs: IPizzaDough[];
+}>();
 </script>
 
 <style module lang="scss">

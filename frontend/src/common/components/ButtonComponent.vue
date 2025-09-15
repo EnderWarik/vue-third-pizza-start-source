@@ -66,7 +66,7 @@ const emits = defineEmits<{
     opacity: 0.5;
   }
   &:disabled {
-    background-color: ds-colors.$green-300;
+    //background-color: ds-colors.$green-300;
     color: rgba(ds-colors.$white, 0.2);
     cursor: default;
   }
