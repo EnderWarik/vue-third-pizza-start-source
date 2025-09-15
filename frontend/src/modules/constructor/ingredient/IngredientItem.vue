@@ -1,8 +1,10 @@
 <template>
   <li :class="$style.item">
-    <span :class="[$style.filling, $style[modifier]]">
-      {{ ingredient.name }}
-    </span>
+    <drag-component :transfer-data="modifier">
+      <span :class="[$style.filling, $style[modifier]]">
+        {{ ingredient.name }}
+      </span>
+    </drag-component>
     <counter-component v-model="modelValue" :class="$style.counter" />
   </li>
 </template>
@@ -10,9 +12,13 @@
 <script setup lang="ts">
 import { IPizzaIngredient } from "@/types/interfaces/IPizzaIngredient";
 import CounterComponent from "@/common/components/CounterComponent.vue";
+import DragComponent from "@/common/components/DragComponent.vue";
 
-defineProps<{ ingredient: IPizzaIngredient; modifier: string }>();
-const modelValue = defineModel<number>({ default: 0 });
+defineProps<{
+  ingredient: IPizzaIngredient;
+  modifier: string;
+}>();
+const modelValue = defineModel<number | undefined>({ default: 0 });
 </script>
 
 <style module lang="scss">

@@ -1,5 +1,6 @@
 <template>
   <div
+    :class="$style.draggable"
     :draggable="true"
     @dragstart.self="onDrag"
     @dragover.prevent
@@ -26,3 +27,12 @@ function onDrag({ dataTransfer }: DragEvent) {
   );
 }
 </script>
+<style module lang="scss">
+.draggable {
+  cursor: grab;
+}
+
+.draggable:active {
+  cursor: grabbing;
+}
+</style>

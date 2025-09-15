@@ -3,10 +3,10 @@
     <p>Начинка:</p>
 
     <ul :class="$style.list">
-      <!--      <drag-component transfer-data="testData">-->
       <ingredient-item
         v-for="ingredient of ingredients"
         :key="ingredient.id"
+        v-model="modelValue[PizzaIngredientEnum[ingredient.id]]"
         :class="$style.item"
         :modifier="PizzaIngredientEnum[ingredient.id]"
         :ingredient="ingredient"
@@ -14,7 +14,6 @@
           updateFilling(PizzaIngredientEnum[ingredient.id], $event)
         "
       />
-      <!--      </drag-component>-->
     </ul>
   </div>
 </template>

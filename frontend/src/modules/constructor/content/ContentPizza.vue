@@ -6,13 +6,13 @@
       </template>
     </text-input>
 
-    <!--    <drop-component>-->
-    <pizza-constructor
-      :size="selectedSize"
-      :layers="fillings"
-      :sauce="selectedSauce"
-    />
-    <!--    </drop-component>-->
+    <drop-component @drop="emits('drop', $event)">
+      <pizza-constructor
+        :size="selectedSize"
+        :layers="fillings"
+        :sauce="selectedSauce"
+      />
+    </drop-component>
 
     <content-result :total="0" button-text="Готовьте!" />
   </div>
@@ -22,11 +22,16 @@ import TextInput from "@/common/components/TextInput.vue";
 import ContentResult from "@/modules/constructor/content/ContentResult.vue";
 import PizzaConstructor from "@/modules/constructor/content/PizzaConstructor.vue";
 import { Sauce, Size } from "@/modules/constructor/content/types";
+import DropComponent from "@/common/components/DropComponent.vue";
 
 defineProps<{
   selectedSauce: Sauce;
   selectedSize: Size;
   fillings: Record<string, number>;
+}>();
+
+const emits = defineEmits<{
+  drop: [value: string];
 }>();
 </script>
 <style module lang="scss">

@@ -14,6 +14,7 @@
           :fillings="selectedFillings"
           :selected-sauce="PizzaSauceEnum[selectedPizzaSauceId] as Sauce"
           :selected-size="PizzaDoughEnum[selectedPizzaDoughId] as Size"
+          @drop="updateFillings"
         ></content-pizza>
       </div>
     </form>
@@ -35,6 +36,12 @@ const selectedPizzaDoughId = ref<number>(1);
 const selectedPizzaSizeId = ref<number>(2);
 const selectedPizzaSauceId = ref<number>(1);
 const selectedFillings = ref<Record<string, number>>({});
+
+function updateFillings(name: string) {
+  const value = selectedFillings.value[name];
+  if (value) selectedFillings.value[name] = value + 1;
+  else selectedFillings.value[name] = 1;
+}
 </script>
 
 <style scoped lang="scss">
