@@ -14,11 +14,13 @@
   </label>
 </template>
 <script setup lang="ts">
-const modelValue = defineModel<boolean | string | null>({ default: false });
+const modelValue = defineModel<boolean | string | number | null>({
+  default: false,
+});
 
 defineProps<{
   name: string;
-  value: string | number | boolean;
+  value: string | number | boolean | null;
   disabled?: boolean;
 }>();
 </script>

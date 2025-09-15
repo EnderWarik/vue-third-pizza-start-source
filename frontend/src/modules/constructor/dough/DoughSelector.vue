@@ -4,8 +4,9 @@
       <dough-option
         v-for="dough of pizzaDoughs"
         :key="dough.id"
-        v-model="selectedPizzaDough"
+        v-model="modelValue"
         :title="dough.name"
+        :value="dough.id"
         :modifier="PizzaDoughEnum[dough.id]"
         name="dough"
         :description="dough.description"
@@ -21,7 +22,7 @@ import doughJson from "@/mocks/dough.json";
 import DoughOption from "@/modules/constructor/dough/components/DoughOption.vue";
 import SheetComponent from "@/common/components/SheetComponent.vue";
 
-const selectedPizzaDough = ref<string | null>(null);
+const modelValue = defineModel<number | null>();
 const pizzaDoughs = ref<IPizzaDough[]>(doughJson);
 </script>
 

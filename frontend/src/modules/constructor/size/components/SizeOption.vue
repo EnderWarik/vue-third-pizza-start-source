@@ -3,13 +3,13 @@
     :class="[
       $style.option,
       $style[modifier],
-      { [$style.checked]: modelValue === title },
+      { [$style.checked]: modelValue === value },
     ]"
   >
     <RadioComponent
       v-model="modelValue"
       class="visually-hidden"
-      :value="title"
+      :value="value"
       :name="name"
     />
     <span>{{ title }}</span>
@@ -19,12 +19,15 @@
 <script setup lang="ts">
 import RadioComponent from "@/common/components/RadioComponent.vue";
 
-const modelValue = defineModel<boolean | string | null>({ default: false });
+const modelValue = defineModel<boolean | number | string | null>({
+  default: false,
+});
 
 defineProps<{
   modifier: string;
   title: string;
   name: string;
+  value: string | number | boolean;
 }>();
 </script>
 

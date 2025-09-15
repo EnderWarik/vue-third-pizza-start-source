@@ -3,11 +3,18 @@
     <form action="#" method="post">
       <div class="content__wrapper">
         <title-component size="big" tag="h1">Конструктор пиццы</title-component>
+        <dough-selector v-model="selectedPizzaDoughId" />
+        <size-selector v-model="selectedPizzaSizeId" />
+        <ingredients-selector
+          v-model:sauce="selectedPizzaSauceId"
+          v-model:fillings="selectedFillings"
+        />
 
-        <dough-selector />
-        <size-selector />
-        <ingredients-selector />
-        <!--        <content-pizza></content-pizza>-->
+        <content-pizza
+          :fillings="selectedFillings"
+          :selected-sauce="selectedPizzaSauceId"
+          :selected-size="selectedPizzaSizeId"
+        ></content-pizza>
       </div>
     </form>
   </main>
@@ -16,8 +23,15 @@
 <script setup lang="ts">
 import TitleComponent from "@/common/components/TitleComponent.vue";
 import DoughSelector from "@/modules/constructor/dough/DoughSelector.vue";
+import { ref } from "vue";
 import SizeSelector from "@/modules/constructor/size/SizeSelector.vue";
 import IngredientsSelector from "@/modules/constructor/ingredient/IngredientsSelector.vue";
+import ContentPizza from "@/modules/constructor/content/ContentPizza.vue";
+
+const selectedPizzaDoughId = ref<number>(1);
+const selectedPizzaSizeId = ref<number>(2);
+const selectedPizzaSauceId = ref<number>(1);
+const selectedFillings = ref<Record<string, number>>({});
 </script>
 
 <style scoped lang="scss">

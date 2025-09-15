@@ -2,12 +2,9 @@
   <div class="content__ingredients">
     <sheet-component title="Выберите ингредиенты">
       <div class="sheet__content ingredients">
-        <ingredients-sauce v-model="selectedPizzaSauce" :sauces="sauces" />
+        <ingredients-sauce v-model="pizzaSauce" :sauces="sauces" />
 
-        <ingredients-filling
-          v-model="selectedFillings"
-          :ingredients="ingredients"
-        />
+        <ingredients-filling v-model="fillings" :ingredients="ingredients" />
       </div>
     </sheet-component>
   </div>
@@ -27,8 +24,12 @@ const ingredients = ref<IPizzaIngredient[]>(ingredientsJson);
 
 const sauces = ref<IPizzaSauce[]>(saucesJson);
 
-const selectedPizzaSauce = ref<string | null>(null);
-const selectedFillings = ref<Record<string, number>>();
+const pizzaSauce = defineModel<string | number | null>("sauce", {
+  default: null,
+});
+const fillings = defineModel<Record<string, number>>("fillings", {
+  default: {},
+});
 </script>
 <style scoped lang="scss">
 .content__ingredients {

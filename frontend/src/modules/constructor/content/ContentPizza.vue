@@ -6,24 +6,29 @@
       </template>
     </text-input>
 
+    <!--    <drop-component>-->
     <pizza-constructor
-      :size="selectedSize"
+      :size="PizzaSizeEnum[selectedSize] as Size"
       :layers="fillings"
-      :sauce="selectedSauce"
+      :sauce="PizzaSauceEnum[selectedSauce] as Sauce"
     />
+    <!--    </drop-component>-->
+
     <content-result :total="0" button-text="Готовьте!" />
   </div>
 </template>
 <script setup lang="ts">
 import TextInput from "@/common/components/TextInput.vue";
 import ContentResult from "@/modules/constructor/content/ContentResult.vue";
-import { Sauce, Size } from "@/modules/constructor/content/types";
 import PizzaConstructor from "@/modules/constructor/content/PizzaConstructor.vue";
+import { PizzaSizeEnum } from "@/types/enums/PizzaSizeEnum";
+import { Sauce, Size } from "@/modules/constructor/content/types";
+import { PizzaSauceEnum } from "@/types/enums/PizzaSauceEnum";
 
 defineProps<{
-  selectedSauce: Sauce;
-  selectedSize: Size;
-  fillings: Array<{ kind: string; count: number }>;
+  selectedSauce: number;
+  selectedSize: number;
+  fillings: Record<string, number>;
 }>();
 </script>
 <style module lang="scss">

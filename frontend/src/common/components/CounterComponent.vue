@@ -41,6 +41,8 @@ const {
   color?: "default" | "orange";
 }>();
 
+const emits = defineEmits(["increment", "decrement"]);
+
 function increment() {
   if (modelValue.value < max) modelValue.value++;
 }

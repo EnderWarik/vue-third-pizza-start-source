@@ -3,7 +3,6 @@
     <span :class="[$style.filling, $style[modifier]]">
       {{ ingredient.name }}
     </span>
-
     <counter-component v-model="modelValue" :class="$style.counter" />
   </li>
 </template>

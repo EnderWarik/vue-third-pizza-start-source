@@ -4,7 +4,8 @@
       <size-option
         v-for="size of pizzaSizes"
         :key="size.id"
-        v-model="selectedPizzaSize"
+        v-model="modelValue"
+        :value="size.id"
         :title="size.name"
         :modifier="PizzaSizeEnum[size.id]"
         name="diameter"
@@ -21,8 +22,7 @@ import SizeOption from "@/modules/constructor/size/components/SizeOption.vue";
 import { PizzaSizeEnum } from "@/types/enums/PizzaSizeEnum";
 
 const pizzaSizes = ref<IPizzaSize[]>(sizesJson);
-
-const selectedPizzaSize = ref<string | null>(null);
+const modelValue = defineModel<number | null>();
 </script>
 
 <style module lang="scss">

@@ -5,7 +5,7 @@
       v-for="sauce of sauces"
       :key="sauce.id"
       v-model="modelValue"
-      :value="sauce.name"
+      :value="sauce.id"
       name="ingredients-sauce"
       :class="$style.input"
     >
@@ -18,7 +18,7 @@ import RadioComponent from "@/common/components/RadioComponent.vue";
 import { IPizzaSauce } from "@/types/interfaces/IPizzaSauce";
 
 defineProps<{ sauces: IPizzaSauce[] }>();
-const modelValue = defineModel<string | null>();
+const modelValue = defineModel<string | number | null>();
 </script>
 <style module lang="scss">
 @use "@/assets/scss/ds-system/ds-typography";
