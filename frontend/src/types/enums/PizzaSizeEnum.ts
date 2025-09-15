@@ -1,5 +1,5 @@
 export enum PizzaSizeEnum {
-    small= 1,
-    normal,
-    large
+  small = 1,
+  normal,
+  big,
 }
