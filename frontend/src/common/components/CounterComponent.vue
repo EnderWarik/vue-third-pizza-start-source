@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import TextInputComponent from "@/common/components/TextInputComponent.vue";
+import TextInputComponent from "@/common/components/NumberInputComponent.vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
 
 const modelValue = defineModel<number>({ default: 0 });
