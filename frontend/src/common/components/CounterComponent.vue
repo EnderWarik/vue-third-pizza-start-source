@@ -3,6 +3,7 @@
     <button-component
       type="button"
       :class="[$style.btn, $style.minus]"
+      :disabled="modelValue <= 0"
       @click="decrement"
     >
       <span class="visually-hidden">Меньше</span>
@@ -40,8 +41,6 @@ const {
   max?: number;
   color?: "default" | "orange";
 }>();
-
-const emits = defineEmits(["increment", "decrement"]);
 
 function increment() {
   if (modelValue.value < max) modelValue.value++;

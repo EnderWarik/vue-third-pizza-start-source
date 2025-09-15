@@ -14,7 +14,7 @@
       />
     </drop-component>
 
-    <content-result :total="0" button-text="Готовьте!" />
+    <content-result :total="totalPrice" button-text="Готовьте!" />
   </div>
 </template>
 <script setup lang="ts">
@@ -28,6 +28,7 @@ defineProps<{
   selectedSauce: Sauce;
   selectedSize: Size;
   fillings: Record<string, number>;
+  totalPrice: number;
 }>();
 
 const emits = defineEmits<{

@@ -14,14 +14,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import sizesJson from "@/mocks/sizes.json";
 import SheetComponent from "@/common/components/SheetComponent.vue";
-import { ref } from "vue";
 import { IPizzaSize } from "@/types/interfaces/IPizzaSize";
 import SizeOption from "@/modules/constructor/size/components/SizeOption.vue";
 import { PizzaSizeEnum } from "@/types/enums/PizzaSizeEnum";
 
-const pizzaSizes = ref<IPizzaSize[]>(sizesJson);
+defineProps<{
+  pizzaSizes: IPizzaSize[];
+}>();
 const modelValue = defineModel<number | null>();
 </script>
 
