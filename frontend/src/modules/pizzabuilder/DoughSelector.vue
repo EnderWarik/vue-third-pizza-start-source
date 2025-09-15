@@ -1,5 +1,5 @@
 <template>
-  <div class="content__dough">
+  <div :class="$style.dough">
     <sheet-component title="Выберите тесто" title-size="small">
       <dough-option
         v-for="dough of pizzaDoughs"
@@ -25,4 +25,11 @@ const selectedPizzaDough = ref<string | null>(null);
 const pizzaDoughs = ref<IPizzaDough[]>(doughJson);
 </script>
 
-<style scoped lang="scss"></style>
+<style module lang="scss">
+.dough {
+  width: 527px;
+  margin-top: 15px;
+  margin-right: auto;
+  margin-bottom: 15px;
+}
+</style>

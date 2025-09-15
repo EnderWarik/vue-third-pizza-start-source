@@ -12,8 +12,7 @@
       :value="title"
       :name="name"
     />
-    <b>{{ title }}</b>
-    <span>{{ description }}</span>
+    <span>{{ title }}</span>
   </label>
 </template>
 
@@ -26,59 +25,63 @@ defineProps<{
   modifier: string;
   title: string;
   name: string;
-  description: string;
 }>();
 </script>
 
 <style module lang="scss">
-@use "@/assets/scss/ds-system/ds-shadows";
 @use "@/assets/scss/ds-system/ds-typography";
+@use "@/assets/scss/ds-system/ds-colors";
+@use "@/assets/scss/ds-system/ds-shadows";
 @use "@/assets/scss/mixins/m_center";
 
 .option {
-  position: relative;
-  margin-right: 8%;
+  margin-right: 8.7%;
   margin-bottom: 20px;
-  padding-left: 50px;
+  padding-top: 7px;
+  padding-bottom: 6px;
   cursor: pointer;
 
-  b {
+  span {
     @include ds-typography.r-s16-h19;
+    position: relative;
+    padding-left: 46px;
 
     &::before {
-      @include m_center.p_center-v;
+      @include m_center.p_center_v;
       width: 36px;
       height: 36px;
       content: "";
       transition: 0.3s;
       border-radius: 50%;
+      background-color: ds-colors.$green-100;
+      background-image: url("@/assets/img/diameter.svg");
       background-repeat: no-repeat;
       background-position: center;
-      background-size: cover;
     }
   }
 
-  span {
-    @include ds-typography.l-s11-h13;
-    display: block;
+  &:nth-child(3n) {
+    margin-right: 0;
   }
 
-  &:hover {
-    b::before {
-      box-shadow: ds-shadows.$shadow-regular;
-    }
+  &:hover span::before {
+    box-shadow: ds-shadows.$shadow-regular;
   }
 }
 
-.checked b::before {
+.small span::before {
+  background-size: 18px;
+}
+
+.normal span::before {
+  background-size: 29px;
+}
+
+.big span::before {
+  background-size: 100%;
+}
+
+.checked span::before {
   box-shadow: ds-shadows.$shadow-large;
-}
-
-.light b::before {
-  background-image: url("@/assets/img/dough-light.svg");
-}
-
-.large b::before {
-  background-image: url("@/assets/img/dough-large.svg");
 }
 </style>

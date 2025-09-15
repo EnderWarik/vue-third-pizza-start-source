@@ -5,30 +5,7 @@
         <title-component size="big" tag="h1">Конструктор пиццы</title-component>
 
         <dough-selector />
-        <div class="content__diameter">
-          <div class="sheet">
-            <h2 class="title title--small sheet__title">Выберите размер</h2>
-            <div class="sheet__content diameter">
-              <label
-                v-for="size of pizzaSizes"
-                :key="size.id"
-                :class="[
-                  'diameter__input',
-                  `diameter__input--${PizzaSizeEnum[size.id]}`,
-                ]"
-              >
-                <input
-                  v-model="selectedPizzaSize"
-                  type="radio"
-                  name="diameter"
-                  class="visually-hidden"
-                  :value="size.name"
-                />
-                <span>{{ size.name }}</span>
-              </label>
-            </div>
-          </div>
-        </div>
+        <size-selector />
 
         <div class="content__ingredients">
           <div class="sheet">
@@ -131,27 +108,20 @@
 </template>
 
 <script setup lang="ts">
-import doughJson from "@/mocks/dough.json";
 import ingredientsJson from "@/mocks/ingredients.json";
 import saucesJson from "@/mocks/sauces.json";
-import sizesJson from "@/mocks/sizes.json";
 import { ref } from "vue";
-import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
 import { IPizzaSauce } from "@/types/interfaces/IPizzaSauce";
-import { IPizzaSize } from "@/types/interfaces/IPizzaSize";
-import { PizzaSizeEnum } from "@/types/enums/PizzaSizeEnum";
 import { IPizzaIngredient } from "@/types/interfaces/IPizzaIngredient";
 import { PizzaIngredientEnum } from "@/types/enums/PizzaIngredientEnum";
 import TitleComponent from "@/common/components/TitleComponent.vue";
 import DoughSelector from "@/modules/pizzabuilder/DoughSelector.vue";
+import SizeSelector from "@/modules/pizzabuilder/SizeSelector.vue";
 
-const pizzaDoughs = ref<IPizzaDough[]>(doughJson);
 const ingredients = ref<IPizzaIngredient[]>(ingredientsJson);
 
 const sauces = ref<IPizzaSauce[]>(saucesJson);
-const pizzaSizes = ref<IPizzaSize[]>(sizesJson);
 
-const selectedPizzaSize = ref<string | null>(null);
 const selectedPizzaSauce = ref<string | null>(null);
 </script>
 
@@ -198,19 +168,6 @@ const selectedPizzaSauce = ref<string | null>(null);
   padding-left: 2.12%;
 }
 
-.content__dough {
-  width: 527px;
-  margin-top: 15px;
-  margin-right: auto;
-  margin-bottom: 15px;
-}
-
-.content__diameter {
-  width: 373px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
 .content__ingredients {
   width: 527px;
   margin-top: 15px;
@@ -249,80 +206,7 @@ const selectedPizzaSauce = ref<string | null>(null);
     padding: 16px 45px;
   }
 }
-//
-//@use "@/assets/scss/ds-system/ds-typography";
-//@use "@/assets/scss/ds-system/ds-colors";
-//@use "@/assets/scss/ds-system/ds-shadows";
-//@use "@/assets/scss/mixins/m_center";
 
-.diameter__input {
-  margin-right: 8.7%;
-  margin-bottom: 20px;
-  padding-top: 7px;
-  padding-bottom: 6px;
-
-  cursor: pointer;
-
-  span {
-    @include ds-typography.r-s16-h19;
-
-    position: relative;
-
-    padding-left: 46px;
-
-    &::before {
-      @include m_center.p_center_v;
-
-      width: 36px;
-      height: 36px;
-
-      content: "";
-      transition: 0.3s;
-
-      border-radius: 50%;
-      background-color: ds-colors.$green-100;
-      background-image: url("@/assets/img/diameter.svg");
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-  }
-
-  &:nth-child(3n) {
-    margin-right: 0;
-  }
-
-  &--small {
-    span::before {
-      background-size: 18px;
-    }
-  }
-
-  &--normal {
-    span::before {
-      background-size: 29px;
-    }
-  }
-
-  &--big {
-    span::before {
-      background-size: 100%;
-    }
-  }
-
-  &:hover {
-    span::before {
-      box-shadow: ds-shadows.$shadow-regular;
-    }
-  }
-
-  input {
-    &:checked + span::before {
-      box-shadow: ds-shadows.$shadow-large;
-    }
-  }
-}
-
-//
 //@use "@/assets/scss/ds-system/ds-typography";
 //@use "@/assets/scss/mixins/m_clear-list";
 
