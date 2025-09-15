@@ -2,34 +2,9 @@
   <main class="content">
     <form action="#" method="post">
       <div class="content__wrapper">
-        <h1 class="title title--big">Конструктор пиццы</h1>
+        <title-component size="big" tag="h1">Конструктор пиццы</title-component>
 
-        <div class="content__dough">
-          <div class="sheet">
-            <h2 class="title title--small sheet__title">Выберите тесто</h2>
-            <div class="sheet__content dough">
-              <label
-                v-for="dough of pizzaDoughs"
-                :key="dough.id"
-                :class="[
-                  'dough__input',
-                  `dough__input--${PizzaDoughEnum[dough.id]}`,
-                ]"
-              >
-                <input
-                  v-model="selectedPizzaDough"
-                  type="radio"
-                  name="dought"
-                  class="visually-hidden"
-                  :value="dough.name"
-                />
-                <b>{{ dough.name }}</b>
-                <span>{{ dough.description }}</span>
-              </label>
-            </div>
-          </div>
-        </div>
-
+        <dough-selector />
         <div class="content__diameter">
           <div class="sheet">
             <h2 class="title title--small sheet__title">Выберите размер</h2>
@@ -160,14 +135,15 @@ import doughJson from "@/mocks/dough.json";
 import ingredientsJson from "@/mocks/ingredients.json";
 import saucesJson from "@/mocks/sauces.json";
 import sizesJson from "@/mocks/sizes.json";
-import {ref} from "vue";
-import {IPizzaDough} from "@/types/interfaces/IPizzaDough";
-import {IPizzaSauce} from "@/types/interfaces/IPizzaSauce";
-import {IPizzaSize} from "@/types/interfaces/IPizzaSize";
-import {PizzaDoughEnum} from "@/types/enums/PizzaDoughEnum";
-import {PizzaSizeEnum} from "@/types/enums/PizzaSizeEnum";
-import {IPizzaIngredient} from "@/types/interfaces/IPizzaIngredient";
-import {PizzaIngredientEnum} from "@/types/enums/PizzaIngredientEnum";
+import { ref } from "vue";
+import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
+import { IPizzaSauce } from "@/types/interfaces/IPizzaSauce";
+import { IPizzaSize } from "@/types/interfaces/IPizzaSize";
+import { PizzaSizeEnum } from "@/types/enums/PizzaSizeEnum";
+import { IPizzaIngredient } from "@/types/interfaces/IPizzaIngredient";
+import { PizzaIngredientEnum } from "@/types/enums/PizzaIngredientEnum";
+import TitleComponent from "@/common/components/TitleComponent.vue";
+import DoughSelector from "@/modules/pizzabuilder/DoughSelector.vue";
 
 const pizzaDoughs = ref<IPizzaDough[]>(doughJson);
 const ingredients = ref<IPizzaIngredient[]>(ingredientsJson);
@@ -175,7 +151,6 @@ const ingredients = ref<IPizzaIngredient[]>(ingredientsJson);
 const sauces = ref<IPizzaSauce[]>(saucesJson);
 const pizzaSizes = ref<IPizzaSize[]>(sizesJson);
 
-const selectedPizzaDough = ref<string | null>(null);
 const selectedPizzaSize = ref<string | null>(null);
 const selectedPizzaSauce = ref<string | null>(null);
 </script>
@@ -274,122 +249,6 @@ const selectedPizzaSauce = ref<string | null>(null);
     padding: 16px 45px;
   }
 }
-
-//
-//@use "@/assets/scss/ds-system/ds-typography";
-//@use "@/assets/scss/ds-system/ds-colors";
-
-.title {
-  box-sizing: border-box;
-  width: 100%;
-  margin: 0;
-
-  color: ds-colors.$black;
-
-  &--big {
-    @include ds-typography.b-s36-h42;
-  }
-
-  &--small {
-    @include ds-typography.b-s18-h21;
-  }
-}
-
-//
-//@use "@/assets/scss/ds-system/ds-colors";
-//@use "@/assets/scss/ds-system/ds-shadows";
-.sheet {
-  padding-top: 15px;
-
-  border-radius: 8px;
-  background-color: ds-colors.$white;
-  box-shadow: ds-shadows.$shadow-light;
-}
-
-.sheet__title {
-  padding-right: 18px;
-  padding-left: 18px;
-}
-
-.sheet__content {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-
-  margin-top: 8px;
-  padding-top: 18px;
-  padding-right: 18px;
-  padding-left: 18px;
-
-  border-top: 1px solid rgba(ds-colors.$green-500, 0.1);
-}
-//
-//@use "@/assets/scss/ds-system/ds-typography";
-//@use "@/assets/scss/ds-system/ds-shadows";
-//@use "@/assets/scss/mixins/m_center";
-.dough__input {
-  position: relative;
-
-  margin-right: 8%;
-  margin-bottom: 20px;
-  padding-left: 50px;
-
-  cursor: pointer;
-
-  b {
-    @include ds-typography.r-s16-h19;
-
-    &::before {
-      @include m_center.p_center-v;
-
-      width: 36px;
-      height: 36px;
-
-      content: "";
-      transition: 0.3s;
-
-      border-radius: 50%;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-    }
-  }
-
-  span {
-    @include ds-typography.l-s11-h13;
-
-    display: block;
-  }
-
-  &--light {
-    b {
-      &::before {
-        background-image: url("@/assets/img/dough-light.svg");
-      }
-    }
-  }
-
-  &--large {
-    b {
-      &::before {
-        background-image: url("@/assets/img/dough-large.svg");
-      }
-    }
-  }
-
-  &:hover {
-    b::before {
-      box-shadow: ds-shadows.$shadow-regular;
-    }
-  }
-
-  input {
-    &:checked + b::before {
-      box-shadow: ds-shadows.$shadow-large;
-    }
-  }
-}
-
 //
 //@use "@/assets/scss/ds-system/ds-typography";
 //@use "@/assets/scss/ds-system/ds-colors";
