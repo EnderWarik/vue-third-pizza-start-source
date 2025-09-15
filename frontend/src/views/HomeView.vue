@@ -12,8 +12,8 @@
 
         <content-pizza
           :fillings="selectedFillings"
-          :selected-sauce="selectedPizzaSauceId"
-          :selected-size="selectedPizzaSizeId"
+          :selected-sauce="PizzaSauceEnum[selectedPizzaSauceId] as Sauce"
+          :selected-size="PizzaDoughEnum[selectedPizzaDoughId] as Size"
         ></content-pizza>
       </div>
     </form>
@@ -27,6 +27,9 @@ import { ref } from "vue";
 import SizeSelector from "@/modules/constructor/size/SizeSelector.vue";
 import IngredientsSelector from "@/modules/constructor/ingredient/IngredientsSelector.vue";
 import ContentPizza from "@/modules/constructor/content/ContentPizza.vue";
+import { Sauce, Size } from "@/modules/constructor/content/types";
+import { PizzaSauceEnum } from "@/types/enums/PizzaSauceEnum";
+import { PizzaDoughEnum } from "@/types/enums/PizzaDoughEnum";
 
 const selectedPizzaDoughId = ref<number>(1);
 const selectedPizzaSizeId = ref<number>(2);

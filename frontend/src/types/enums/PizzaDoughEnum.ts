@@ -1,5 +1,4 @@
 export enum PizzaDoughEnum {
-    light= 1,
-    large
+  small = 1,
+  big,
 }
-

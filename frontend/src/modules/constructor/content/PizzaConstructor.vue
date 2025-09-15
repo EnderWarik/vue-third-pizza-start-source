@@ -1,12 +1,16 @@
 <template>
   <div :class="$style.container">
-    {{ size }} {{ sauce }}
     <div :class="[$style.pizza, $style[`foundation_${size}_${sauce}`]]">
       <div :class="$style.wrapper">
         <div
           v-for="(value, key) in layers"
           :key="key"
-          :class="layerClasses(key, value)"
+          :class="[
+            $style.layer,
+            $style[key],
+            value === 2 && $style['second'],
+            value >= 3 && $style['third'],
+          ]"
         ></div>
       </div>
     </div>
@@ -21,14 +25,6 @@ defineProps<{
   sauce: Sauce;
   layers: Record<string, number>;
 }>();
-
-function layerClasses(kind: string, count: number) {
-  return [
-    `pizza__filling--${kind}`,
-    count === 2 && "pizza__filling--second",
-    count >= 3 && "pizza__filling--third",
-  ];
-}
 </script>
 
 <style module lang="scss">

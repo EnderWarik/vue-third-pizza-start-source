@@ -77,11 +77,11 @@ defineProps<{
   box-shadow: ds-shadows.$shadow-large;
 }
 
-.light b::before {
+.small b::before {
   background-image: url("@/assets/img/dough-light.svg");
 }
 
-.large b::before {
+.big b::before {
   background-image: url("@/assets/img/dough-large.svg");
 }
 </style>

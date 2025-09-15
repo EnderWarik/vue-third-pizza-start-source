@@ -8,9 +8,9 @@
 
     <!--    <drop-component>-->
     <pizza-constructor
-      :size="PizzaSizeEnum[selectedSize] as Size"
+      :size="selectedSize"
       :layers="fillings"
-      :sauce="PizzaSauceEnum[selectedSauce] as Sauce"
+      :sauce="selectedSauce"
     />
     <!--    </drop-component>-->
 
@@ -21,13 +21,11 @@
 import TextInput from "@/common/components/TextInput.vue";
 import ContentResult from "@/modules/constructor/content/ContentResult.vue";
 import PizzaConstructor from "@/modules/constructor/content/PizzaConstructor.vue";
-import { PizzaSizeEnum } from "@/types/enums/PizzaSizeEnum";
 import { Sauce, Size } from "@/modules/constructor/content/types";
-import { PizzaSauceEnum } from "@/types/enums/PizzaSauceEnum";
 
 defineProps<{
-  selectedSauce: number;
-  selectedSize: number;
+  selectedSauce: Sauce;
+  selectedSize: Size;
   fillings: Record<string, number>;
 }>();
 </script>
