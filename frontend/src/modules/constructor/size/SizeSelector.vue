@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.diameter">
-    <sheet-component title="Выберите размер" :content-class="'diameter'">
+    <sheet-component title="Выберите размер">
       <size-option
         v-for="size of pizzaSizes"
         :key="size.id"
@@ -17,7 +17,7 @@ import sizesJson from "@/mocks/sizes.json";
 import SheetComponent from "@/common/components/SheetComponent.vue";
 import { ref } from "vue";
 import { IPizzaSize } from "@/types/interfaces/IPizzaSize";
-import SizeOption from "@/modules/pizzabuilder/SizeOption.vue";
+import SizeOption from "@/modules/constructor/size/components/SizeOption.vue";
 import { PizzaSizeEnum } from "@/types/enums/PizzaSizeEnum";
 
 const pizzaSizes = ref<IPizzaSize[]>(sizesJson);

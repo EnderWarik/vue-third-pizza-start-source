@@ -6,7 +6,7 @@
       </title-component>
     </div>
 
-    <div :class="[$style.content, contentClass]">
+    <div :class="[$style.content]">
       <slot />
     </div>
   </section>
@@ -20,7 +20,6 @@ defineProps<{
   title?: string;
   titleSize?: TitleSize;
   titleTag?: TitleTag;
-  contentClass?: string | string[] | Record<string, boolean>;
 }>();
 </script>
 

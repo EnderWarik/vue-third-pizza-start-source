@@ -18,7 +18,7 @@ import { PizzaDoughEnum } from "@/types/enums/PizzaDoughEnum";
 import { ref } from "vue";
 import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
 import doughJson from "@/mocks/dough.json";
-import DoughOption from "@/modules/pizzabuilder/DoughOption.vue";
+import DoughOption from "@/modules/constructor/dough/components/DoughOption.vue";
 import SheetComponent from "@/common/components/SheetComponent.vue";
 
 const selectedPizzaDough = ref<string | null>(null);
