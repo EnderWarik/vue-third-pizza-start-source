@@ -1,7 +1,7 @@
 <template>
-  <main class="content">
+  <main :class="$style.content">
     <form action="#" method="post">
-      <div class="content__wrapper">
+      <div :class="$style.wrapper">
         <title-component size="big" tag="h1">Конструктор пиццы</title-component>
         <dough-selector
           v-model="selectedPizzaDoughId"
@@ -106,14 +106,14 @@ const finalPrice = computed(() => {
 });
 </script>
 
-<style scoped lang="scss">
+<style module lang="scss">
 @use "@/assets/scss/ds-system/ds-typography";
 
 .content {
   padding-top: 20px;
 }
 
-.content__wrapper {
+.wrapper {
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
