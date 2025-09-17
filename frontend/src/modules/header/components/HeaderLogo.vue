@@ -1,8 +1,8 @@
 <template>
   <div :class="$style.wrapper">
-    <a href="../../../index.html" :class="$style.logo">
+    <a href="../../../../index.html" :class="$style.logo">
       <img
-        src="../../assets/img/logo.svg"
+        src="../../../assets/img/logo.svg"
         alt="V!U!E! Pizza logo"
         width="90"
         height="40"

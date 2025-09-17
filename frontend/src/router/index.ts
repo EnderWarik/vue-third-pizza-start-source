@@ -1,13 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
+import HeaderLayout from "@/layouts/HeaderLayout.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
-      name: "app",
-      component: () => import("@/App.vue"),
-    }
+      name: "home",
+      component: () => import("@/views/HomeView.vue"),
+      meta: {
+        layout: HeaderLayout,
+      },
+    },
   ],
 });
 
