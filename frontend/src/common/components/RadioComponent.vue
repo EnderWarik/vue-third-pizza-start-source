@@ -66,7 +66,6 @@ defineProps<{
   }
 }
 
-/* состояния */
 .radio:hover .input:not(:checked):not(:disabled) + .text::before {
   border-color: ds-colors.$purple-800;
 }

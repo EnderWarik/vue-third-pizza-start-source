@@ -1,0 +1,79 @@
+<script setup lang="ts">
+import ButtonComponent from "@/common/components/ButtonComponent.vue";
+
+defineProps<{
+  total: number;
+}>();
+
+defineEmits<{
+  more: [];
+  submit: [];
+}>();
+</script>
+
+<template>
+  <section :class="$style.footer">
+    <div :class="$style.more">
+      <ButtonComponent
+        type="button"
+        variant="border"
+        :class="$style.moreButton"
+        @click="$emit('more')"
+      >
+        Хочу еще одну
+      </ButtonComponent>
+    </div>
+
+    <p :class="$style.text">
+      Перейти к конструктору<br />
+      чтоб собрать ещё одну пиццу
+    </p>
+
+    <div :class="$style.price">
+      <b>Итого: {{ total.toLocaleString() }} ₽</b>
+    </div>
+
+    <div :class="$style.submit">
+      <ButtonComponent type="submit" @click="$emit('submit')">
+        Оформить заказ
+      </ButtonComponent>
+    </div>
+  </section>
+</template>
+
+<style module lang="scss">
+@use "@/assets/scss/ds-system/ds-colors";
+@use "@/assets/scss/ds-system/ds-typography";
+
+.footer {
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+  padding: 25px 2.12%;
+  background-color: rgba(ds-colors.$green-500, 0.1);
+}
+
+.more {
+  width: 220px;
+  margin-right: 16px;
+}
+.moreButton {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.text {
+  @include ds-typography.l-s11-h13;
+  color: rgba(ds-colors.$black, 0.5);
+}
+
+.price {
+  @include ds-typography.b-s24-h28;
+  margin-right: 12px;
+  margin-left: auto;
+}
+
+.submit button {
+  padding: 16px 14px;
+}
+</style>

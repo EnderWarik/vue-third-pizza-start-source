@@ -1,5 +1,12 @@
 <template>
-  <label :class="$style.input">
+  <label
+    :class="[
+      $style.input,
+      {
+        [$style.bigLabel]: isBig,
+      },
+    ]"
+  >
     <slot v-if="$slots.default" />
     <input-component
       v-model="modelValue"
@@ -20,6 +27,7 @@ const { type = "text" } = defineProps<{
   name: string;
   placeholder?: string;
   type?: InputType;
+  isBig?: boolean;
 }>();
 </script>
 
