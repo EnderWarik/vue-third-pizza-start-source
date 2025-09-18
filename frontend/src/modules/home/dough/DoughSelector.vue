@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { PizzaDoughEnum } from "@/types/enums/PizzaDoughEnum";
 import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
-import DoughOption from "@/modules/constructor/dough/components/DoughOption.vue";
+import DoughOption from "@/modules/home/dough/components/DoughOption.vue";
 import SheetComponent from "@/common/components/SheetComponent.vue";
 
 const modelValue = defineModel<number | null>();

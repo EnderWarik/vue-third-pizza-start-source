@@ -1,7 +1,5 @@
 <template>
   <label :class="$style.radio">
-    {{ modelValue }}
-    {{ value }}
     <input-component
       v-model="modelValue"
       :class="$style.input"
