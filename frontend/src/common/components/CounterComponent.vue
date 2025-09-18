@@ -9,11 +9,11 @@
       <span class="visually-hidden">Меньше</span>
     </button-component>
 
-    <text-input-component
+    <input-component
       v-model="modelValue"
+      :class="$style.input"
       type="text"
       name="counter"
-      :class="$style.input"
     />
 
     <button-component
@@ -27,8 +27,8 @@
 </template>
 
 <script setup lang="ts">
-import TextInputComponent from "@/common/components/NumberInputComponent.vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
+import InputComponent from "@/common/components/InputComponent.vue";
 
 const modelValue = defineModel<number>({ default: 0 });
 
