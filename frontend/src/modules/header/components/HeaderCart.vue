@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.cart">
-    <a href="/cart">{{ totalPrice }} ₽</a>
+    <router-link to="/cart">{{ totalPrice }} ₽</router-link>
   </div>
 </template>
 

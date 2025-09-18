@@ -1,19 +1,22 @@
 <template>
   <label :class="$style.radio">
-    <input
+    <input-component
       v-model="modelValue"
-      :value="value"
       :class="$style.input"
       type="radio"
       :name="name"
+      :value="value"
       :disabled="disabled"
     />
+
     <span :class="$style.text">
       <slot />
     </span>
   </label>
 </template>
 <script setup lang="ts">
+import InputComponent from "@/common/components/InputComponent.vue";
+
 const modelValue = defineModel<boolean | string | number | null>({
   default: false,
 });
@@ -39,7 +42,7 @@ defineProps<{
 .input {
   display: none;
 
-  &:checked + text::before {
+  &:checked + .text::before {
     box-shadow: ds-shadows.$shadow-large;
   }
 }
@@ -63,7 +66,6 @@ defineProps<{
   }
 }
 
-/* состояния */
 .radio:hover .input:not(:checked):not(:disabled) + .text::before {
   border-color: ds-colors.$purple-800;
 }

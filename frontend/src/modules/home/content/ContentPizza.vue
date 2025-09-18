@@ -1,9 +1,7 @@
 <template>
   <div :class="$style.pizza">
     <text-input name="pizza_name" placeholder="Название пиццы">
-      <template #label>
-        <span class="visually-hidden">Название пиццы</span>
-      </template>
+      <span class="visually-hidden">Название пиццы</span>
     </text-input>
 
     <drop-component @drop="emits('drop', $event)">
@@ -19,9 +17,9 @@
 </template>
 <script setup lang="ts">
 import TextInput from "@/common/components/TextInput.vue";
-import ContentResult from "@/modules/constructor/content/ContentResult.vue";
-import PizzaConstructor from "@/modules/constructor/content/PizzaConstructor.vue";
-import { Sauce, Size } from "@/modules/constructor/content/types";
+import ContentResult from "@/modules/home/content/ContentResult.vue";
+import PizzaConstructor from "@/modules/home/content/PizzaConstructor.vue";
+import { Sauce, Size } from "@/modules/home/content/types";
 import DropComponent from "@/common/components/DropComponent.vue";
 
 defineProps<{

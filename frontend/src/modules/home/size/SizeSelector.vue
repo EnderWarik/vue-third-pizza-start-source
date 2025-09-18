@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import SheetComponent from "@/common/components/SheetComponent.vue";
 import { IPizzaSize } from "@/types/interfaces/IPizzaSize";
-import SizeOption from "@/modules/constructor/size/components/SizeOption.vue";
+import SizeOption from "@/modules/home/size/components/SizeOption.vue";
 import { PizzaSizeEnum } from "@/types/enums/PizzaSizeEnum";
 
 defineProps<{

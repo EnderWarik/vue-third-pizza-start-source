@@ -1,13 +1,13 @@
 <template>
   <div :class="$style.wrapper">
-    <a href="../../../../index.html" :class="$style.logo">
+    <router-link to="/" :class="$style.logo">
       <img
-        src="../../../assets/img/logo.svg"
+        src="@/assets/img/logo.svg"
         alt="V!U!E! Pizza logo"
         width="90"
         height="40"
       />
-    </a>
+    </router-link>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
   <router-view v-slot="{ Component, route }">
-    <component :is="route.meta.layout" v-if="route.meta.layout">
+    <component :is="route.meta.layout || 'div'">
       <component :is="Component" />
     </component>
   </router-view>

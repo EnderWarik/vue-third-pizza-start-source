@@ -1,9 +1,16 @@
 <template>
-  <label :class="$style.input">
-    <slot v-if="$slots.label" name="label" />
-    <input
+  <label
+    :class="[
+      $style.input,
+      {
+        [$style.bigLabel]: isBig,
+      },
+    ]"
+  >
+    <slot v-if="$slots.default" />
+    <input-component
       v-model="modelValue"
-      type="text"
+      :type="type"
       :name="name"
       :placeholder="placeholder"
     />
@@ -11,11 +18,16 @@
 </template>
 
 <script setup lang="ts">
+import InputComponent from "@/common/components/InputComponent.vue";
+import { InputType } from "@/common/types";
+
 const modelValue = defineModel<string>({ default: "" });
 
-defineProps<{
+const { type = "text" } = defineProps<{
   name: string;
   placeholder?: string;
+  type?: InputType;
+  isBig?: boolean;
 }>();
 </script>
 

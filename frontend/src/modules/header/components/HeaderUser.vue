@@ -1,9 +1,9 @@
 <template>
   <div :class="$style.user">
     <!--    v-if="!props.user"-->
-    <a href="#" :class="$style.login">
+    <router-link to="/login" :class="$style.login">
       <span>Войти</span>
-    </a>
+    </router-link>
 
     <!--    <a v-else href="#" :class="$style.logout">-->
     <!--      <img :src="props.user.avatar" :alt="props.user.name" />-->
