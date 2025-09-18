@@ -40,6 +40,20 @@ const router = createRouter({
         ],
       },
     },
+    {
+      path: "/profile",
+      name: "profile",
+      component: () => import("@/views/ProfileView.vue"),
+      meta: {
+        layout: SidebarLayout,
+        title: "Мои данные",
+        logo: { src: "./src/assets/img/logo.svg", alt: "V!U!E! Pizza" },
+        links: [
+          { label: "История заказов", href: "/orders" },
+          { label: "Мои данные", href: "/profile" },
+        ],
+      },
+    },
   ],
 });
 
