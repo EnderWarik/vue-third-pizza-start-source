@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import { IPizzaIngredient } from "@/types/interfaces/IPizzaIngredient";
+import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
 import CounterComponent from "@/common/components/CounterComponent.vue";
 import DragComponent from "@/common/components/DragComponent.vue";
 

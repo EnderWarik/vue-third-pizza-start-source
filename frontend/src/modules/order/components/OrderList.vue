@@ -5,10 +5,11 @@
 </template>
 <script setup lang="ts">
 import OrderListItem from "./OrderListItem.vue";
-import type { ProductItem } from "@/types";
+
+import { IProductItem } from "@/modules/pizza/types/IProductItem";
 
 defineProps<{
-  items: ProductItem[];
+  items: IProductItem[];
 }>();
 </script>
 

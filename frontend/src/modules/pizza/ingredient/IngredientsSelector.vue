@@ -14,9 +14,9 @@
 import SheetComponent from "@/common/components/SheetComponent.vue";
 import IngredientsFilling from "@/modules/pizza/ingredient/components/IngredientsFilling.vue";
 import IngredientsSauce from "@/modules/pizza/ingredient/components/IngredientsSauce.vue";
-import { IPizzaIngredient } from "@/types/interfaces/IPizzaIngredient";
+import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
 
-import { IPizzaSauce } from "@/types/interfaces/IPizzaSauce";
+import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
 
 defineProps<{
   sauces: IPizzaSauce[];

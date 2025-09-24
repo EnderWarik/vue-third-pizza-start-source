@@ -5,7 +5,7 @@
       :img="item.img"
       :img-width="item?.imgWidth || 56"
       :img-height="item?.imgHeight || 56"
-      :title="item.title"
+      :name="item.name"
       :size="item.size"
       :dough="item.dough"
       :sauce="item.sauce"
@@ -36,9 +36,10 @@ import CartProduct from "./CartProduct.vue";
 import CounterComponent from "@/common/components/CounterComponent.vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
 import { ref } from "vue";
-import { ProductItem } from "@/types";
 
-defineProps<{ item: ProductItem }>();
+import { IProductItem } from "@/modules/pizza/types/IProductItem";
+
+defineProps<{ item: IProductItem }>();
 
 const count = ref(0);
 

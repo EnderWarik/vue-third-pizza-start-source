@@ -37,12 +37,12 @@ import { PizzaSauceEnum } from "@/types/enums/PizzaSauceEnum";
 import { PizzaDoughEnum } from "@/types/enums/PizzaDoughEnum";
 import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
 import doughJson from "@/mocks/dough.json";
-import { IPizzaSauce } from "@/types/interfaces/IPizzaSauce";
+import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
 import saucesJson from "@/mocks/sauces.json";
 import sizesJson from "@/mocks/sizes.json";
-import { IPizzaSize } from "@/types/interfaces/IPizzaSize";
+import { IPizzaSize } from "@/modules/pizza/types/IPizzaSize";
 import ingredientsJson from "@/mocks/ingredients.json";
-import { IPizzaIngredient } from "@/types/interfaces/IPizzaIngredient";
+import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
 import { PizzaIngredientEnum } from "@/types/enums/PizzaIngredientEnum";
 
 const selectedPizzaDoughId = ref<number>(1);

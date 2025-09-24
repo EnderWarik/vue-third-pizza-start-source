@@ -1,7 +1,7 @@
 <template>
   <li :class="$style.item">
     <OrderProduct
-      :title="product.title"
+      :name="product.name"
       :img="product.img"
       :size="product.size"
       :count="product.count"
@@ -23,11 +23,11 @@
 </template>
 <script setup lang="ts">
 import OrderProduct from "./OrderProduct.vue";
-import type { ProductItem } from "@/types";
 import { computed } from "vue";
+import { IProductItem } from "@/modules/pizza/types/IProductItem";
 
 const props = defineProps<{
-  product: ProductItem;
+  product: IProductItem;
 }>();
 
 const totalPrice = computed(() => props.product.price * props.product.count);
