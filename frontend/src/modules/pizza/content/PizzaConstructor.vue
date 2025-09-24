@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { Sauce, Size } from "@/modules/home/content/types";
+import { Sauce, Size } from "@/modules/pizza/content/types";
 
 defineProps<{
   size: Size;

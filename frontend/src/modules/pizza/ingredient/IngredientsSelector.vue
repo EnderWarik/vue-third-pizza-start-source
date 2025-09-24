@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import SheetComponent from "@/common/components/SheetComponent.vue";
-import IngredientsFilling from "@/modules/home/ingredient/components/IngredientsFilling.vue";
-import IngredientsSauce from "@/modules/home/ingredient/components/IngredientsSauce.vue";
+import IngredientsFilling from "@/modules/pizza/ingredient/components/IngredientsFilling.vue";
+import IngredientsSauce from "@/modules/pizza/ingredient/components/IngredientsSauce.vue";
 import { IPizzaIngredient } from "@/types/interfaces/IPizzaIngredient";
 
 import { IPizzaSauce } from "@/types/interfaces/IPizzaSauce";

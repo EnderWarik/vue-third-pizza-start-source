@@ -27,12 +27,12 @@
 
 <script setup lang="ts">
 import TitleComponent from "@/common/components/TitleComponent.vue";
-import DoughSelector from "@/modules/home/dough/DoughSelector.vue";
+import DoughSelector from "@/modules/pizza/dough/DoughSelector.vue";
 import { computed, ref } from "vue";
-import SizeSelector from "@/modules/home/size/SizeSelector.vue";
-import IngredientsSelector from "@/modules/home/ingredient/IngredientsSelector.vue";
-import ContentPizza from "@/modules/home/content/ContentPizza.vue";
-import { Sauce, Size } from "@/modules/home/content/types";
+import SizeSelector from "@/modules/pizza/size/SizeSelector.vue";
+import IngredientsSelector from "@/modules/pizza/ingredient/IngredientsSelector.vue";
+import ContentPizza from "@/modules/pizza/content/ContentPizza.vue";
+import { Sauce, Size } from "@/modules/pizza/content/types";
 import { PizzaSauceEnum } from "@/types/enums/PizzaSauceEnum";
 import { PizzaDoughEnum } from "@/types/enums/PizzaDoughEnum";
 import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
