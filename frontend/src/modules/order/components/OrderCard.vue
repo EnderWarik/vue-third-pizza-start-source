@@ -21,8 +21,8 @@ import SheetComponent from "@/common/components/SheetComponent.vue";
 import OrderHeader from "./OrderHeader.vue";
 import OrderList from "./OrderList.vue";
 import OrderAdditionalList from "./OrderAdditionalList.vue";
-import { IAdditionalItem } from "@/modules/profile/types/IAdditionalItem";
-import { IProductItem } from "@/modules/profile/types/IProductItem";
+import { IAdditionalItem } from "@/modules/pizza/types/IAdditionalItem";
+import { IProductItem } from "@/modules/pizza/types/IProductItem";
 
 defineProps<{
   orderNumber: number | string;

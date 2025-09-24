@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import CartListItem from "./CartListItem.vue";
 import SheetComponent from "@/common/components/SheetComponent.vue";
-import { IProductItem } from "@/modules/profile/types/IProductItem";
+import { IProductItem } from "@/modules/pizza/types/IProductItem";
 
 defineProps<{
   items: IProductItem[];

@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import OrderAdditionalItem from "./OrderAdditionalItem.vue";
 
-import { IAdditionalItem } from "@/modules/profile/types/IAdditionalItem";
+import { IAdditionalItem } from "@/modules/pizza/types/IAdditionalItem";
 
 defineProps<{ items: IAdditionalItem[] }>();
 </script>

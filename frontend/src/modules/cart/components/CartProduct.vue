@@ -2,13 +2,13 @@
   <div :class="$style.product">
     <img
       :src="img"
-      :alt="alt || title"
+      :alt="alt || name"
       :width="imgWidth"
       :height="imgHeight"
       :class="$style.img"
     />
     <div :class="$style.text">
-      <h2 :class="$style.title">{{ title }}</h2>
+      <h2 :class="$style.title">{{ name }}</h2>
       <ul :class="$style.meta">
         <li>{{ size }}, на {{ dough }} тесте</li>
         <li>Соус: {{ sauce }}</li>
@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { IProductItem } from "@/modules/profile/types/IProductItem";
+import { IProductItem } from "@/modules/pizza/types/IProductItem";
 
 defineProps<Omit<IProductItem, "id" | "price">>();
 </script>

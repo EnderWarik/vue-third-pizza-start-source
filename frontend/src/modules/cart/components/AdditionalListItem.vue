@@ -18,7 +18,7 @@ import CounterComponent from "@/common/components/CounterComponent.vue";
 import { ref } from "vue";
 import SheetComponent from "@/common/components/SheetComponent.vue";
 
-import { IAdditionalItem } from "@/modules/profile/types/IAdditionalItem";
+import { IAdditionalItem } from "@/modules/pizza/types/IAdditionalItem";
 
 defineProps<{ item: IAdditionalItem }>();
 

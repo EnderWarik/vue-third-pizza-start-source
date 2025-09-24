@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
-import { IAdditionalItem } from "@/modules/profile/types/IAdditionalItem";
-import { IPizzaSauce } from "@/modules/profile/types/IPizzaSauce";
-import { IPizzaSize } from "@/modules/profile/types/IPizzaSize";
+import { IAdditionalItem } from "@/modules/pizza/types/IAdditionalItem";
+import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
+import { IPizzaSize } from "@/modules/pizza/types/IPizzaSize";
 import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
 
 const pizzaStore = defineStore("pizzaStore", () => {

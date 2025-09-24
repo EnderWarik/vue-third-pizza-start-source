@@ -16,7 +16,7 @@ import IngredientsFilling from "@/modules/pizza/ingredient/components/Ingredient
 import IngredientsSauce from "@/modules/pizza/ingredient/components/IngredientsSauce.vue";
 import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
 
-import { IPizzaSauce } from "@/modules/profile/types/IPizzaSauce";
+import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
 
 defineProps<{
   sauces: IPizzaSauce[];

@@ -6,7 +6,7 @@
 <script setup lang="ts">
 import OrderListItem from "./OrderListItem.vue";
 
-import { IProductItem } from "@/modules/profile/types/IProductItem";
+import { IProductItem } from "@/modules/pizza/types/IProductItem";
 
 defineProps<{
   items: IProductItem[];

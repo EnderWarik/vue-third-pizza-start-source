@@ -14,7 +14,7 @@
   </li>
 </template>
 <script setup lang="ts">
-import { IAdditionalItem } from "@/modules/profile/types/IAdditionalItem";
+import { IAdditionalItem } from "@/modules/pizza/types/IAdditionalItem";
 
 type Props = Omit<IAdditionalItem, "id">;
 defineProps<Props>();

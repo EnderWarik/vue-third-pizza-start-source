@@ -1,6 +1,6 @@
 export type IProductItem = {
   id: string;
-  title: string;
+  name: string;
   img: string;
   imgWidth?: number;
   imgHeight?: number;
