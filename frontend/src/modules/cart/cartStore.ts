@@ -58,4 +58,10 @@ const cartStore = defineStore("cartStore", () => {
       count: 2,
     },
   ]);
+
+  function updatePizzaCounts(pizzaId: number, pizzaCount: number) {}
+
+  function addAdditionalItem(pizzaId: number, item: IAdditionalItem) {}
+
+  function deleteAdditionalItem(pizzaId: number, item: IAdditionalItem) {}
 });
