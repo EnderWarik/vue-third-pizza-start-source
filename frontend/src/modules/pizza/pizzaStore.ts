@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
 import { IAdditionalItem } from "@/modules/pizza/types/IAdditionalItem";
 import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
 import { IPizzaSize } from "@/modules/pizza/types/IPizzaSize";
 import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
+import { PizzaIngredientEnum } from "@/types/enums/PizzaIngredientEnum";
 
 const pizzaStore = defineStore("pizzaStore", () => {
   const ingredients = ref<IPizzaIngredient[]>([
@@ -59,7 +60,7 @@ const pizzaStore = defineStore("pizzaStore", () => {
     },
   ]);
 
-  const sizes = ref<IPizzaSize[]>([
+  const pizzaSizes = ref<IPizzaSize[]>([
     {
       id: 1,
       name: "23 см",
@@ -80,7 +81,7 @@ const pizzaStore = defineStore("pizzaStore", () => {
     },
   ]);
 
-  const doughs = ref<IPizzaDough[]>([
+  const pizzaDoughs = ref<IPizzaDough[]>([
     {
       id: 1,
       name: "Тонкое",
@@ -96,4 +97,50 @@ const pizzaStore = defineStore("pizzaStore", () => {
       price: 300,
     },
   ]);
+
+  const selectedPizzaDoughId = ref<number>(1);
+  const selectedPizzaSizeId = ref<number>(2);
+  const selectedPizzaSauceId = ref<number>(1);
+  const selectedFillings = ref<Record<string, number>>({});
+
+  const doughPrice = computed(() => {
+    return (
+      pizzaDoughs.value.find((item) => item.id === selectedPizzaDoughId.value)
+        ?.price || 0
+    );
+  });
+
+  const sizePrice = computed(() => {
+    return (
+      pizzaSizes.value.find((item) => item.id === selectedPizzaSizeId.value)
+        ?.multiplier || 0
+    );
+  });
+
+  const saucePrice = computed(() => {
+    return (
+      sauces.value.find((item) => item.id === selectedPizzaSauceId.value)
+        ?.price || 0
+    );
+  });
+
+  const ingredientsPrice = computed(() => {
+    let result = 0;
+    for (const filling in selectedFillings.value) {
+      const count = selectedFillings.value[filling];
+      const id =
+        PizzaIngredientEnum[filling as keyof typeof PizzaIngredientEnum];
+      const price =
+        ingredients.value.find((item) => item.id === id)?.price || 0;
+      result += price * count;
+    }
+    return result;
+  });
+
+  const finalPrice = computed(() => {
+    return (
+      (doughPrice.value + saucePrice.value + ingredientsPrice.value) *
+      sizePrice.value
+    );
+  });
 });
