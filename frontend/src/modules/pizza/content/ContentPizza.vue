@@ -17,9 +17,9 @@
 </template>
 <script setup lang="ts">
 import TextInput from "@/common/components/TextInput.vue";
-import ContentResult from "@/modules/home/content/ContentResult.vue";
-import PizzaConstructor from "@/modules/home/content/PizzaConstructor.vue";
-import { Sauce, Size } from "@/modules/home/content/types";
+import ContentResult from "@/modules/pizza/content/ContentResult.vue";
+import PizzaConstructor from "@/modules/pizza/content/PizzaConstructor.vue";
+import { Sauce, Size } from "@/modules/pizza/content/types";
 import DropComponent from "@/common/components/DropComponent.vue";
 
 defineProps<{
