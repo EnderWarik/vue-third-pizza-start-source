@@ -143,4 +143,10 @@ const pizzaStore = defineStore("pizzaStore", () => {
       sizePrice.value
     );
   });
+
+  function updateFillings(name: string) {
+    const value = selectedFillings.value[name];
+    if (value) selectedFillings.value[name] = value + 1;
+    else selectedFillings.value[name] = 1;
+  }
 });
