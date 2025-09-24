@@ -3,7 +3,7 @@
     <p>Начинка:</p>
 
     <ul :class="$style.list">
-      <ingredient-item
+      <IngredientItem
         v-for="ingredient of ingredients"
         :key="ingredient.id"
         v-model="modelValue[PizzaIngredientEnum[ingredient.id]]"

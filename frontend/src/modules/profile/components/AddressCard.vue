@@ -1,19 +1,19 @@
 <template>
   <div :class="$style.wrapper">
-    <sheet-component :class="$style.card">
+    <SheetComponent :class="$style.card">
       <div :class="$style.header">
         <b>{{ title }}</b>
         <div>
-          <button-component class="button" type="button" @click="$emit('edit')">
+          <ButtonComponent class="button" type="button" @click="$emit('edit')">
             <span class="visually-hidden">Изменить адрес</span>
             Изменить
-          </button-component>
+          </ButtonComponent>
         </div>
       </div>
 
       <p :class="$style.address">{{ address }}</p>
       <small v-if="note" :class="$style.note">{{ note }}</small>
-    </sheet-component>
+    </SheetComponent>
   </div>
 </template>
 <script setup lang="ts">

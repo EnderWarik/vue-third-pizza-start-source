@@ -6,9 +6,9 @@ import CartFooter from "@/modules/cart/components/CartFooter.vue";
 <template>
   <form action="test.html" method="post" class="layout-form">
     <main :class="[$style.content, $style.cart]">
-      <cart-container />
+      <CartContainer />
     </main>
-    <cart-footer :total="123" @more="() => {}" @submit="() => {}" />
+    <CartFooter :total="123" @more="() => {}" @submit="() => {}" />
   </form>
 </template>
 

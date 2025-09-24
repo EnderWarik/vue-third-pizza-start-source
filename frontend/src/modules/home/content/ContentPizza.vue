@@ -1,18 +1,18 @@
 <template>
   <div :class="$style.pizza">
-    <text-input name="pizza_name" placeholder="Название пиццы">
+    <TextInput name="pizza_name" placeholder="Название пиццы">
       <span class="visually-hidden">Название пиццы</span>
-    </text-input>
+    </TextInput>
 
-    <drop-component @drop="emits('drop', $event)">
-      <pizza-constructor
+    <DropComponent @drop="emits('drop', $event)">
+      <PizzaConstructor
         :size="selectedSize"
         :layers="fillings"
         :sauce="selectedSauce"
       />
-    </drop-component>
+    </DropComponent>
 
-    <content-result :total="totalPrice" button-text="Готовьте!" />
+    <ContentResult :total="totalPrice" button-text="Готовьте!" />
   </div>
 </template>
 <script setup lang="ts">

@@ -1,14 +1,14 @@
 <template>
   <div :class="$style.result">
     <p>Итого: {{ total.toLocaleString() }} ₽</p>
-    <button-component
+    <ButtonComponent
       type="button"
       class="button"
       :disabled="disabled"
       @click="emit('submit')"
     >
       {{ buttonText }}
-    </button-component>
+    </ButtonComponent>
   </div>
 </template>
 

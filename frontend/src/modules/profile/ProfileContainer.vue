@@ -31,16 +31,16 @@ function editAddress() {
 </script>
 
 <template>
-  <user-info :name="user.name" :phone="user.phone" :avatar="user.avatar" />
+  <UserInfo :name="user.name" :phone="user.phone" :avatar="user.avatar" />
 
-  <address-card
+  <AddressCard
     title="Адрес №1. Тест"
     address="Невский пр., д. 22, кв. 46"
     note="Позвоните, пожалуйста, от проходной"
     @edit="editAddress"
   />
 
-  <address-form
+  <AddressForm
     v-model="formModel"
     title="Адрес №1"
     @submit="saveAddress"
@@ -48,8 +48,8 @@ function editAddress() {
   />
 
   <div style="margin-top: 16px">
-    <button-component type="button" variant="border">
+    <ButtonComponent type="button" variant="border">
       Добавить новый адрес
-    </button-component>
+    </ButtonComponent>
   </div>
 </template>

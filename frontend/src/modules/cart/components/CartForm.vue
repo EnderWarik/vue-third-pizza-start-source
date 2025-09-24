@@ -25,9 +25,9 @@
     <div v-if="delivery === '2'" :class="$style.address">
       <span :class="$style.label">Новый адрес:</span>
 
-      <form-line v-model="street" name="street" label="Улица*" />
-      <form-line v-model="house" name="house" label="Дом*" small />
-      <form-line v-model="apartment" name="apartment" label="Квартира" small />
+      <FormLine v-model="street" name="street" label="Улица*" />
+      <FormLine v-model="house" name="house" label="Дом*" small />
+      <FormLine v-model="apartment" name="apartment" label="Квартира" small />
     </div>
   </div>
 </template>

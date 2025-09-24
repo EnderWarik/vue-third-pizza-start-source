@@ -17,6 +17,9 @@ module.exports = {
     "@vue/eslint-config-typescript/recommended",
     "@vue/eslint-config-prettier",
   ],
+  rules: {
+    "vue/component-name-in-template-casing": ["error", "PascalCase"]
+  },
   overrides: [
     {
       files: ["**/*.d.ts"],

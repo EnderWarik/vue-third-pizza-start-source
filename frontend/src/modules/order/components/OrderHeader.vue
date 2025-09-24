@@ -9,20 +9,20 @@
     </div>
 
     <div :class="$style.actions">
-      <button-component
+      <ButtonComponent
         type="button"
         :class="[$style.btn, $style.btnBorder]"
         @click="$emit('delete')"
       >
         Удалить
-      </button-component>
-      <button-component
+      </ButtonComponent>
+      <ButtonComponent
         type="button"
         :class="$style.btn"
         @click="$emit('repeat')"
       >
         Повторить
-      </button-component>
+      </ButtonComponent>
     </div>
   </div>
 </template>

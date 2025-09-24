@@ -1,14 +1,14 @@
 <template>
   <div class="container">
-    <title-component :class="$style.title" tag="h1"> Корзина </title-component>
+    <TitleComponent :class="$style.title" tag="h1"> Корзина </TitleComponent>
 
-    <cart-list :items="cartItems" />
+    <CartList :items="cartItems" />
     <!-- <div class="sheet cart__empty">
           <p>В корзине нет ни одного товара</p>
         </div> -->
-    <additional-list :class="$style.additional" :items="extras" />
+    <AdditionalList :class="$style.additional" :items="extras" />
 
-    <cart-form />
+    <CartForm />
   </div>
 </template>
 

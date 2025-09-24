@@ -1,78 +1,78 @@
 <template>
   <div :class="$style.wrapper">
-    <sheet-component tag="form" :class="$style.form" @submit="onSubmit">
+    <SheetComponent tag="form" :class="$style.form" @submit="onSubmit">
       <div :class="$style.header">
         <b>{{ title ?? "Адрес" }}</b>
       </div>
 
       <div :class="$style.body">
         <div :class="$style.input">
-          <text-input
+          <TextInput
             v-model="model.name"
             name="addr-name"
             placeholder="Введите название адреса"
             required
           >
             <span>Название адреса*</span>
-          </text-input>
+          </TextInput>
         </div>
 
         <div :class="[$style.input, $style.normal]">
-          <text-input
+          <TextInput
             v-model="model.street"
             name="addr-street"
             placeholder="Введите название улицы"
             required
           >
             <span>Улица*</span>
-          </text-input>
+          </TextInput>
         </div>
 
         <div :class="[$style.input, $style.small]">
-          <text-input
+          <TextInput
             v-model="model.house"
             name="addr-house"
             placeholder="Введите номер дома"
             required
           >
             <span>Дом*</span>
-          </text-input>
+          </TextInput>
         </div>
 
         <div :class="[$style.input, $style.small]">
-          <text-input
+          <TextInput
             v-model="model.apartment"
             name="addr-apartment"
             placeholder="Введите № квартиры"
           >
             <span>Квартира</span>
-          </text-input>
+          </TextInput>
         </div>
 
         <div :class="$style.input">
-          <text-input
+          <TextInput
             v-model="model.comment"
             name="addr-comment"
             placeholder="Введите комментарий"
           >
             <span>Комментарий</span>
-          </text-input>
+          </TextInput>
         </div>
       </div>
 
       <div :class="$style.actions">
-        <button-component
+        <ButtonComponent
           type="button"
           variant="transparent"
           @click="$emit('remove')"
         >
           Удалить
-        </button-component>
-        <button-component type="submit" class="button">
+        </ButtonComponent>
+        <ButtonComponent type="submit" class="button">
           Сохранить
-        </button-component>
+        </ButtonComponent>
       </div>
-    </sheet-component>
+    </SheetComponent>
   </div>
 </template>
 <script setup lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <button-component
+  <ButtonComponent
     :class="[
       $style.close,
       {

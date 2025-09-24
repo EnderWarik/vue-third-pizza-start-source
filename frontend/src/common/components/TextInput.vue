@@ -8,7 +8,7 @@
     ]"
   >
     <slot v-if="$slots.default" />
-    <input-component
+    <InputComponent
       v-model="modelValue"
       :type="type"
       :name="name"

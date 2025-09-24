@@ -1,6 +1,6 @@
 <template>
   <main :class="$style.content">
-    <home-container />
+    <HomeContainer />
   </main>
 </template>
 

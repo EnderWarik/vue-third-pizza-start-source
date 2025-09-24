@@ -1,6 +1,6 @@
 <template>
   <li :class="$style.item">
-    <cart-product
+    <CartProduct
       :class="$style.product"
       :img="item.img"
       :img-width="item?.imgWidth || 56"

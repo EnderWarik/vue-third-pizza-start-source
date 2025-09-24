@@ -1,5 +1,5 @@
 <template>
-  <sheet-component>
+  <SheetComponent>
     <ul :class="[$style.list, $style.sheet]">
       <CartListItem
         v-for="item in items"
@@ -8,7 +8,7 @@
         @edit="() => emit('edit', item.id)"
       />
     </ul>
-  </sheet-component>
+  </SheetComponent>
 </template>
 <script setup lang="ts">
 import CartListItem from "./CartListItem.vue";

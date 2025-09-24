@@ -1,12 +1,12 @@
 <template>
-  <order-card
+  <OrderCard
     :order-number="11199929"
     :total="1564"
     :products="products"
     :additionals="additionals"
     address="Адрес доставки: Тест (или если адрес новый - писать целиком)"
   />
-  <order-card
+  <OrderCard
     :order-number="11199930"
     :total="1564"
     :products="products"

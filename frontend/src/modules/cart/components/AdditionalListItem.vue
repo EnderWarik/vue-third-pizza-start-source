@@ -1,5 +1,5 @@
 <template>
-  <sheet-component tag="li" :class="$style.item">
+  <SheetComponent tag="li" :class="$style.item">
     <p :class="$style.description">
       <img :src="item.img" width="39" height="60" :alt="item.title" />
       <span>{{ item.title }}</span>
@@ -11,7 +11,7 @@
         <b>× {{ item.price }} ₽</b>
       </div>
     </div>
-  </sheet-component>
+  </SheetComponent>
 </template>
 <script setup lang="ts">
 import CounterComponent from "@/common/components/CounterComponent.vue";

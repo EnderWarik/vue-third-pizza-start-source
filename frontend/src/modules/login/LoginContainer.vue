@@ -1,34 +1,34 @@
 <template>
   <div class="sign-form">
-    <close-button inner-aria-label="Закрыть форму авторизации" white />
+    <CloseButton inner-aria-label="Закрыть форму авторизации" white />
 
-    <title-component class="sign-form__title" tag="h1">
+    <TitleComponent class="sign-form__title" tag="h1">
       Авторизуйтесь на сайте
-    </title-component>
+    </TitleComponent>
 
     <form action="test.html" method="post">
-      <form-line>
-        <text-input
+      <FormLine>
+        <TextInput
           v-model="email"
           name="email"
           type="email"
           placeholder="example@mail.ru"
         >
           <span>E-mail</span>
-        </text-input>
-      </form-line>
+        </TextInput>
+      </FormLine>
 
-      <form-line>
-        <text-input
+      <FormLine>
+        <TextInput
           v-model="password"
           name="pass"
           type="password"
           placeholder="***********"
         >
           <span>Пароль</span>
-        </text-input>
-      </form-line>
-      <button-component type="submit"> Авторизоваться </button-component>
+        </TextInput>
+      </FormLine>
+      <ButtonComponent type="submit"> Авторизоваться </ButtonComponent>
     </form>
   </div>
 </template>

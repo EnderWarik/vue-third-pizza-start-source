@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.sauce">
     <p>Основной соус:</p>
-    <radio-component
+    <RadioComponent
       v-for="sauce of sauces"
       :key="sauce.id"
       v-model="modelValue"
@@ -10,7 +10,7 @@
       :class="$style.input"
     >
       {{ sauce.name }}
-    </radio-component>
+    </RadioComponent>
   </div>
 </template>
 <script setup lang="ts">

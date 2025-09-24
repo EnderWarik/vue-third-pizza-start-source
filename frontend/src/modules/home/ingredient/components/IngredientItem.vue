@@ -1,11 +1,11 @@
 <template>
   <li :class="$style.item">
-    <drag-component :transfer-data="modifier">
+    <DragComponent :transfer-data="modifier">
       <span :class="[$style.filling, $style[modifier]]">
         {{ ingredient.name }}
       </span>
-    </drag-component>
-    <counter-component v-model="modelValue" :class="$style.counter" />
+    </DragComponent>
+    <CounterComponent v-model="modelValue" :class="$style.counter" />
   </li>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.diameter">
-    <sheet-component title="Выберите размер">
-      <size-option
+    <SheetComponent title="Выберите размер">
+      <SizeOption
         v-for="size of pizzaSizes"
         :key="size.id"
         v-model="modelValue"
@@ -10,7 +10,7 @@
         :modifier="PizzaSizeEnum[size.id]"
         name="diameter"
       />
-    </sheet-component>
+    </SheetComponent>
   </div>
 </template>
 <script setup lang="ts">

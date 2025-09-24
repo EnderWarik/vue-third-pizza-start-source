@@ -1,6 +1,6 @@
 <template>
   <li :class="$style.item">
-    <order-product
+    <OrderProduct
       :title="product.title"
       :img="product.img"
       :size="product.size"
@@ -12,7 +12,7 @@
       :alt="product.alt"
       :fillings="product.fillings"
     >
-    </order-product>
+    </OrderProduct>
     <p :class="$style.price">
       <template v-if="product.count > 1">
         {{ product.count }} × {{ product.price.toLocaleString() }} ₽ =

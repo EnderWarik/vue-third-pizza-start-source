@@ -1,26 +1,26 @@
 <template>
   <form action="#" method="post">
     <div :class="$style.wrapper">
-      <title-component size="big" tag="h1">Конструктор пиццы</title-component>
-      <dough-selector
+      <TitleComponent size="big" tag="h1">Конструктор пиццы</TitleComponent>
+      <DoughSelector
         v-model="selectedPizzaDoughId"
         :pizza-doughs="pizzaDoughs"
       />
-      <size-selector v-model="selectedPizzaSizeId" :pizza-sizes="pizzaSizes" />
-      <ingredients-selector
+      <SizeSelector v-model="selectedPizzaSizeId" :pizza-sizes="pizzaSizes" />
+      <IngredientsSelector
         v-model:sauce="selectedPizzaSauceId"
         v-model:fillings="selectedFillings"
         :sauces="sauces"
         :ingredients="ingredients"
       />
 
-      <content-pizza
+      <ContentPizza
         :fillings="selectedFillings"
         :selected-sauce="PizzaSauceEnum[selectedPizzaSauceId] as Sauce"
         :selected-size="PizzaDoughEnum[selectedPizzaDoughId] as Size"
         :total-price="finalPrice"
         @drop="updateFillings"
-      ></content-pizza>
+      ></ContentPizza>
     </div>
   </form>
 </template>

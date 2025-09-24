@@ -1,32 +1,32 @@
 <template>
   <div :class="$style.layout">
     <aside :class="$style.sidebar" :style="{ width: sidebarWidth + 'px' }">
-      <router-link v-if="logo?.src" to="/" :class="$style.logo">
+      <RouterLink v-if="logo?.src" to="/" :class="$style.logo">
         <img
           :src="logo.src"
           :alt="logo.alt || 'Logo'"
           :width="logo.width ?? 90"
           :height="logo.height ?? 40"
         />
-      </router-link>
+      </RouterLink>
 
       <nav :class="$style.nav">
-        <router-link
+        <RouterLink
           v-for="l in links"
           :key="l.href + l.label"
           :to="l.href"
           :class="[$style.link, currentPath === l.href && $style.active]"
         >
           {{ l.label }}
-        </router-link>
+        </RouterLink>
       </nav>
     </aside>
 
     <div :class="$style.content">
       <div v-if="title" :class="$style.title">
-        <title-component tag="h1" size="big">
+        <TitleComponent tag="h1" size="big">
           {{ title }}
-        </title-component>
+        </TitleComponent>
       </div>
       <slot />
     </div>

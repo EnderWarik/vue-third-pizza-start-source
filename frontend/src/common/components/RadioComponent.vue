@@ -1,6 +1,6 @@
 <template>
   <label :class="$style.radio">
-    <input-component
+    <InputComponent
       v-model="modelValue"
       :class="$style.input"
       type="radio"

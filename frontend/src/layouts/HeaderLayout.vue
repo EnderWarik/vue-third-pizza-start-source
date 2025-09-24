@@ -4,7 +4,7 @@ import HeaderContainer from "@/modules/header/HeaderContainer.vue";
 
 <template>
   <div>
-    <header-container />
+    <HeaderContainer />
     <slot />
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <login-container />
+  <LoginContainer />
 </template>
 
 <script setup lang="ts">

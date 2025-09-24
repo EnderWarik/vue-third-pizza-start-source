@@ -1,28 +1,28 @@
 <template>
   <div :class="[$style.counter, color === 'orange' && $style.orange]">
-    <button-component
+    <ButtonComponent
       type="button"
       :class="[$style.btn, $style.minus]"
       :disabled="modelValue <= 0"
       @click="decrement"
     >
       <span class="visually-hidden">Меньше</span>
-    </button-component>
+    </ButtonComponent>
 
-    <input-component
+    <InputComponent
       v-model="modelValue"
       :class="$style.input"
       type="text"
       name="counter"
     />
 
-    <button-component
+    <ButtonComponent
       type="button"
       :class="[$style.btn, $style.plus]"
       @click="increment"
     >
       <span class="visually-hidden">Больше</span>
-    </button-component>
+    </ButtonComponent>
   </div>
 </template>
 

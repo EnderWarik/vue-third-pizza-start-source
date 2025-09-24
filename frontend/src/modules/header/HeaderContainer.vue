@@ -6,9 +6,9 @@ import HeaderCart from "@/modules/header/components/HeaderCart.vue";
 
 <template>
   <header :class="$style.header">
-    <header-logo />
-    <header-cart :total-price="0" />
-    <header-user />
+    <HeaderLogo />
+    <HeaderCart :total-price="0" />
+    <HeaderUser />
   </header>
   <slot />
 </template>

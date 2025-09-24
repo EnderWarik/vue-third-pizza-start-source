@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.dough">
-    <sheet-component title="Выберите тесто" title-size="small">
-      <dough-option
+    <SheetComponent title="Выберите тесто" title-size="small">
+      <DoughOption
         v-for="dough of pizzaDoughs"
         :key="dough.id"
         v-model="modelValue"
@@ -11,7 +11,7 @@
         name="dough"
         :description="dough.description"
       />
-    </sheet-component>
+    </SheetComponent>
   </div>
 </template>
 <script setup lang="ts">

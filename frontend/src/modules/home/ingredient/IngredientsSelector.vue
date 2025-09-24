@@ -1,12 +1,12 @@
 <template>
   <div class="content__ingredients">
-    <sheet-component title="Выберите ингредиенты">
+    <SheetComponent title="Выберите ингредиенты">
       <div class="sheet__content ingredients">
-        <ingredients-sauce v-model="pizzaSauce" :sauces="sauces" />
+        <IngredientsSauce v-model="pizzaSauce" :sauces="sauces" />
 
-        <ingredients-filling v-model="fillings" :ingredients="ingredients" />
+        <IngredientsFilling v-model="fillings" :ingredients="ingredients" />
       </div>
-    </sheet-component>
+    </SheetComponent>
   </div>
 </template>
 
