@@ -15,7 +15,7 @@
 </template>
 <script setup lang="ts">
 import RadioComponent from "@/common/components/RadioComponent.vue";
-import { IPizzaSauce } from "@/types/interfaces/IPizzaSauce";
+import { IPizzaSauce } from "@/modules/profile/types/IPizzaSauce";
 
 defineProps<{ sauces: IPizzaSauce[] }>();
 const modelValue = defineModel<string | number | null>();

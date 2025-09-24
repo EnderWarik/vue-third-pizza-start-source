@@ -19,7 +19,7 @@
 </template>
 <script setup lang="ts">
 import IngredientItem from "./IngredientItem.vue";
-import { IPizzaIngredient } from "@/types/interfaces/IPizzaIngredient";
+import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
 import { PizzaIngredientEnum } from "@/types/enums/PizzaIngredientEnum";
 
 defineProps<{ ingredients: IPizzaIngredient[] }>();

@@ -12,11 +12,11 @@
 </template>
 <script setup lang="ts">
 import CartListItem from "./CartListItem.vue";
-import { ProductItem } from "@/types";
 import SheetComponent from "@/common/components/SheetComponent.vue";
+import { IProductItem } from "@/modules/profile/types/IProductItem";
 
 defineProps<{
-  items: ProductItem[];
+  items: IProductItem[];
 }>();
 
 const emit = defineEmits<{

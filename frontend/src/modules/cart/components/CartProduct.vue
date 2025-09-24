@@ -19,9 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import { ProductItem } from "@/types";
+import { IProductItem } from "@/modules/profile/types/IProductItem";
 
-defineProps<Omit<ProductItem, "id" | "price">>();
+defineProps<Omit<IProductItem, "id" | "price">>();
 </script>
 
 <style module lang="scss">

@@ -3,7 +3,7 @@ import UserInfo from "@/modules/profile/components/UserInfo.vue";
 import AddressCard from "@/modules/profile/components/AddressCard.vue";
 import AddressForm from "@/modules/profile/components/AddressForm.vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
-import { makeAvatar } from "@/modules/profile/helpers/img-helpers";
+import { makeAvatar } from "@/modules/profile/helpers/imgHelpers";
 
 const user = {
   name: "Василий Ложкин",

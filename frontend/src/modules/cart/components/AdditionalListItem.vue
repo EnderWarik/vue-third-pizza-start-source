@@ -1,8 +1,8 @@
 <template>
   <SheetComponent tag="li" :class="$style.item">
     <p :class="$style.description">
-      <img :src="item.img" width="39" height="60" :alt="item.title" />
-      <span>{{ item.title }}</span>
+      <img :src="item.image" width="39" height="60" :alt="item.name" />
+      <span>{{ item.name }}</span>
     </p>
 
     <div :class="$style.wrapper">
@@ -17,9 +17,10 @@
 import CounterComponent from "@/common/components/CounterComponent.vue";
 import { ref } from "vue";
 import SheetComponent from "@/common/components/SheetComponent.vue";
-import { AdditionalItem } from "@/types";
 
-defineProps<{ item: AdditionalItem }>();
+import { IAdditionalItem } from "@/modules/profile/types/IAdditionalItem";
+
+defineProps<{ item: IAdditionalItem }>();
 
 const count = ref(0);
 </script>

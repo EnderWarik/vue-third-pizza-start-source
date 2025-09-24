@@ -23,11 +23,11 @@
 </template>
 <script setup lang="ts">
 import OrderProduct from "./OrderProduct.vue";
-import type { ProductItem } from "@/types";
 import { computed } from "vue";
+import { IProductItem } from "@/modules/profile/types/IProductItem";
 
 const props = defineProps<{
-  product: ProductItem;
+  product: IProductItem;
 }>();
 
 const totalPrice = computed(() => props.product.price * props.product.count);

@@ -36,9 +36,10 @@ import CartProduct from "./CartProduct.vue";
 import CounterComponent from "@/common/components/CounterComponent.vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
 import { ref } from "vue";
-import { ProductItem } from "@/types";
 
-defineProps<{ item: ProductItem }>();
+import { IProductItem } from "@/modules/profile/types/IProductItem";
+
+defineProps<{ item: IProductItem }>();
 
 const count = ref(0);
 

@@ -21,13 +21,14 @@ import SheetComponent from "@/common/components/SheetComponent.vue";
 import OrderHeader from "./OrderHeader.vue";
 import OrderList from "./OrderList.vue";
 import OrderAdditionalList from "./OrderAdditionalList.vue";
-import type { AdditionalItem, ProductItem } from "@/types";
+import { IAdditionalItem } from "@/modules/profile/types/IAdditionalItem";
+import { IProductItem } from "@/modules/profile/types/IProductItem";
 
 defineProps<{
   orderNumber: number | string;
   total: number;
-  products: ProductItem[];
-  additionals?: AdditionalItem[];
+  products: IProductItem[];
+  additionals?: IAdditionalItem[];
   address?: string;
 }>();
 

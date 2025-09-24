@@ -5,10 +5,11 @@
 </template>
 <script setup lang="ts">
 import AdditionalListItem from "./AdditionalListItem.vue";
-import { AdditionalItem } from "@/types";
+
+import { IAdditionalItem } from "@/modules/profile/types/IAdditionalItem";
 
 defineProps<{
-  items: AdditionalItem[];
+  items: IAdditionalItem[];
 }>();
 </script>
 <style module lang="scss">
