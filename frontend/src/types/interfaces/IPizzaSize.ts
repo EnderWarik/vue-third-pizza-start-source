@@ -1,6 +1,6 @@
 export interface IPizzaSize {
-    id: number,
-    name: string,
-    image: string,
-    multiplier: number
+  id: number;
+  name: string;
+  image: string;
+  multiplier: number;
 }

@@ -3,6 +3,7 @@
     :type="type"
     :disabled="disabled"
     :class="[$style.button, $style[variant], arrow && $style.arrow]"
+    v-bind="$attrs"
     @click="emits('click', $event)"
   >
     <slot />
@@ -32,7 +33,6 @@ const emits = defineEmits<{
 @use "@/assets/scss/ds-system/ds-shadows";
 @use "@/assets/scss/ds-system/ds-typography";
 
-/* базовый стиль */
 .button {
   @include ds-typography.b-s18-h21;
   font-family: inherit;

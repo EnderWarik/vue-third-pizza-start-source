@@ -1,34 +1,34 @@
 <template>
   <div :class="[$style.counter, color === 'orange' && $style.orange]">
-    <button-component
+    <ButtonComponent
       type="button"
       :class="[$style.btn, $style.minus]"
       :disabled="modelValue <= 0"
       @click="decrement"
     >
       <span class="visually-hidden">Меньше</span>
-    </button-component>
+    </ButtonComponent>
 
-    <text-input-component
+    <InputComponent
       v-model="modelValue"
+      :class="$style.input"
       type="text"
       name="counter"
-      :class="$style.input"
     />
 
-    <button-component
+    <ButtonComponent
       type="button"
       :class="[$style.btn, $style.plus]"
       @click="increment"
     >
       <span class="visually-hidden">Больше</span>
-    </button-component>
+    </ButtonComponent>
   </div>
 </template>
 
 <script setup lang="ts">
-import TextInputComponent from "@/common/components/NumberInputComponent.vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
+import InputComponent from "@/common/components/InputComponent.vue";
 
 const modelValue = defineModel<number>({ default: 0 });
 

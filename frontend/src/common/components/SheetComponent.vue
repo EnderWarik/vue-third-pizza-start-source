@@ -1,9 +1,9 @@
 <template>
   <section :class="$style.sheet">
     <div v-if="$slots.title || title" :class="$style.title">
-      <title-component :size="titleSize" :tag="titleTag">
+      <TitleComponent :size="titleSize" :tag="titleTag">
         <slot name="title">{{ title }}</slot>
-      </title-component>
+      </TitleComponent>
     </div>
 
     <div :class="[$style.content]">
