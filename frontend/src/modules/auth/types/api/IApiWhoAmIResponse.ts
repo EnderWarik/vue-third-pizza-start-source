@@ -1,4 +1,4 @@
-export interface IWhoAmIResponse {
+export interface IApiWhoAmIResponse {
   id: string;
   name: string;
   email: string;

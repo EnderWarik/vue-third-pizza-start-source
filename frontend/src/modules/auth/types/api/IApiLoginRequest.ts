@@ -1,4 +1,4 @@
-export interface ILoginDto {
+export interface IApiLoginRequest {
   email: string;
   password: string;
 }

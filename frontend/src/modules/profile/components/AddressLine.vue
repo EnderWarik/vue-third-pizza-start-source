@@ -21,8 +21,8 @@ import { ref, toRefs, watch } from "vue";
 import AddressCard from "./AddressCard.vue";
 import AddressForm from "./AddressForm.vue";
 import { IUserAddress } from "@/modules/profile/types/IUserAddress";
-import { AddressDraftType } from "@/modules/profile/types/AddressDraftType";
 import concatAddress from "@/helpers/concatAddress";
+import { AddressDraftType } from "@/modules/profile/types/draft";
 
 const props = defineProps<{
   address: IUserAddress;

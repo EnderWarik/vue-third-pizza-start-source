@@ -3,7 +3,7 @@ import colaIcon from "@/assets/img/cola.svg";
 import sauceIcon from "@/assets/img/sauce.svg";
 import potatoIcon from "@/assets/img/potato.svg";
 import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
-import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
+import { IAdditionalCartItem } from "@/modules/cart/types/IAdditionalCartItem";
 import { computed, ref } from "vue";
 import { mapWithCount } from "@/helpers/mappers";
 import { BaseDeliveryEnum } from "@/modules/cart/types/BaseDeliveryEnum";
@@ -17,7 +17,7 @@ export const useCartStore = defineStore("cartStore", () => {
 
   const cartItems = ref<IPizzaItem[]>([]);
 
-  const extras = ref<IAdditionalPizzaItem[]>(
+  const extras = ref<IAdditionalCartItem[]>(
     mapWithCount([
       {
         id: 1,

@@ -11,10 +11,10 @@
 <script setup lang="ts">
 import AdditionalListItem from "./AdditionalListItem.vue";
 
-import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
+import { IAdditionalCartItem } from "@/modules/cart/types/IAdditionalCartItem";
 
 defineProps<{
-  items: IAdditionalPizzaItem[];
+  items: IAdditionalCartItem[];
 }>();
 </script>
 <style module lang="scss">

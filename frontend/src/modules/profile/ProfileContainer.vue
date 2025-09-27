@@ -40,8 +40,8 @@ import AddressLine from "@/modules/profile/components/AddressLine.vue";
 import UserInfo from "@/modules/profile/components/UserInfo.vue";
 import AddressForm from "@/modules/profile/components/AddressForm.vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
-import { AddressDraftType } from "@/modules/profile/types/AddressDraftType";
 import { IUserAddress } from "@/modules/profile/types/IUserAddress";
+import { AddressDraftType } from "@/modules/profile/types/draft";
 
 const profileStore = useProfileStore();
 
