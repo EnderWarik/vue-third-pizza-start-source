@@ -1,15 +1,22 @@
 <template>
   <div :class="$style.container">
-    <div :class="[$style.pizza, $style[`foundation_${size}_${sauce}`]]">
+    <div
+      :class="[
+        $style.pizza,
+        $style[
+          `foundation_${PizzaDoughEnum[sizeId]}_${PizzaSauceEnum[sauceId]}`
+        ],
+      ]"
+    >
       <div :class="$style.wrapper">
         <div
-          v-for="(value, key) in layers"
-          :key="key"
+          v-for="layer in layers"
+          :key="PizzaIngredientEnum[layer.id]"
           :class="[
             $style.layer,
-            $style[key],
-            value === 2 && $style['second'],
-            value >= 3 && $style['third'],
+            layer.count >= 1 && $style[PizzaIngredientEnum[layer.id]],
+            layer.count === 2 && $style['second'],
+            layer.count >= 3 && $style['third'],
           ]"
         ></div>
       </div>
@@ -18,12 +25,15 @@
 </template>
 
 <script setup lang="ts">
-import { Sauce, Size } from "@/modules/pizza/content/types";
+import { PizzaSauceEnum } from "@/types/enums/PizzaSauceEnum";
+import { PizzaDoughEnum } from "@/types/enums/PizzaDoughEnum";
+import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
+import { PizzaIngredientEnum } from "@/types/enums/PizzaIngredientEnum";
 
-defineProps<{
-  size: Size;
-  sauce: Sauce;
-  layers: Record<string, number>;
+const props = defineProps<{
+  sizeId: number;
+  sauceId: number;
+  layers: IPizzaIngredient[];
 }>();
 </script>
 

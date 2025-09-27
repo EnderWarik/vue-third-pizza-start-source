@@ -24,10 +24,10 @@
 <script setup lang="ts">
 import OrderProduct from "./OrderProduct.vue";
 import { computed } from "vue";
-import { IProductItem } from "@/modules/pizza/types/IProductItem";
+import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
 
 const props = defineProps<{
-  product: IProductItem;
+  product: IPizzaItem;
 }>();
 
 const totalPrice = computed(() => props.product.price * props.product.count);

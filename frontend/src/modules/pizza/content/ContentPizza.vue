@@ -1,36 +1,47 @@
 <template>
   <div :class="$style.pizza">
-    <TextInput name="pizza_name" placeholder="Название пиццы">
+    <TextInput
+      v-model="pizzaName"
+      name="pizza_name"
+      placeholder="Название пиццы"
+    >
       <span class="visually-hidden">Название пиццы</span>
     </TextInput>
 
     <DropComponent @drop="emits('drop', $event)">
       <PizzaConstructor
-        :size="selectedSize"
+        :size-id="selectedSizeId"
         :layers="fillings"
-        :sauce="selectedSauce"
+        :sauce-id="selectedSauceId"
       />
     </DropComponent>
 
-    <ContentResult :total="totalPrice" button-text="Готовьте!" />
+    <ContentResult
+      :total="totalPrice"
+      button-text="Готовьте!"
+      @submit="emits('submit')"
+    />
   </div>
 </template>
 <script setup lang="ts">
 import TextInput from "@/common/components/TextInput.vue";
 import ContentResult from "@/modules/pizza/content/ContentResult.vue";
 import PizzaConstructor from "@/modules/pizza/content/PizzaConstructor.vue";
-import { Sauce, Size } from "@/modules/pizza/content/types";
 import DropComponent from "@/common/components/DropComponent.vue";
+import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
+
+const pizzaName = defineModel<string>("pizzaName");
 
 defineProps<{
-  selectedSauce: Sauce;
-  selectedSize: Size;
-  fillings: Record<string, number>;
+  selectedSauceId: number;
+  selectedSizeId: number;
+  fillings: IPizzaIngredient[];
   totalPrice: number;
 }>();
 
 const emits = defineEmits<{
   drop: [value: string];
+  submit: [];
 }>();
 </script>
 <style module lang="scss">

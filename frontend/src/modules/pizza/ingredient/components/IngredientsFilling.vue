@@ -6,38 +6,22 @@
       <IngredientItem
         v-for="ingredient of ingredients"
         :key="ingredient.id"
-        v-model="modelValue[PizzaIngredientEnum[ingredient.id]]"
+        v-model="ingredient.count"
         :class="$style.item"
         :modifier="PizzaIngredientEnum[ingredient.id]"
         :ingredient="ingredient"
-        @update:model-value="
-          updateFilling(PizzaIngredientEnum[ingredient.id], $event)
-        "
       />
     </ul>
   </div>
 </template>
 <script setup lang="ts">
-import IngredientItem from "./IngredientItem.vue";
 import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
 import { PizzaIngredientEnum } from "@/types/enums/PizzaIngredientEnum";
+import IngredientItem from "@/modules/pizza/ingredient/components/IngredientItem.vue";
 
-defineProps<{ ingredients: IPizzaIngredient[] }>();
-const modelValue = defineModel<Record<string, number>>({ default: {} });
-
-const emits = defineEmits<{
-  "update:model-value": [value: Record<string, number>];
-}>();
-function updateFilling(name: string, event: number) {
-  const next = { ...modelValue.value };
-
-  if (event > 0) {
-    next[name] = event;
-  } else {
-    delete next[name];
-  }
-  emits("update:model-value", next);
-}
+const ingredients = defineModel<IPizzaIngredient[]>("ingredients", {
+  default: [],
+});
 </script>
 <style module lang="scss">
 @use "@/assets/scss/ds-system/ds-typography";

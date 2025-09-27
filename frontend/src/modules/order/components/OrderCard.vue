@@ -21,15 +21,15 @@ import SheetComponent from "@/common/components/SheetComponent.vue";
 import OrderHeader from "./OrderHeader.vue";
 import OrderList from "./OrderList.vue";
 import OrderAdditionalList from "./OrderAdditionalList.vue";
-import { IAdditionalItem } from "@/modules/pizza/types/IAdditionalItem";
-import { IProductItem } from "@/modules/pizza/types/IProductItem";
+import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
+import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
 
 defineProps<{
   orderNumber: number | string;
   total: number;
-  products: IProductItem[];
-  additionals?: IAdditionalItem[];
-  address?: string;
+  products: IPizzaItem[];
+  additionals?: IAdditionalPizzaItem[];
+  address?: string | null;
 }>();
 
 defineEmits<{

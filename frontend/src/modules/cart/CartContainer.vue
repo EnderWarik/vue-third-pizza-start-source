@@ -2,76 +2,32 @@
   <div class="container">
     <TitleComponent :class="$style.title" tag="h1"> Корзина </TitleComponent>
 
-    <CartList :items="cartItems" />
-    <!-- <div class="sheet cart__empty">
-          <p>В корзине нет ни одного товара</p>
-        </div> -->
-    <AdditionalList :class="$style.additional" :items="extras" />
+    <CartList :items="cartStore.cartItems" />
 
-    <CartForm />
+    <AdditionalList :class="$style.additional" :items="cartStore.extras" />
+
+    <CartForm
+      v-model:delivery="cartStore.currentDelivery"
+      v-model:street="profileStore.addressForm.street"
+      v-model:house="profileStore.addressForm.building"
+      v-model:apartment="profileStore.addressForm.flat"
+      v-model:phone="cartStore.userPhone"
+      :addresses="profileStore.addresses"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import TitleComponent from "@/common/components/TitleComponent.vue";
-import pizzaIcon from "@/assets/img/product.svg";
-import colaIcon from "@/assets/img/cola.svg";
-import sauceIcon from "@/assets/img/sauce.svg";
-import potatoIcon from "@/assets/img/potato.svg";
 import CartForm from "@/modules/cart/components/CartForm.vue";
 import CartList from "@/modules/cart/components/CartList.vue";
 import AdditionalList from "@/modules/cart/components/AdditionalList.vue";
+import { useCartStore } from "@/modules/cart/cartStore";
+import { useProfileStore } from "@/modules/profile/profileStore";
 
-const cartItems = [
-  {
-    id: "1",
-    title: "Капричоза",
-    img: pizzaIcon,
-    size: "30 см",
-    dough: "тонком",
-    sauce: "томатный",
-    fillings: ["грибы", "лук", "ветчина", "пармезан", "ананас"],
-    count: 1,
-    price: 782,
-  },
-  {
-    id: "2",
-    title: "Любимая пицца",
-    img: pizzaIcon,
-    size: "30 см",
-    dough: "тонком",
-    sauce: "томатный",
-    fillings: [
-      "грибы",
-      "лук",
-      "ветчина",
-      "пармезан",
-      "ананас",
-      "бекон",
-      "блю чиз",
-    ],
-    count: 2,
-    price: 782,
-  },
-];
+const cartStore = useCartStore();
 
-const extras = [
-  {
-    id: "cola",
-    img: colaIcon,
-    title: "Coca-Cola 0,5 литра",
-    price: 56,
-    count: 2,
-  },
-  { id: "sauce", img: sauceIcon, title: "Острый соус", price: 30, count: 2 },
-  {
-    id: "potato",
-    img: potatoIcon,
-    title: "Картошка из печи",
-    price: 56,
-    count: 2,
-  },
-];
+const profileStore = useProfileStore();
 </script>
 
 <style module lang="scss">

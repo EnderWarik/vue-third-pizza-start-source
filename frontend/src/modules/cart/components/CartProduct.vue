@@ -2,7 +2,7 @@
   <div :class="$style.product">
     <img
       :src="img"
-      :alt="alt || name"
+      :alt="name"
       :width="imgWidth"
       :height="imgHeight"
       :class="$style.img"
@@ -10,18 +10,44 @@
     <div :class="$style.text">
       <h2 :class="$style.title">{{ name }}</h2>
       <ul :class="$style.meta">
-        <li>{{ size }}, на {{ dough }} тесте</li>
-        <li>Соус: {{ sauce }}</li>
-        <li v-if="fillings?.length">Начинка: {{ fillings.join(", ") }}</li>
+        <li>
+          {{ toInstrumental(size?.name) }}, на
+          {{ toInstrumental(dough?.name) }} тесте
+        </li>
+        <li>Соус: {{ sauce?.name }}</li>
+        <li v-if="fillings?.length">
+          Начинка: {{ fillings.map((fl) => fl.name).join(", ") }}
+        </li>
       </ul>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { IProductItem } from "@/modules/pizza/types/IProductItem";
+import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
+import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
+import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
+import { IPizzaSize } from "@/modules/pizza/types/IPizzaSize";
 
-defineProps<Omit<IProductItem, "id" | "price">>();
+function toInstrumental(form: string | undefined): string {
+  if (!form) return "";
+  if (form.endsWith("ое")) {
+    return form.toLowerCase().slice(0, -2) + "ом";
+  }
+  return form;
+}
+
+defineProps<{
+  img: string;
+  imgWidth: number;
+  imgHeight: number;
+  name: string;
+  size: IPizzaSize | null;
+  dough: IPizzaDough | null;
+  sauce: IPizzaSauce | null;
+  count: number;
+  fillings: IPizzaIngredient[];
+}>();
 </script>
 
 <style module lang="scss">

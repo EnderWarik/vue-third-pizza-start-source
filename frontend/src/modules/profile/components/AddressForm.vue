@@ -1,103 +1,82 @@
 <template>
-  <div :class="$style.wrapper">
-    <SheetComponent tag="form" :class="$style.form" @submit="onSubmit">
-      <div :class="$style.header">
-        <b>{{ title ?? "Адрес" }}</b>
-      </div>
+  <form :class="$style.form" @submit.prevent="emits('submit')">
+    <div :class="$style.header">
+      <b>{{ title ?? "Адрес" }}</b>
+    </div>
 
-      <div :class="$style.body">
-        <div :class="$style.input">
-          <TextInput
-            v-model="model.name"
-            name="addr-name"
-            placeholder="Введите название адреса"
-            required
-          >
-            <span>Название адреса*</span>
-          </TextInput>
-        </div>
+    <div :class="$style.body">
+      <TextInput
+        v-model="model.name"
+        name="addr-name"
+        placeholder="Название"
+        required
+      >
+        <span>Название адреса*</span>
+      </TextInput>
 
-        <div :class="[$style.input, $style.normal]">
-          <TextInput
-            v-model="model.street"
-            name="addr-street"
-            placeholder="Введите название улицы"
-            required
-          >
-            <span>Улица*</span>
-          </TextInput>
-        </div>
-
-        <div :class="[$style.input, $style.small]">
-          <TextInput
-            v-model="model.house"
-            name="addr-house"
-            placeholder="Введите номер дома"
-            required
-          >
-            <span>Дом*</span>
-          </TextInput>
-        </div>
-
-        <div :class="[$style.input, $style.small]">
-          <TextInput
-            v-model="model.apartment"
-            name="addr-apartment"
-            placeholder="Введите № квартиры"
-          >
-            <span>Квартира</span>
-          </TextInput>
-        </div>
-
-        <div :class="$style.input">
-          <TextInput
-            v-model="model.comment"
-            name="addr-comment"
-            placeholder="Введите комментарий"
-          >
-            <span>Комментарий</span>
-          </TextInput>
-        </div>
-      </div>
-
-      <div :class="$style.actions">
-        <ButtonComponent
-          type="button"
-          variant="transparent"
-          @click="$emit('remove')"
+      <div :class="$style.row">
+        <TextInput
+          v-model="model.street"
+          name="addr-street"
+          placeholder="Улица"
+          required
         >
-          Удалить
-        </ButtonComponent>
-        <ButtonComponent type="submit" class="button">
-          Сохранить
-        </ButtonComponent>
+          <span>Улица*</span>
+        </TextInput>
       </div>
-    </SheetComponent>
-  </div>
+
+      <div :class="$style.row">
+        <TextInput
+          v-model="model.building"
+          name="addr-building"
+          placeholder="Дом"
+          required
+        >
+          <span>Дом*</span>
+        </TextInput>
+
+        <TextInput
+          v-model="model.flat"
+          name="addr-flat"
+          placeholder="Кв. (необязательно)"
+        >
+          <span>Квартира</span>
+        </TextInput>
+      </div>
+    </div>
+
+    <div :class="$style.actions">
+      <ButtonComponent type="submit">Сохранить</ButtonComponent>
+      <ButtonComponent type="button" variant="border" @click="emits('cancel')"
+        >Отмена</ButtonComponent
+      >
+      <ButtonComponent v-if="!isNew" type="button" @click="emits('remove')">
+        Удалить
+      </ButtonComponent>
+    </div>
+  </form>
 </template>
+
 <script setup lang="ts">
+import { defineModel } from "vue";
+import { AddressDraftType } from "@/modules/profile/types/AddressDraftType";
 import TextInput from "@/common/components/TextInput.vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
-import SheetComponent from "@/common/components/SheetComponent.vue";
 
-const model = defineModel<{
-  name: string;
-  street: string;
-  house: string;
-  apartment: string;
-  comment: string;
-}>({
-  default: { name: "", street: "", house: "", apartment: "", comment: "" },
-});
+const { title = "Адрес", isNew = false } = defineProps<{
+  title?: string;
+  isNew?: boolean;
+}>();
 
-defineProps<{ title?: string }>();
-const emits = defineEmits<{ submit: [typeof model.value]; remove: [] }>();
+const emits = defineEmits<{
+  (e: "submit"): void;
+  (e: "cancel"): void;
+  (e: "remove"): void;
+}>();
 
-function onSubmit(e: Event) {
-  e.preventDefault();
-  emits("submit", model.value);
-}
+const model = defineModel<AddressDraftType>({ required: true });
 </script>
+
 <style module lang="scss">
 @use "@/assets/scss/ds-system/ds-typography";
 @use "@/assets/scss/ds-system/ds-colors";

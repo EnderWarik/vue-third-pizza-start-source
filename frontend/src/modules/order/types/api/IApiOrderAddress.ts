@@ -1,4 +1,4 @@
-export interface IOrderAddress {
+export interface IApiOrderAddress {
   id: number;
   name: string;
   street: string;
