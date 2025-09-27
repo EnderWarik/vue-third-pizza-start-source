@@ -15,14 +15,13 @@
 </template>
 <script setup lang="ts">
 import CounterComponent from "@/common/components/CounterComponent.vue";
-import { ref } from "vue";
 import SheetComponent from "@/common/components/SheetComponent.vue";
 
-import { IAdditionalItem } from "@/modules/pizza/types/IAdditionalItem";
+import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
 
-defineProps<{ item: IAdditionalItem }>();
+const count = defineModel<number>("count");
 
-const count = ref(0);
+defineProps<{ item: IAdditionalPizzaItem }>();
 </script>
 
 <style module lang="scss">

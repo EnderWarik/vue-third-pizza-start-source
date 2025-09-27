@@ -21,9 +21,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { IProductItem } from "@/modules/pizza/types/IProductItem";
+import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
 
-defineProps<Omit<IProductItem, "id" | "price">>();
+defineProps<Omit<IPizzaItem, "id" | "price">>();
 </script>
 <style module lang="scss">
 @use "@/assets/scss/ds-system/ds-typography";

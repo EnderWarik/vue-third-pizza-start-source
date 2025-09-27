@@ -1,55 +1,27 @@
 <template>
-  <OrderCard
-    :order-number="11199929"
-    :total="1564"
-    :products="products"
-    :additionals="additionals"
-    address="Адрес доставки: Тест (или если адрес новый - писать целиком)"
-  />
-  <OrderCard
-    :order-number="11199930"
-    :total="1564"
-    :products="products"
-    :additionals="additionals"
-    address="Адрес доставки: Тест (или если адрес новый - писать целиком)"
-  />
+  <main>
+    <template v-for="order in orderStore.orders" :key="order.id">
+      <OrderCard
+        :order-number="order.id"
+        :total="order.total"
+        :products="order.pizzas"
+        :additionals="order.extras"
+        :address="getCorrectAddress(order)"
+      />
+    </template>
+  </main>
 </template>
 <script setup lang="ts">
 import OrderCard from "@/modules/order/components/OrderCard.vue";
-import PizzaIcon from "@/assets/img/product.svg";
-import ColaIcon from "@/assets/img/cola.svg";
-import SauceIcon from "@/assets/img/sauce.svg";
-import PotatoIcon from "@/assets/img/potato.svg";
+import { useOrderStore } from "@/modules/order/orderStore";
+import concatAddress from "@/helpers/concatAddress";
+import { IOrder } from "@/modules/order/types/IOrder";
 
-const products = [
-  {
-    id: "1",
-    title: "Капричоза",
-    img: PizzaIcon,
-    size: "30 см",
-    dough: "тонком",
-    sauce: "томатный",
-    fillings: ["грибы", "лук", "ветчина", "пармезан", "ананас"],
-    count: 1,
-    price: 782,
-  },
-  {
-    id: "2",
-    title: "Моя любимая",
-    img: PizzaIcon,
-    size: "30 см",
-    dough: "тонком",
-    sauce: "томатный",
-    fillings: ["грибы", "лук", "ветчина", "пармезан", "ананас"],
-    count: 2,
-    price: 782,
-  },
-];
-const additionals = [
-  { id: "cola", img: ColaIcon, title: "Coca-Cola 0,5 литра", price: 56 },
-  { id: "sauce", img: SauceIcon, title: "Острый соус", price: 30 },
-  { id: "potato", img: PotatoIcon, title: "Картошка из печи", price: 170 },
-];
+function getCorrectAddress(order: IOrder) {
+  if (order.address) return concatAddress(order.address);
+  return null;
+}
+const orderStore = useOrderStore();
 </script>
 <style scoped lang="scss">
 @use "@/assets/scss/ds-system/ds-colors";

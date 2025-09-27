@@ -4,7 +4,7 @@
       <div class="sheet__content ingredients">
         <IngredientsSauce v-model="pizzaSauce" :sauces="sauces" />
 
-        <IngredientsFilling v-model="fillings" :ingredients="ingredients" />
+        <IngredientsFilling v-model:ingredients="ingredients" />
       </div>
     </SheetComponent>
   </div>
@@ -14,19 +14,18 @@
 import SheetComponent from "@/common/components/SheetComponent.vue";
 import IngredientsFilling from "@/modules/pizza/ingredient/components/IngredientsFilling.vue";
 import IngredientsSauce from "@/modules/pizza/ingredient/components/IngredientsSauce.vue";
-import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
 
 import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
+import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
 
 defineProps<{
   sauces: IPizzaSauce[];
-  ingredients: IPizzaIngredient[];
 }>();
 
 const pizzaSauce = defineModel<string | number | null>("sauce", {
   default: null,
 });
-const fillings = defineModel<Record<string, number>>("fillings", {
+const ingredients = defineModel<IPizzaIngredient[]>("ingredients", {
   default: {},
 });
 </script>

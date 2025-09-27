@@ -1,4 +1,4 @@
-export interface IOrderMisc {
+export interface IApiOrderMisc {
   id: number;
   orderId: number;
   miscId: number;

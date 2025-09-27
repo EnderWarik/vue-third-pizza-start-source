@@ -6,10 +6,10 @@
 <script setup lang="ts">
 import OrderListItem from "./OrderListItem.vue";
 
-import { IProductItem } from "@/modules/pizza/types/IProductItem";
+import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
 
 defineProps<{
-  items: IProductItem[];
+  items: IPizzaItem[];
 }>();
 </script>
 

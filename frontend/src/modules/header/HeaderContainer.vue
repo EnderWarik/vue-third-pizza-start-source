@@ -1,17 +1,19 @@
-<script setup lang="ts">
-import HeaderLogo from "@/modules/header/components/HeaderLogo.vue";
-import HeaderUser from "@/modules/header/components/HeaderUser.vue";
-import HeaderCart from "@/modules/header/components/HeaderCart.vue";
-</script>
-
 <template>
   <header :class="$style.header">
     <HeaderLogo />
-    <HeaderCart :total-price="0" />
+    <HeaderCart :total-price="cartStore.totalPrice" />
     <HeaderUser />
   </header>
   <slot />
 </template>
+<script setup lang="ts">
+import HeaderLogo from "@/modules/header/components/HeaderLogo.vue";
+import HeaderUser from "@/modules/header/components/HeaderUser.vue";
+import HeaderCart from "@/modules/header/components/HeaderCart.vue";
+import { useCartStore } from "@/modules/cart/cartStore";
+
+const cartStore = useCartStore();
+</script>
 
 <style module lang="scss">
 @use "@/assets/scss/ds-system/ds-colors";

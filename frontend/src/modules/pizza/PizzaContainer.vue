@@ -3,23 +3,27 @@
     <div :class="$style.wrapper">
       <TitleComponent size="big" tag="h1">Конструктор пиццы</TitleComponent>
       <DoughSelector
-        v-model="selectedPizzaDoughId"
-        :pizza-doughs="pizzaDoughs"
+        v-model="pizzaStore.selectedPizzaDoughId"
+        :pizza-doughs="pizzaStore.pizzaDoughs"
       />
-      <SizeSelector v-model="selectedPizzaSizeId" :pizza-sizes="pizzaSizes" />
+      <SizeSelector
+        v-model="pizzaStore.selectedPizzaSizeId"
+        :pizza-sizes="pizzaStore.pizzaSizes"
+      />
       <IngredientsSelector
-        v-model:sauce="selectedPizzaSauceId"
-        v-model:fillings="selectedFillings"
-        :sauces="sauces"
-        :ingredients="ingredients"
+        v-model:sauce="pizzaStore.selectedPizzaSauceId"
+        v-model:ingredients="pizzaStore.ingredients"
+        :sauces="pizzaStore.sauces"
       />
 
       <ContentPizza
-        :fillings="selectedFillings"
-        :selected-sauce="PizzaSauceEnum[selectedPizzaSauceId] as Sauce"
-        :selected-size="PizzaDoughEnum[selectedPizzaDoughId] as Size"
-        :total-price="finalPrice"
-        @drop="updateFillings"
+        v-model:pizza-name="pizzaStore.pizzaName"
+        :fillings="pizzaStore.pizzaFillings"
+        :selected-sauce-id="pizzaStore.selectedPizzaSauceId"
+        :selected-size-id="pizzaStore.selectedPizzaDoughId"
+        :total-price="pizzaStore.finalPrice"
+        @drop="pizzaStore.updateFillings"
+        @submit="pizzaStore.addToCart"
       ></ContentPizza>
     </div>
   </form>
@@ -28,77 +32,12 @@
 <script setup lang="ts">
 import TitleComponent from "@/common/components/TitleComponent.vue";
 import DoughSelector from "@/modules/pizza/dough/DoughSelector.vue";
-import { computed, ref } from "vue";
 import SizeSelector from "@/modules/pizza/size/SizeSelector.vue";
 import IngredientsSelector from "@/modules/pizza/ingredient/IngredientsSelector.vue";
+import { usePizzaStore } from "@/modules/pizza/pizzaStore";
 import ContentPizza from "@/modules/pizza/content/ContentPizza.vue";
-import { Sauce, Size } from "@/modules/pizza/content/types";
-import { PizzaSauceEnum } from "@/types/enums/PizzaSauceEnum";
-import { PizzaDoughEnum } from "@/types/enums/PizzaDoughEnum";
-import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
-import doughJson from "@/mocks/dough.json";
-import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
-import saucesJson from "@/mocks/sauces.json";
-import sizesJson from "@/mocks/sizes.json";
-import { IPizzaSize } from "@/modules/pizza/types/IPizzaSize";
-import ingredientsJson from "@/mocks/ingredients.json";
-import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
-import { PizzaIngredientEnum } from "@/types/enums/PizzaIngredientEnum";
 
-const selectedPizzaDoughId = ref<number>(1);
-const selectedPizzaSizeId = ref<number>(2);
-const selectedPizzaSauceId = ref<number>(1);
-const selectedFillings = ref<Record<string, number>>({});
-
-function updateFillings(name: string) {
-  const value = selectedFillings.value[name];
-  if (value) selectedFillings.value[name] = value + 1;
-  else selectedFillings.value[name] = 1;
-}
-
-const pizzaDoughs = ref<IPizzaDough[]>(doughJson);
-const pizzaSizes = ref<IPizzaSize[]>(sizesJson);
-const sauces = ref<IPizzaSauce[]>(saucesJson);
-const ingredients = ref<IPizzaIngredient[]>(ingredientsJson);
-
-const doughPrice = computed(() => {
-  return (
-    pizzaDoughs.value.find((item) => item.id === selectedPizzaDoughId.value)
-      ?.price || 0
-  );
-});
-
-const sizePrice = computed(() => {
-  return (
-    pizzaSizes.value.find((item) => item.id === selectedPizzaSizeId.value)
-      ?.multiplier || 0
-  );
-});
-
-const saucePrice = computed(() => {
-  return (
-    sauces.value.find((item) => item.id === selectedPizzaSauceId.value)
-      ?.price || 0
-  );
-});
-
-const ingredientsPrice = computed(() => {
-  let result = 0;
-  for (const filling in selectedFillings.value) {
-    const count = selectedFillings.value[filling];
-    const id = PizzaIngredientEnum[filling as keyof typeof PizzaIngredientEnum];
-    const price = ingredients.value.find((item) => item.id === id)?.price || 0;
-    result += price * count;
-  }
-  return result;
-});
-
-const finalPrice = computed(() => {
-  return (
-    (doughPrice.value + saucePrice.value + ingredientsPrice.value) *
-    sizePrice.value
-  );
-});
+const pizzaStore = usePizzaStore();
 </script>
 
 <style module lang="scss">

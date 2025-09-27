@@ -1,6 +1,6 @@
 <template>
   <li :class="$style.item">
-    <DragComponent :transfer-data="modifier">
+    <DragComponent :transfer-data="ingredient">
       <span :class="[$style.filling, $style[modifier]]">
         {{ ingredient.name }}
       </span>
