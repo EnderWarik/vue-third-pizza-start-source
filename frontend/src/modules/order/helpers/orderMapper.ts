@@ -1,5 +1,5 @@
 import { IPizzaSize } from "@/modules/pizza/types/IPizzaSize";
-import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
+import { IPizzaDough } from "@/modules/pizza/types/IPizzaDough";
 import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
 import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
 import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
