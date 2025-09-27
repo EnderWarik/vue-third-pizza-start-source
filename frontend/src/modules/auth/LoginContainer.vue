@@ -41,8 +41,8 @@ import TextInput from "@/common/components/TextInput.vue";
 import { ref } from "vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
 import CloseButton from "@/common/components/CloseButton.vue";
-import FormLine from "@/modules/login/components/FormLine.vue";
-import { useAuthStore } from "@/modules/login/authStore";
+import FormLine from "@/modules/auth/components/FormLine.vue";
+import { useAuthStore } from "@/modules/auth/authStore";
 import { useRouter } from "vue-router";
 
 const authStore = useAuthStore();

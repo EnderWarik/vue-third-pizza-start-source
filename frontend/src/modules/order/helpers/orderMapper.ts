@@ -1,8 +1,8 @@
 import { IPizzaSize } from "@/modules/pizza/types/IPizzaSize";
-import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
+import { IPizzaDough } from "@/modules/pizza/types/IPizzaDough";
 import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
 import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
-import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
+import { IAdditionalCartItem } from "@/modules/cart/types/IAdditionalCartItem";
 import { IApiOrderAddress } from "@/modules/order/types/api/IApiOrderAddress";
 import { IUserAddress } from "@/modules/profile/types/IUserAddress";
 import { IApiOrderPizzaIngredient } from "@/modules/order/types/api/IApiOrderPizzaIngredient";
@@ -17,7 +17,7 @@ export type Catalogs = {
   doughs: IPizzaDough[];
   sauces: IPizzaSauce[];
   ingredients: IPizzaIngredient[];
-  extras: IAdditionalPizzaItem[];
+  extras: IAdditionalCartItem[];
 };
 
 export type MapOptions = {
@@ -109,8 +109,8 @@ function mapPizza(
 }
 function mapExtras(
   apiMisc: IApiOrderMisc[],
-  extraById: Record<number, IAdditionalPizzaItem>,
-): IAdditionalPizzaItem[] {
+  extraById: Record<number, IAdditionalCartItem>,
+): IAdditionalCartItem[] {
   return apiMisc.map((m) => {
     const base = extraById[m.miscId];
     if (base) return { ...base, count: m.quantity };
@@ -126,7 +126,7 @@ function mapExtras(
 
 function calcOrderTotal(
   pizzas: IPizzaItem[],
-  extras: IAdditionalPizzaItem[],
+  extras: IAdditionalCartItem[],
 ): number {
   const pizzasSum = pizzas.reduce((s, p) => s + p.price * p.count, 0);
   const extrasSum = extras.reduce((s, e) => s + e.price * e.count, 0);

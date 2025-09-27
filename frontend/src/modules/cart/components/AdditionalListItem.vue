@@ -17,11 +17,11 @@
 import CounterComponent from "@/common/components/CounterComponent.vue";
 import SheetComponent from "@/common/components/SheetComponent.vue";
 
-import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
+import { IAdditionalCartItem } from "@/modules/cart/types/IAdditionalCartItem";
 
 const count = defineModel<number>("count");
 
-defineProps<{ item: IAdditionalPizzaItem }>();
+defineProps<{ item: IAdditionalCartItem }>();
 </script>
 
 <style module lang="scss">

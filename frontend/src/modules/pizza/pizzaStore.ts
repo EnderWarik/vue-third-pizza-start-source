@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
 import { IPizzaSize } from "@/modules/pizza/types/IPizzaSize";
-import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
+import { IPizzaDough } from "@/modules/pizza/types/IPizzaDough";
 import { v4 as uuidv4 } from "uuid";
 import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
 import { mapWithCount } from "@/helpers/mappers";

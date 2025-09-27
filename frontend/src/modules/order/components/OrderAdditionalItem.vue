@@ -14,9 +14,9 @@
   </li>
 </template>
 <script setup lang="ts">
-import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
+import { IAdditionalCartItem } from "@/modules/cart/types/IAdditionalCartItem";
 
-type Props = Omit<IAdditionalPizzaItem, "id">;
+type Props = Omit<IAdditionalCartItem, "id">;
 defineProps<Props>();
 </script>
 <style module lang="scss">

@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { IUserAddress } from "@/modules/profile/types/IUserAddress";
-import { AddressDraftType } from "@/modules/profile/types/AddressDraftType";
 import { makeAvatar } from "@/modules/profile/helpers/imgHelpers";
+import { AddressDraftType } from "@/modules/profile/types/draft";
 
 export const useProfileStore = defineStore("profileStore", () => {
   const addresses = ref<IUserAddress[]>([
