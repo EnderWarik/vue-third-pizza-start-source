@@ -1,14 +1,20 @@
 <template>
   <ul :class="$style.list">
-    <AdditionalListItem v-for="item in items" :key="item.id" :item="item" />
+    <AdditionalListItem
+      v-for="item in items"
+      :key="item.id"
+      v-model:count="item.count"
+      :item="item"
+    />
   </ul>
 </template>
 <script setup lang="ts">
 import AdditionalListItem from "./AdditionalListItem.vue";
-import { AdditionalItem } from "@/types";
+
+import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
 
 defineProps<{
-  items: AdditionalItem[];
+  items: IAdditionalPizzaItem[];
 }>();
 </script>
 <style module lang="scss">

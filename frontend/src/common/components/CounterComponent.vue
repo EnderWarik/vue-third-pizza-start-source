@@ -12,6 +12,7 @@
     <InputComponent
       v-model="modelValue"
       :class="$style.input"
+      :disabled="true"
       type="text"
       name="counter"
     />

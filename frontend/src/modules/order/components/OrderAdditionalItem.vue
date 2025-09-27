@@ -1,22 +1,22 @@
 <template>
   <li :class="$style.item">
     <img
-      :src="img"
+      :src="image"
       :width="imgWidth ?? 20"
       :height="imgHeight ?? 30"
-      :alt="alt || title"
+      :alt="alt || name"
       :class="$style.img"
     />
     <p :class="$style.text">
-      <span :class="$style.title">{{ title }}</span>
+      <span :class="$style.title">{{ name }}</span>
       <b :class="$style.price">{{ price }} ₽</b>
     </p>
   </li>
 </template>
 <script setup lang="ts">
-import { AdditionalItem } from "@/types";
+import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
 
-type Props = Omit<AdditionalItem, "id">;
+type Props = Omit<IAdditionalPizzaItem, "id">;
 defineProps<Props>();
 </script>
 <style module lang="scss">

@@ -1,55 +1,91 @@
-<script setup lang="ts">
-import UserInfo from "@/modules/profile/components/UserInfo.vue";
-import AddressCard from "@/modules/profile/components/AddressCard.vue";
-import AddressForm from "@/modules/profile/components/AddressForm.vue";
-import ButtonComponent from "@/common/components/ButtonComponent.vue";
-import { makeAvatar } from "@/modules/profile/helpers/img-helpers";
-
-const user = {
-  name: "Василий Ложкин",
-  phone: "+7 999-999-99-99",
-  avatar: makeAvatar("user5"),
-};
-
-const formModel = {
-  name: "",
-  street: "",
-  house: "",
-  apartment: "",
-  comment: "",
-};
-
-function saveAddress(payload: typeof formModel) {
-  console.log(payload);
-}
-function removeAddress() {
-  console.log("remove");
-}
-function editAddress() {
-  console.log("edit");
-}
-</script>
-
 <template>
-  <UserInfo :name="user.name" :phone="user.phone" :avatar="user.avatar" />
-
-  <AddressCard
-    title="Адрес №1. Тест"
-    address="Невский пр., д. 22, кв. 46"
-    note="Позвоните, пожалуйста, от проходной"
-    @edit="editAddress"
+  <UserInfo
+    :name="profileStore.user.name"
+    :phone="profileStore.user.phone"
+    :avatar="profileStore.user.avatar"
   />
+
+  <template v-for="address in profileStore.addresses" :key="address.id">
+    <AddressLine
+      :address="address"
+      :is-open="openId === address.id"
+      form-title="Изменить адрес"
+      @edit="openEdit"
+      @save="saveAddress"
+      @remove="removeAddress"
+      @cancel="closeEditor"
+    />
+  </template>
 
   <AddressForm
-    v-model="formModel"
-    title="Адрес №1"
-    @submit="saveAddress"
-    @remove="removeAddress"
+    v-if="openId === -1"
+    v-model="newDraft"
+    :is-new="true"
+    title="Новый адрес"
+    @submit="saveAddress({ id: null, form: newDraft })"
+    @cancel="closeEditor"
   />
 
-  <div style="margin-top: 16px">
-    <ButtonComponent type="button" variant="border">
-      Добавить новый адрес
-    </ButtonComponent>
+  <div>
+    <ButtonComponent type="button" variant="border" @click="openNew"
+      >Добавить новый адрес</ButtonComponent
+    >
   </div>
 </template>
+
+<script setup lang="ts">
+import { ref } from "vue";
+import { useProfileStore } from "@/modules/profile/profileStore";
+import AddressLine from "@/modules/profile/components/AddressLine.vue";
+import UserInfo from "@/modules/profile/components/UserInfo.vue";
+import AddressForm from "@/modules/profile/components/AddressForm.vue";
+import ButtonComponent from "@/common/components/ButtonComponent.vue";
+import { AddressDraftType } from "@/modules/profile/types/AddressDraftType";
+import { IUserAddress } from "@/modules/profile/types/IUserAddress";
+
+const profileStore = useProfileStore();
+
+const openId = ref<number | null>(null);
+
+const newDraft = ref<AddressDraftType>(profileStore.addressForm);
+
+function openEdit(id: number) {
+  openId.value = id;
+}
+
+function openNew() {
+  profileStore.clearAddressForm();
+  newDraft.value = profileStore.addressForm;
+  openId.value = -1;
+}
+
+function closeEditor() {
+  openId.value = null;
+  profileStore.clearAddressForm();
+  newDraft.value = profileStore.addressForm;
+}
+
+function saveAddress(payload: { id: number | null; form: AddressDraftType }) {
+  const { id, form } = payload;
+
+  if (id == null) {
+    const nextId = getNextId(profileStore.addresses);
+    const created: IUserAddress = { ...form, id: nextId } as IUserAddress;
+    profileStore.addresses = [...profileStore.addresses, created];
+  } else {
+    profileStore.addresses = profileStore.addresses.map((a) =>
+      a.id === id ? ({ ...a, ...form, id } satisfies IUserAddress) : a,
+    );
+  }
+  closeEditor();
+}
+
+function removeAddress(id: number) {
+  profileStore.addresses = profileStore.addresses.filter((a) => a.id !== id);
+  closeEditor();
+}
+
+function getNextId(items: IUserAddress[]): number {
+  return (items.reduce((m, x) => Math.max(m, x.id), 0) || 0) + 1;
+}
+</script>

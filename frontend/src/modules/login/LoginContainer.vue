@@ -28,7 +28,9 @@
           <span>Пароль</span>
         </TextInput>
       </FormLine>
-      <ButtonComponent type="submit"> Авторизоваться </ButtonComponent>
+      <ButtonComponent type="submit" @click="onLogin">
+        Авторизоваться
+      </ButtonComponent>
     </form>
   </div>
 </template>
@@ -40,7 +42,16 @@ import { ref } from "vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
 import CloseButton from "@/common/components/CloseButton.vue";
 import FormLine from "@/modules/login/components/FormLine.vue";
+import { useAuthStore } from "@/modules/login/authStore";
+import { useRouter } from "vue-router";
 
+const authStore = useAuthStore();
+const router = useRouter();
+function onLogin() {
+  if (authStore.login(email.value, password.value)) {
+    router.push("/");
+  }
+}
 const email = ref("");
 const password = ref("");
 </script>

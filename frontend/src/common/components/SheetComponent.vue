@@ -6,9 +6,10 @@
       </TitleComponent>
     </div>
 
-    <div :class="[$style.content]">
+    <div v-if="$slots.default" :class="[$style.content]">
       <slot />
     </div>
+    <slot name="no-content" />
   </section>
 </template>
 

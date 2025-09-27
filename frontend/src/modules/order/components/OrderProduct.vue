@@ -2,13 +2,13 @@
   <div :class="$style.product">
     <img
       :src="img"
-      :alt="alt || title"
+      :alt="alt || name"
       :width="imgWidth ?? 56"
       :height="imgHeight ?? 56"
       :class="$style.img"
     />
     <div :class="$style.text">
-      <h2 :class="$style.title">{{ title }}</h2>
+      <h2 :class="$style.title">{{ name }}</h2>
 
       <p :class="$style.metaParagraph">
         {{ size }}, на {{ dough }} тесте<br />
@@ -21,9 +21,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ProductItem } from "@/types";
+import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
 
-defineProps<Omit<ProductItem, "id" | "price">>();
+defineProps<Omit<IPizzaItem, "id" | "price">>();
 </script>
 <style module lang="scss">
 @use "@/assets/scss/ds-system/ds-typography";

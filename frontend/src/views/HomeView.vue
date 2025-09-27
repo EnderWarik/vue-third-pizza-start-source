@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import HomeContainer from "@/modules/home/HomeContainer.vue";
+import HomeContainer from "@/modules/pizza/PizzaContainer.vue";
 </script>
 
 <style module lang="scss">

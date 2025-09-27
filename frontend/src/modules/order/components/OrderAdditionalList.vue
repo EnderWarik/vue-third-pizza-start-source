@@ -5,9 +5,10 @@
 </template>
 <script setup lang="ts">
 import OrderAdditionalItem from "./OrderAdditionalItem.vue";
-import type { AdditionalItem } from "@/types";
 
-defineProps<{ items: AdditionalItem[] }>();
+import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
+
+defineProps<{ items: IAdditionalPizzaItem[] }>();
 </script>
 <style module lang="scss">
 @use "@/assets/scss/ds-system/ds-typography";

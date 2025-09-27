@@ -2,10 +2,10 @@
   <li :class="$style.item">
     <CartProduct
       :class="$style.product"
-      :img="item.img"
-      :img-width="item?.imgWidth || 56"
-      :img-height="item?.imgHeight || 56"
-      :title="item.title"
+      :img="pizzaIcon"
+      :img-width="56"
+      :img-height="56"
+      :name="item.name"
       :size="item.size"
       :dough="item.dough"
       :sauce="item.sauce"
@@ -35,12 +35,11 @@
 import CartProduct from "./CartProduct.vue";
 import CounterComponent from "@/common/components/CounterComponent.vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
-import { ref } from "vue";
-import { ProductItem } from "@/types";
+import pizzaIcon from "@/assets/img/product.svg";
+import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
 
-defineProps<{ item: ProductItem }>();
-
-const count = ref(0);
+const count = defineModel<number>("count");
+defineProps<{ item: IPizzaItem }>();
 
 defineEmits<{
   edit: [];

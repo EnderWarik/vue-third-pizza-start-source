@@ -1,8 +1,8 @@
 <template>
   <SheetComponent tag="li" :class="$style.item">
     <p :class="$style.description">
-      <img :src="item.img" width="39" height="60" :alt="item.title" />
-      <span>{{ item.title }}</span>
+      <img :src="item.image" width="39" height="60" :alt="item.name" />
+      <span>{{ item.name }}</span>
     </p>
 
     <div :class="$style.wrapper">
@@ -15,13 +15,13 @@
 </template>
 <script setup lang="ts">
 import CounterComponent from "@/common/components/CounterComponent.vue";
-import { ref } from "vue";
 import SheetComponent from "@/common/components/SheetComponent.vue";
-import { AdditionalItem } from "@/types";
 
-defineProps<{ item: AdditionalItem }>();
+import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
 
-const count = ref(0);
+const count = defineModel<number>("count");
+
+defineProps<{ item: IAdditionalPizzaItem }>();
 </script>
 
 <style module lang="scss">
