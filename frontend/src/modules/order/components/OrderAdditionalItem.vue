@@ -2,9 +2,9 @@
   <li :class="$style.item">
     <img
       :src="image"
-      :width="imgWidth ?? 20"
-      :height="imgHeight ?? 30"
-      :alt="alt || name"
+      :width="20"
+      :height="30"
+      :alt="name"
       :class="$style.img"
     />
     <p :class="$style.text">

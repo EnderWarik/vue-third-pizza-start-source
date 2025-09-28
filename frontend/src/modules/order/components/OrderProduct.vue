@@ -2,7 +2,7 @@
   <div :class="$style.product">
     <img
       :src="img"
-      :alt="alt || name"
+      :alt="name"
       :width="imgWidth ?? 56"
       :height="imgHeight ?? 56"
       :class="$style.img"
@@ -23,7 +23,13 @@
 <script setup lang="ts">
 import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
 
-defineProps<Omit<IPizzaItem, "id" | "price">>();
+defineProps<
+  Omit<IPizzaItem, "id" | "price"> & {
+    img: string;
+    imgWidth: number;
+    imgHeight: number;
+  }
+>();
 </script>
 <style module lang="scss">
 @use "@/assets/scss/ds-system/ds-typography";

@@ -13,6 +13,6 @@ export const authApi = {
   },
 
   async me(): Promise<IApiWhoAmIResponse> {
-    return httpClient.get<IApiWhoAmIResponse>("/me");
+    return httpClient.get<IApiWhoAmIResponse>("/whoAmI");
   },
 };

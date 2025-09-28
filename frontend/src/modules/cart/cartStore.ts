@@ -51,7 +51,7 @@ export const useCartStore = defineStore("cartStore", () => {
   function addPizzaItem(item: IPizzaItem) {
     cartItems.value.push(item);
   }
-  const userPhone = ref<string>(profileStore.user.phone);
+  const userPhone = ref<string>(profileStore.user?.phone || "");
 
   function orderPizzas() {
     const order: IOrder = {
