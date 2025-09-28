@@ -21,14 +21,14 @@ import SheetComponent from "@/common/components/SheetComponent.vue";
 import OrderHeader from "./OrderHeader.vue";
 import OrderList from "./OrderList.vue";
 import OrderAdditionalList from "./OrderAdditionalList.vue";
-import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
+import { IAdditionalCartItem } from "@/modules/cart/types/IAdditionalCartItem";
 import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
 
 defineProps<{
   orderNumber: number | string;
   total: number;
   products: IPizzaItem[];
-  additionals?: IAdditionalPizzaItem[];
+  additionals?: IAdditionalCartItem[];
   address?: string | null;
 }>();
 

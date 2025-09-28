@@ -2,77 +2,36 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import { IApiOrder } from "@/modules/order/types/api/IApiOrder";
 import { IOrder } from "@/modules/order/types/IOrder";
-import { mapApiOrdersToOrders } from "@/modules/order/helpers/orderMapper";
 import { usePizzaStore } from "@/modules/pizza/pizzaStore";
 import { useCartStore } from "@/modules/cart/cartStore";
+import { orderApi } from "@/modules/order/orderApi";
+import { mapApiOrdersToOrders } from "@/modules/order/helpers/orderMapper";
 
 export const useOrderStore = defineStore("orderStore", () => {
   const pizzaStore = usePizzaStore();
   const cartStore = useCartStore();
-  const orders = ref<IOrder[]>(
-    mapApiOrdersToOrders(
-      [
-        {
-          id: 1,
-          userId: "1",
-          addressId: 0,
-          orderPizzas: [
-            {
-              id: 2,
-              name: "string",
-              sauceId: 0,
-              doughId: 0,
-              sizeId: 0,
-              quantity: 0,
-              orderId: 0,
-              ingredients: [
-                {
-                  id: 0,
-                  pizzaId: 0,
-                  ingredientId: 0,
-                  quantity: 0,
-                },
-              ],
-            },
-          ],
-          orderMisc: [
-            {
-              id: 0,
-              orderId: 0,
-              miscId: 0,
-              quantity: 0,
-            },
-          ],
-          orderAddress: {
-            id: 0,
-            name: "string",
-            street: "string",
-            building: "string",
-            flat: "string",
-            comment: "string",
-            userId: "1",
-          },
-        },
-      ],
-      {
+  const orders = ref<IOrder[]>([]);
+  const isLoading = ref<boolean>(false);
+
+  async function init(): Promise<void> {
+    try {
+      isLoading.value = true;
+      const apiOrders = await orderApi.getOrders();
+      orders.value = mapApiOrdersToOrders(apiOrders as unknown as IApiOrder[], {
         sizes: pizzaStore.pizzaSizes,
         doughs: pizzaStore.pizzaDoughs,
         sauces: pizzaStore.sauces,
         ingredients: pizzaStore.ingredients,
         extras: cartStore.extras,
-      },
-    ),
-  );
-
-  function getOrders(): IApiOrder[] {}
-
-  function postOrder(payload: IApiOrder): IApiOrder {}
-
-  function deleteOrder(id: number): boolean {}
+      });
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
   function addOrder(payload: IOrder): void {
     orders.value.push(payload);
   }
 
-  return { orders, addOrder };
+  return { orders, addOrder, init, isLoading };
 });

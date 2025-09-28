@@ -1,5 +1,6 @@
 <template>
   <main>
+    <div v-if="orderStore.isLoading">Загрузка заказов...</div>
     <template v-for="order in orderStore.orders" :key="order.id">
       <OrderCard
         :order-number="order.id"
@@ -16,12 +17,17 @@ import OrderCard from "@/modules/order/components/OrderCard.vue";
 import { useOrderStore } from "@/modules/order/orderStore";
 import concatAddress from "@/helpers/concatAddress";
 import { IOrder } from "@/modules/order/types/IOrder";
+import { onMounted } from "vue";
 
 function getCorrectAddress(order: IOrder) {
   if (order.address) return concatAddress(order.address);
   return null;
 }
 const orderStore = useOrderStore();
+
+onMounted(() => {
+  orderStore.init();
+});
 </script>
 <style scoped lang="scss">
 @use "@/assets/scss/ds-system/ds-colors";

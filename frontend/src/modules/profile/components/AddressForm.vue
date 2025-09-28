@@ -59,9 +59,10 @@
 
 <script setup lang="ts">
 import { defineModel } from "vue";
-import { AddressDraftType } from "@/modules/profile/types/AddressDraftType";
 import TextInput from "@/common/components/TextInput.vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
+
+import { AddressDraftType } from "@/modules/profile/types/draft";
 
 const { title = "Адрес", isNew = false } = defineProps<{
   title?: string;

@@ -16,7 +16,7 @@
 </template>
 <script setup lang="ts">
 import { PizzaDoughEnum } from "@/types/enums/PizzaDoughEnum";
-import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
+import { IPizzaDough } from "@/modules/pizza/types/IPizzaDough";
 import DoughOption from "@/modules/pizza/dough/components/DoughOption.vue";
 import SheetComponent from "@/common/components/SheetComponent.vue";
 

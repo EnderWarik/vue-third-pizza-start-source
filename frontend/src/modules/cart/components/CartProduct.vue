@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
 import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
-import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
+import { IPizzaDough } from "@/modules/pizza/types/IPizzaDough";
 import { IPizzaSize } from "@/modules/pizza/types/IPizzaSize";
 
 function toInstrumental(form: string | undefined): string {

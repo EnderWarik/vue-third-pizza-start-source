@@ -1,36 +1,17 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { IUserAddress } from "@/modules/profile/types/IUserAddress";
-import { AddressDraftType } from "@/modules/profile/types/AddressDraftType";
-import { makeAvatar } from "@/modules/profile/helpers/imgHelpers";
+import { AddressDraftType } from "@/modules/profile/types/draft";
+import { authApi } from "@/modules/auth/authApi";
+import { IUserData } from "@/modules/profile/types/IUserData";
+import { profileApi } from "@/modules/profile/profileApi";
 
 export const useProfileStore = defineStore("profileStore", () => {
-  const addresses = ref<IUserAddress[]>([
-    {
-      id: 1,
-      name: "Адрес №1. Тест",
-      street: "Невский пр",
-      building: "22",
-      flat: "46",
-      comment: "Позвоните, пожалуйста, от проходной",
-      userId: "1",
-    },
-    {
-      id: 2,
-      name: "Адрес №2. Тест",
-      street: "2 Невский пр",
-      building: "33",
-      flat: "466",
-      comment: "Позвоните, пожалуйста, от проходной",
-      userId: "1",
-    },
-  ]);
+  const addresses = ref<IUserAddress[]>([]);
 
-  const user = {
-    name: "Василий Ложкин",
-    phone: "+7 999-999-99-99",
-    avatar: makeAvatar("user5"),
-  };
+  const user = ref<IUserData | null>(null);
+
+  const isLoading = ref<boolean>(false);
 
   const addressForm = ref<AddressDraftType>({
     name: "",
@@ -49,8 +30,34 @@ export const useProfileStore = defineStore("profileStore", () => {
       comment: "",
     };
   }
-  function updateAddress() {}
-  function removeAddress() {}
+  async function createAddress(form: AddressDraftType) {
+    const name = form.name?.trim()
+      ? form.name
+      : `${form.street} ${form.building} ${form.flat ?? ""}`.trim();
+    const created = await profileApi.createAddress({
+      ...form,
+      name,
+      userId: user.value!.id,
+    });
+    addresses.value = [...addresses.value, created];
+    return created;
+  }
+
+  async function updateAddress(payload: {
+    id: number;
+    form: AddressDraftType;
+  }) {
+    const { id, form } = payload;
+    await profileApi.updateAddress({ id, ...form });
+    addresses.value = addresses.value.map((a) =>
+      a.id === id ? ({ ...a, ...form, id } as IUserAddress) : a,
+    );
+  }
+
+  async function removeAddress(id: number) {
+    await profileApi.deleteAddress(id);
+    addresses.value = addresses.value.filter((a) => a.id !== id);
+  }
   function saveAddressFromForm(): IUserAddress {
     if (!addressForm.value.name) {
       addressForm.value.name = `${addressForm.value.street} ${addressForm.value.building} ${addressForm.value.flat}`;
@@ -60,11 +67,38 @@ export const useProfileStore = defineStore("profileStore", () => {
     addresses.value.push(correctAddress);
     return correctAddress;
   }
+
+  async function fetchUser() {
+    user.value = await authApi.me();
+    console.log(user.value);
+  }
+
+  function clearUser() {
+    user.value = null;
+  }
+  async function init(): Promise<void> {
+    try {
+      isLoading.value = true;
+      const [fetchedAddresses] = await Promise.all([profileApi.getAddresses()]);
+      addresses.value = fetchedAddresses;
+      console.log(addresses.value);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   return {
     addresses,
     saveAddressFromForm,
     addressForm,
     clearAddressForm,
+    fetchUser,
     user,
+    isLoading,
+    init,
+    clearUser,
+    createAddress,
+    updateAddress,
+    removeAddress,
   };
 });

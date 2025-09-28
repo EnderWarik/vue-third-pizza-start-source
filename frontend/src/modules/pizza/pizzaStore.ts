@@ -2,92 +2,52 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
 import { IPizzaSize } from "@/modules/pizza/types/IPizzaSize";
-import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
+import { IPizzaDough } from "@/modules/pizza/types/IPizzaDough";
 import { v4 as uuidv4 } from "uuid";
 import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
 import { mapWithCount } from "@/helpers/mappers";
 import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
 import { useCartStore } from "@/modules/cart/cartStore";
+import { pizzaApi } from "@/modules/pizza/pizzaApi";
 
 export const usePizzaStore = defineStore("pizzaStore", () => {
   const cartStore = useCartStore();
 
-  const ingredients = ref<IPizzaIngredient[]>(
-    mapWithCount([
-      { id: 1, name: "Грибы", image: "filling/mushrooms.svg", price: 33 },
-      { id: 2, name: "Чеддер", image: "filling/cheddar.svg", price: 42 },
-      { id: 3, name: "Салями", image: "filling/salami.svg", price: 42 },
-      { id: 4, name: "Ветчина", image: "filling/ham.svg", price: 42 },
-      { id: 5, name: "Ананас", image: "filling/ananas.svg", price: 25 },
-      { id: 6, name: "Бекон", image: "filling/bacon.svg", price: 42 },
-      { id: 7, name: "Лук", image: "filling/onion.svg", price: 21 },
-      { id: 8, name: "Чили", image: "filling/chile.svg", price: 21 },
-      { id: 9, name: "Халапеньо", image: "filling/jalapeno.svg", price: 25 },
-      { id: 10, name: "Маслины", image: "filling/olives.svg", price: 25 },
-      { id: 11, name: "Томаты", image: "filling/tomatoes.svg", price: 35 },
-      { id: 12, name: "Лосось", image: "filling/salmon.svg", price: 50 },
-      { id: 13, name: "Моцарелла", image: "filling/mozzarella.svg", price: 35 },
-      { id: 14, name: "Пармезан", image: "filling/parmesan.svg", price: 35 },
-      { id: 15, name: "Блю чиз", image: "filling/blue_cheese.svg", price: 50 },
-    ]),
-  );
+  const isLoading = ref<boolean>(false);
 
-  const sauces = ref<IPizzaSauce[]>([
-    {
-      id: 1,
-      name: "Томатный",
-      price: 50,
-    },
-    {
-      id: 2,
-      name: "Сливочный",
-      price: 50,
-    },
-  ]);
+  const ingredients = ref<(IPizzaIngredient & { count: number })[]>([]);
+  const sauces = ref<IPizzaSauce[]>([]);
+  const pizzaSizes = ref<IPizzaSize[]>([]);
+  const pizzaDoughs = ref<IPizzaDough[]>([]);
 
-  const pizzaSizes = ref<IPizzaSize[]>([
-    {
-      id: 1,
-      name: "23 см",
-      image: "diameter.svg",
-      multiplier: 1,
-    },
-    {
-      id: 2,
-      name: "32 см",
-      image: "diameter.svg",
-      multiplier: 2,
-    },
-    {
-      id: 3,
-      name: "45 см",
-      image: "diameter.svg",
-      multiplier: 3,
-    },
-  ]);
-
-  const pizzaDoughs = ref<IPizzaDough[]>([
-    {
-      id: 1,
-      name: "Тонкое",
-      image: "dough-light.svg",
-      description: "Из твердых сортов пшеницы",
-      price: 300,
-    },
-    {
-      id: 2,
-      name: "Толстое",
-      image: "dough-large.svg",
-      description: "Из твердых сортов пшеницы",
-      price: 300,
-    },
-  ]);
-
-  const selectedPizzaDoughId = ref<number>(1);
-  const selectedPizzaSizeId = ref<number>(2);
-  const selectedPizzaSauceId = ref<number>(1);
+  const selectedPizzaDoughId = ref<number>(0);
+  const selectedPizzaSizeId = ref<number>(0);
+  const selectedPizzaSauceId = ref<number>(0);
 
   const pizzaName = ref<string>("Моя пицца");
+
+  async function init(): Promise<void> {
+    try {
+      isLoading.value = true;
+      const [doughs, ingredientsResp, saucesResp, sizesResp] = await Promise.all([
+        pizzaApi.getDoughs(),
+        pizzaApi.getIngredients(),
+        pizzaApi.getSauces(),
+        pizzaApi.getSizes(),
+      ]);
+
+      pizzaDoughs.value = doughs;
+      ingredients.value = mapWithCount(ingredientsResp);
+      sauces.value = saucesResp;
+      pizzaSizes.value = sizesResp;
+
+      selectedPizzaDoughId.value = doughs[0]?.id ?? 0;
+      selectedPizzaSizeId.value = sizesResp[0]?.id ?? 0;
+      selectedPizzaSauceId.value = saucesResp[0]?.id ?? 0;
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
   const currentDough = computed<IPizzaDough | null>(() => {
     return (
@@ -166,6 +126,7 @@ export const usePizzaStore = defineStore("pizzaStore", () => {
   }
 
   return {
+    isLoading,
     ingredients,
     sauces,
     pizzaSizes,
@@ -178,5 +139,6 @@ export const usePizzaStore = defineStore("pizzaStore", () => {
     pizzaFillings,
     updateFillings,
     addToCart,
+    init,
   };
 });

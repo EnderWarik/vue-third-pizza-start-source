@@ -1,5 +1,7 @@
 <template>
+  <div v-if="profileStore.isLoading">Загрузка профиля...</div>
   <UserInfo
+    v-else-if="profileStore.user"
     :name="profileStore.user.name"
     :phone="profileStore.user.phone"
     :avatar="profileStore.user.avatar"
@@ -40,8 +42,9 @@ import AddressLine from "@/modules/profile/components/AddressLine.vue";
 import UserInfo from "@/modules/profile/components/UserInfo.vue";
 import AddressForm from "@/modules/profile/components/AddressForm.vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
-import { AddressDraftType } from "@/modules/profile/types/AddressDraftType";
 import { IUserAddress } from "@/modules/profile/types/IUserAddress";
+import { AddressDraftType } from "@/modules/profile/types/draft";
+import { onMounted } from "vue";
 
 const profileStore = useProfileStore();
 
@@ -67,25 +70,22 @@ function closeEditor() {
 
 function saveAddress(payload: { id: number | null; form: AddressDraftType }) {
   const { id, form } = payload;
-
   if (id == null) {
-    const nextId = getNextId(profileStore.addresses);
-    const created: IUserAddress = { ...form, id: nextId } as IUserAddress;
-    profileStore.addresses = [...profileStore.addresses, created];
+    profileStore.createAddress(form).then(() => closeEditor());
   } else {
-    profileStore.addresses = profileStore.addresses.map((a) =>
-      a.id === id ? ({ ...a, ...form, id } satisfies IUserAddress) : a,
-    );
+    profileStore.updateAddress({ id, form }).then(() => closeEditor());
   }
-  closeEditor();
 }
 
 function removeAddress(id: number) {
-  profileStore.addresses = profileStore.addresses.filter((a) => a.id !== id);
-  closeEditor();
+  profileStore.removeAddress(id).then(() => closeEditor());
 }
 
 function getNextId(items: IUserAddress[]): number {
   return (items.reduce((m, x) => Math.max(m, x.id), 0) || 0) + 1;
 }
+
+onMounted(() => {
+  profileStore.init();
+});
 </script>

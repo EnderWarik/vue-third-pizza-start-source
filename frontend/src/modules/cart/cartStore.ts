@@ -1,43 +1,23 @@
 import { defineStore } from "pinia";
-import colaIcon from "@/assets/img/cola.svg";
-import sauceIcon from "@/assets/img/sauce.svg";
-import potatoIcon from "@/assets/img/potato.svg";
 import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
-import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
+import { IAdditionalCartItem } from "@/modules/cart/types/IAdditionalCartItem";
 import { computed, ref } from "vue";
 import { mapWithCount } from "@/helpers/mappers";
 import { BaseDeliveryEnum } from "@/modules/cart/types/BaseDeliveryEnum";
 import { useProfileStore } from "@/modules/profile/profileStore";
-import { IOrder } from "@/modules/order/types/IOrder";
 import { useOrderStore } from "@/modules/order/orderStore";
+import { cartApi } from "@/modules/cart/cartApi";
+import { orderApi } from "@/modules/order/orderApi";
 
 export const useCartStore = defineStore("cartStore", () => {
   const profileStore = useProfileStore();
   const orderStore = useOrderStore();
 
   const cartItems = ref<IPizzaItem[]>([]);
+  const isLoadingExtras = ref<boolean>(false);
+  const extras = ref<IAdditionalCartItem[]>([]);
 
-  const extras = ref<IAdditionalPizzaItem[]>(
-    mapWithCount([
-      {
-        id: 1,
-        image: colaIcon,
-        name: "Coca-Cola 0,5 литра",
-        price: 56,
-        count: 2,
-      },
-      { id: 2, image: sauceIcon, name: "Острый соус", price: 30, count: 2 },
-      {
-        id: 3,
-        image: potatoIcon,
-        name: "Картошка из печи",
-        price: 56,
-        count: 2,
-      },
-    ]),
-  );
-
-  const currentDelivery = ref<string>("self");
+  const currentDelivery = ref<string>(BaseDeliveryEnum.new);
   const totalPrice = computed(() => {
     let result = 0;
     cartItems.value.forEach((item) => (result += item.price * item.count));
@@ -51,38 +31,71 @@ export const useCartStore = defineStore("cartStore", () => {
   function addPizzaItem(item: IPizzaItem) {
     cartItems.value.push(item);
   }
-  const userPhone = ref<string>(profileStore.user.phone);
+  const userPhone = ref<string>(profileStore.user?.phone || "");
 
-  function orderPizzas() {
-    const order: IOrder = {
-      id: 1,
-      pizzas: cartItems.value,
-      extras: extras.value,
-      address: null,
-      deliveryType: currentDelivery.value,
-      phone: userPhone.value,
-      total: totalPrice.value,
-    };
+  async function init(): Promise<void> {
+    try {
+      isLoadingExtras.value = true;
+      const extrasResp = await cartApi.getExtras();
+      console.log(extrasResp);
+      extras.value = mapWithCount(extrasResp).map((item) => ({
+        ...item,
+        count: 0,
+      }));
+    } finally {
+      isLoadingExtras.value = false;
+    }
+  }
 
-    switch (currentDelivery.value) {
-      case BaseDeliveryEnum.new:
-        order.address = profileStore.saveAddressFromForm();
-        order.deliveryType = BaseDeliveryEnum.new;
-        break;
-      case BaseDeliveryEnum.self:
-        break;
-      default: {
-        const selectedAddress = profileStore.addresses.find(
-          (address) => address.id === parseFloat(currentDelivery.value),
-        );
-        if (selectedAddress) {
-          order.address = selectedAddress;
-        }
+  async function orderPizzas() {
+    if (!profileStore.user?.id) throw new Error("userId is required");
+    const userId = profileStore.user.id;
 
-        break;
+    let addressPayload = null;
+    if (currentDelivery.value === BaseDeliveryEnum.new) {
+      const form = profileStore.addressForm;
+      addressPayload = {
+        street: form.street,
+        building: form.building,
+        flat: form.flat || "",
+        comment: form.comment || "",
+      };
+    } else {
+      const selectedAddress = profileStore.addresses.find(
+        (address) => address.id === parseFloat(currentDelivery.value),
+      );
+      if (selectedAddress) {
+        addressPayload = { id: selectedAddress.id } as any;
       }
     }
-    orderStore.addOrder(order);
+
+    const pizzasPayload = cartItems.value.map((p) => ({
+      name: p.name,
+      sauceId: p.sauce?.id ?? 0,
+      doughId: p.dough?.id ?? 0,
+      sizeId: p.size?.id ?? 0,
+      quantity: p.count,
+      ingredients: p.fillings.map((f) => ({
+        ingredientId: f.id,
+        quantity: f.count,
+      })),
+    }));
+
+    const miscPayload = extras.value
+      .filter((e) => e.count > 0)
+      .map((e) => ({ miscId: e.id, quantity: e.count }));
+
+    await orderApi.createOrder({
+      userId,
+      phone: userPhone.value,
+      address: addressPayload,
+      pizzas: pizzasPayload,
+      misc: miscPayload,
+    });
+
+    cartItems.value = [];
+    extras.value = extras.value.map((e) => ({ ...e, count: 0 }));
+    await orderStore.init();
   }
 
   return {
@@ -93,5 +106,7 @@ export const useCartStore = defineStore("cartStore", () => {
     userPhone,
     addPizzaItem,
     orderPizzas,
+    isLoadingExtras,
+    init,
   };
 });

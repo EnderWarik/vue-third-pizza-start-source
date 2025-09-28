@@ -1,15 +1,17 @@
 import { IPizzaSize } from "@/modules/pizza/types/IPizzaSize";
-import { IPizzaDough } from "@/types/interfaces/IPizzaDough";
+import { IPizzaDough } from "@/modules/pizza/types/IPizzaDough";
 import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
 import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
-import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
-import { IApiOrderAddress } from "@/modules/order/types/api/IApiOrderAddress";
+import { IAdditionalCartItem } from "@/modules/cart/types/IAdditionalCartItem";
+import {
+  IApiOrderGetResponse,
+  IApiOrderAddress,
+  IApiOrderPizzaIngredient,
+  IApiOrderPizza,
+  IApiOrderMisc,
+} from "@/modules/order/types/api/IApiOrderGetResponse";
 import { IUserAddress } from "@/modules/profile/types/IUserAddress";
-import { IApiOrderPizzaIngredient } from "@/modules/order/types/api/IApiOrderPizzaIngredient";
-import { IApiOrderPizza } from "@/modules/order/types/api/IApiOrderPizza";
 import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
-import { IApiOrderMisc } from "@/modules/order/types/api/IApiOrderMisc";
-import { IApiOrder } from "@/modules/order/types/api/IApiOrder";
 import { IOrder } from "@/modules/order/types/IOrder";
 
 export type Catalogs = {
@@ -17,7 +19,7 @@ export type Catalogs = {
   doughs: IPizzaDough[];
   sauces: IPizzaSauce[];
   ingredients: IPizzaIngredient[];
-  extras: IAdditionalPizzaItem[];
+  extras: IAdditionalCartItem[];
 };
 
 export type MapOptions = {
@@ -93,7 +95,7 @@ function mapPizza(
   const dough = by.doughById[apiPizza.doughId] ?? null;
   const sauce = by.sauceById[apiPizza.sauceId] ?? null;
 
-  const fillings = mapPizzaFillings(apiPizza.ingredients, by.ingrById);
+  const fillings = mapPizzaFillings(apiPizza.ingredients ?? [], by.ingrById);
   const unitPrice = calcPizzaUnitPrice(dough, sauce, fillings, size);
 
   return {
@@ -109,8 +111,8 @@ function mapPizza(
 }
 function mapExtras(
   apiMisc: IApiOrderMisc[],
-  extraById: Record<number, IAdditionalPizzaItem>,
-): IAdditionalPizzaItem[] {
+  extraById: Record<number, IAdditionalCartItem>,
+): IAdditionalCartItem[] {
   return apiMisc.map((m) => {
     const base = extraById[m.miscId];
     if (base) return { ...base, count: m.quantity };
@@ -126,7 +128,7 @@ function mapExtras(
 
 function calcOrderTotal(
   pizzas: IPizzaItem[],
-  extras: IAdditionalPizzaItem[],
+  extras: IAdditionalCartItem[],
 ): number {
   const pizzasSum = pizzas.reduce((s, p) => s + p.price * p.count, 0);
   const extrasSum = extras.reduce((s, e) => s + e.price * e.count, 0);
@@ -134,7 +136,7 @@ function calcOrderTotal(
 }
 
 export function mapApiOrderToOrder(
-  api: IApiOrder,
+  api: IApiOrderGetResponse,
   catalogs: Catalogs,
   opts: MapOptions = {},
 ): IOrder {
@@ -146,11 +148,11 @@ export function mapApiOrderToOrder(
   const ingrById = indexById(ingredients);
   const extraById = indexById(extras);
 
-  const pizzas = api.orderPizzas.map((p) =>
+  const pizzas = (api.orderPizzas ?? []).map((p: IApiOrderPizza) =>
     mapPizza(p, { sizeById, doughById, sauceById, ingrById }),
   );
 
-  const extrasMapped = mapExtras(api.orderMisc, extraById);
+  const extrasMapped = mapExtras(api.orderMisc ?? [], extraById);
 
   const address = mapAddress(api.orderAddress);
 
@@ -168,7 +170,7 @@ export function mapApiOrderToOrder(
 }
 
 export function mapApiOrdersToOrders(
-  apiOrders: IApiOrder[],
+  apiOrders: IApiOrderGetResponse[],
   catalogs: Catalogs,
   opts?: MapOptions,
 ): IOrder[] {

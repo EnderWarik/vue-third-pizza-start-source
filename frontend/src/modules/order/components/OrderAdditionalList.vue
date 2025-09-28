@@ -6,9 +6,9 @@
 <script setup lang="ts">
 import OrderAdditionalItem from "./OrderAdditionalItem.vue";
 
-import { IAdditionalPizzaItem } from "@/modules/pizza/types/IAdditionalPizzaItem";
+import { IAdditionalCartItem } from "@/modules/cart/types/IAdditionalCartItem";
 
-defineProps<{ items: IAdditionalPizzaItem[] }>();
+defineProps<{ items: IAdditionalCartItem[] }>();
 </script>
 <style module lang="scss">
 @use "@/assets/scss/ds-system/ds-typography";
