@@ -12,10 +12,10 @@
         <TransitionGroup name="scale-layer">
           <div
             v-for="layer in layers"
-            :key="`${PizzaIngredientEnum[layer.id]}-${layer.count}`"
+            :key="`${getIngredientName(layer.image)}-${layer.count}`"
             :class="[
               $style.layer,
-              layer.count >= 1 && $style[PizzaIngredientEnum[layer.id]],
+              layer.count >= 1 && $style[getIngredientName(layer.image)],
               layer.count === 2 && $style['second'],
               layer.count >= 3 && $style['third'],
             ]"
@@ -30,13 +30,17 @@
 import { PizzaSauceEnum } from "@/types/enums/PizzaSauceEnum";
 import { PizzaDoughEnum } from "@/types/enums/PizzaDoughEnum";
 import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
-import { PizzaIngredientEnum } from "@/types/enums/PizzaIngredientEnum";
 
 const props = defineProps<{
   sizeId: number;
   sauceId: number;
   layers: IPizzaIngredient[];
 }>();
+
+function getIngredientName(path: string): string {
+  const fileName = path.split("/").pop() || "";
+  return fileName.replace(/\.[^/.]+$/, "");
+}
 </script>
 
 <style module lang="scss">
