@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.user">
-    <picture>
+    <picture v-if="typeof avatar === 'object'">
       <source type="image/webp" :srcset="toSrcset(avatar.webp)" />
       <img
         :src="avatar.jpg.x1"
@@ -10,6 +10,7 @@
         :height="size"
       />
     </picture>
+    <img v-else :src="avatar" :alt="name" :width="size" :height="size" />
 
     <div :class="$style.name">
       <span>{{ name }}</span>
@@ -28,10 +29,10 @@ type Avatar = {
   jpg: { x1: string; x2?: string };
 };
 
-const { size = 72 } = defineProps<{
+const { size = 72, avatar } = defineProps<{
   name: string;
   phone?: string;
-  avatar: Avatar;
+  avatar: Avatar | string;
   size?: number;
 }>();
 

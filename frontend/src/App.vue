@@ -10,13 +10,19 @@
 import { onMounted } from "vue";
 import { useAuthStore } from "@/modules/auth/authStore";
 import { useProfileStore } from "@/modules/profile/profileStore";
+import { usePizzaStore } from "@/modules/pizza/pizzaStore";
+import { useCartStore } from "@/modules/cart/cartStore";
 
 const authStore = useAuthStore();
 const profileStore = useProfileStore();
-onMounted(() => {
+const pizzaStore = usePizzaStore();
+const cartStore = useCartStore();
+onMounted(async () => {
   if (authStore.isAuthenticated) {
-    profileStore.fetchUser();
+    await profileStore.fetchUser();
   }
+  await pizzaStore.init();
+  await cartStore.init();
 });
 </script>
 <style lang="scss">

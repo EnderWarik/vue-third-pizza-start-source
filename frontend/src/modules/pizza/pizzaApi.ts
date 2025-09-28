@@ -7,19 +7,19 @@ import {
 } from "@/modules/pizza/types/api/api";
 
 export const pizzaApi = {
-  async getDoughs(): Promise<IApiPizzaDoughResponse[]> {
-    return httpClient.get<IApiPizzaDoughResponse[]>("/dough");
+  async getDoughs(): Promise<IApiPizzaDoughResponse> {
+    return httpClient.get<IApiPizzaDoughResponse>("/dough");
   },
 
-  async getIngredients(): Promise<IApiPizzaIngredientResponse[]> {
-    return httpClient.get<IApiPizzaIngredientResponse[]>("/ingredients");
+  async getIngredients(): Promise<IApiPizzaIngredientResponse> {
+    return httpClient.get<IApiPizzaIngredientResponse>("/ingredients");
   },
 
-  async getSauces(): Promise<IApiPizzaSaucesResponse[]> {
-    return httpClient.get<IApiPizzaSaucesResponse[]>("/sauces");
+  async getSauces(): Promise<IApiPizzaSaucesResponse> {
+    return httpClient.get<IApiPizzaSaucesResponse>("/sauces");
   },
 
-  async getSizes(): Promise<IPizzaSizeResponse[]> {
-    return httpClient.get<IPizzaSizeResponse[]>("/sizes");
+  async getSizes(): Promise<IPizzaSizeResponse> {
+    return httpClient.get<IPizzaSizeResponse>("/sizes");
   },
 };

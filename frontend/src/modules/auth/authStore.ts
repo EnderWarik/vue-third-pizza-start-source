@@ -2,8 +2,10 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { TokenStorage } from "@/modules/auth/utils/TokenStorage";
 import { authApi } from "@/modules/auth/authApi";
+import { useProfileStore } from "@/modules/profile/profileStore";
 
 export const useAuthStore = defineStore("authStore", () => {
+  const profileStore = useProfileStore();
   const token = ref(TokenStorage.get());
 
   const isAuthenticated = computed(() => !!token.value);
@@ -18,6 +20,7 @@ export const useAuthStore = defineStore("authStore", () => {
     await authApi.logout();
     token.value = null;
     TokenStorage.clear();
+    profileStore.clearUser();
   }
   return {
     isAuthenticated,

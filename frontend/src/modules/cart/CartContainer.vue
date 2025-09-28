@@ -4,7 +4,8 @@
 
     <CartList :items="cartStore.cartItems" />
 
-    <AdditionalList :class="$style.additional" :items="cartStore.extras" />
+    <div v-if="cartStore.isLoadingExtras" class="$style.empty">Загрузка товаров...</div>
+    <AdditionalList v-else :class="$style.additional" :items="cartStore.extras" />
 
     <CartForm
       v-model:delivery="cartStore.currentDelivery"
@@ -24,10 +25,15 @@ import CartList from "@/modules/cart/components/CartList.vue";
 import AdditionalList from "@/modules/cart/components/AdditionalList.vue";
 import { useCartStore } from "@/modules/cart/cartStore";
 import { useProfileStore } from "@/modules/profile/profileStore";
+import { onMounted } from "vue";
 
 const cartStore = useCartStore();
 
 const profileStore = useProfileStore();
+
+onMounted(() => {
+  cartStore.init();
+});
 </script>
 
 <style module lang="scss">
