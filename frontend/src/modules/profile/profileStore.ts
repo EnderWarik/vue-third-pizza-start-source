@@ -1,8 +1,9 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { IUserAddress } from "@/modules/profile/types/IUserAddress";
-import { makeAvatar } from "@/modules/profile/helpers/imgHelpers";
 import { AddressDraftType } from "@/modules/profile/types/draft";
+import { authApi } from "@/modules/auth/authApi";
+import { IUserData } from "@/modules/profile/types/IUserData";
 
 export const useProfileStore = defineStore("profileStore", () => {
   const addresses = ref<IUserAddress[]>([
@@ -26,11 +27,7 @@ export const useProfileStore = defineStore("profileStore", () => {
     },
   ]);
 
-  const user = {
-    name: "Василий Ложкин",
-    phone: "+7 999-999-99-99",
-    avatar: makeAvatar("user5"),
-  };
+  const user = ref<IUserData | null>(null);
 
   const addressForm = ref<AddressDraftType>({
     name: "",
@@ -60,11 +57,17 @@ export const useProfileStore = defineStore("profileStore", () => {
     addresses.value.push(correctAddress);
     return correctAddress;
   }
+
+  async function fetchUser() {
+    user.value = await authApi.me();
+    console.log(user.value);
+  }
   return {
     addresses,
     saveAddressFromForm,
     addressForm,
     clearAddressForm,
+    fetchUser,
     user,
   };
 });

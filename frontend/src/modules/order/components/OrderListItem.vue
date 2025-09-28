@@ -2,14 +2,13 @@
   <li :class="$style.item">
     <OrderProduct
       :name="product.name"
-      :img="product.img"
+      :img="pizzaIcon"
       :size="product.size"
       :count="product.count"
       :sauce="product.sauce"
       :dough="product.dough"
-      :img-height="product.imgHeight"
-      :img-width="product.imgWidth"
-      :alt="product.alt"
+      :img-height="56"
+      :img-width="56"
       :fillings="product.fillings"
     >
     </OrderProduct>
@@ -25,6 +24,7 @@
 import OrderProduct from "./OrderProduct.vue";
 import { computed } from "vue";
 import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
+import pizzaIcon from "@/assets/img/product.svg";
 
 const props = defineProps<{
   product: IPizzaItem;

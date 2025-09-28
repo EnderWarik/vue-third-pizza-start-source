@@ -1,24 +1,40 @@
 <template>
   <div :class="$style.user">
-    <!--    v-if="!props.user"-->
-    <router-link to="/login" :class="$style.login">
+    <!-- Если не авторизован -->
+    <router-link v-if="!props.user" to="/login" :class="$style.login">
       <span>Войти</span>
     </router-link>
 
-    <!--    <a v-else href="#" :class="$style.logout">-->
-    <!--      <img :src="props.user.avatar" :alt="props.user.name" />-->
-    <!--      <span>{{ props.user.name }}</span>-->
-    <!--    </a>-->
+    <!-- Если авторизован -->
+    <template v-else>
+      <router-link to="/profile" :class="$style.profile">
+        <img :src="props.user.avatar" :alt="props.user.name" />
+        <span>{{ props.user.name }}</span>
+      </router-link>
+
+      <div :class="$style.logout" @click="onLogout">
+        <span>Выйти</span>
+      </div>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
-// defineProps<{
-//   user?: {
-//     name: string;
-//     avatar: string;
-//   };
-// }>();
+import { IUserData } from "@/modules/profile/types/IUserData";
+import { useAuthStore } from "@/modules/auth/authStore";
+import { useRouter } from "vue-router";
+
+const props = defineProps<{
+  user: IUserData | null;
+}>();
+
+const authStore = useAuthStore();
+const router = useRouter();
+
+async function onLogout() {
+  await authStore.logout();
+  await router.replace("/login");
+}
 </script>
 
 <style module lang="scss">
@@ -29,12 +45,14 @@
   display: flex;
   align-items: center;
 
-  a {
+  a,
+  div {
     display: block;
     padding: 14px 20px;
 
     transition: 0.3s;
     background-color: ds-colors.$green-500;
+    cursor: pointer;
 
     &:hover:not(:active) {
       background-color: ds-colors.$green-400;
@@ -81,6 +99,10 @@
     background: url("@/assets/img/login.svg") no-repeat center;
     background-size: auto 50%;
   }
+}
+
+.profile {
+  margin-right: 8px;
 }
 
 .logout {

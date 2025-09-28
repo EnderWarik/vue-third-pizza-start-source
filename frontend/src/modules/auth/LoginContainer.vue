@@ -6,7 +6,7 @@
       Авторизуйтесь на сайте
     </TitleComponent>
 
-    <form action="test.html" method="post">
+    <form novalidate @submit.prevent="onLogin">
       <FormLine>
         <TextInput
           v-model="email"
@@ -28,8 +28,9 @@
           <span>Пароль</span>
         </TextInput>
       </FormLine>
-      <ButtonComponent type="submit" @click="onLogin">
-        Авторизоваться
+
+      <ButtonComponent type="submit" :disabled="loading">
+        {{ loading ? "Авторизация..." : "Авторизоваться" }}
       </ButtonComponent>
     </form>
   </div>
@@ -47,13 +48,48 @@ import { useRouter } from "vue-router";
 
 const authStore = useAuthStore();
 const router = useRouter();
-function onLogin() {
-  if (authStore.login(email.value, password.value)) {
-    router.push("/");
-  }
-}
+
 const email = ref("");
 const password = ref("");
+const loading = ref(false);
+
+const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+function validate(): string | null {
+  const e = email.value.trim();
+  const p = password.value;
+
+  if (!e) return "Введите e-mail.";
+  if (!emailRe.test(e)) return "Некорректный e-mail.";
+  if (!p) return "Введите пароль.";
+  if (p.length < 8) return "Пароль должен быть не короче 8 символов.";
+
+  return null;
+}
+
+async function onLogin() {
+  const err = validate();
+  if (err) {
+    alert(err);
+    return;
+  }
+
+  if (loading.value) return;
+  loading.value = true;
+  try {
+    const ok = await authStore.login(email.value.trim(), password.value);
+    if (ok) {
+      await router.push("/");
+    } else {
+      alert("Неверный e-mail или пароль.");
+    }
+  } catch (e) {
+    console.error(e);
+    alert("Ошибка входа. Попробуйте ещё раз.");
+  } finally {
+    loading.value = false;
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -63,18 +99,11 @@ const password = ref("");
 
 .sign-form {
   @include m_center.pf_center-all;
-
   z-index: 10;
-
   display: block;
-
   box-sizing: border-box;
   width: 455px;
-  padding-top: 146px;
-  padding-right: 32px;
-  padding-bottom: 32px;
-  padding-left: 32px;
-
+  padding: 146px 32px 32px;
   background: ds-colors.$white url("@/assets/img/popup.svg") no-repeat center
     top;
   box-shadow: ds-shadows.$shadow-light;
@@ -87,7 +116,6 @@ const password = ref("");
 
 .sign-form__title {
   margin-bottom: 24px;
-
   text-align: center;
 }
 </style>

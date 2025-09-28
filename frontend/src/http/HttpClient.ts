@@ -6,8 +6,8 @@ import axios, {
 } from "axios";
 import { HttpError } from "@/http/types/HttpError";
 import { TokenStorage } from "@/modules/auth/utils/TokenStorage";
-import { PUBLIC_ROUTES } from "@/modules/auth/constants";
 import { API_URL } from "@/http/constants";
+import { useAuthStore } from "@/modules/auth/authStore";
 
 class HttpClient {
   private instance: AxiosInstance;
@@ -40,16 +40,13 @@ class HttpClient {
   private installInterceptors() {
     this.instance.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
-        const isPublic = PUBLIC_ROUTES.some((r) => config.url?.includes(r));
-
-        if (!isPublic) {
-          const token = TokenStorage.get();
-          if (token) {
-            config.headers = config.headers ?? {};
-            (config.headers as Record<string, string>)["Authorization"] =
-              `Bearer ${token}`;
-          }
+        const token = TokenStorage.get();
+        if (token) {
+          config.headers = config.headers ?? {};
+          (config.headers as Record<string, string>)["Authorization"] =
+            `Bearer ${token}`;
         }
+
         return config;
       },
     );
@@ -58,7 +55,8 @@ class HttpClient {
       (resp) => resp,
       (error: AxiosError) => {
         if (error.response?.status === 401) {
-          TokenStorage.clear();
+          const authStore = useAuthStore();
+          authStore.logout();
         }
 
         const dataAny = error.response?.data as any;

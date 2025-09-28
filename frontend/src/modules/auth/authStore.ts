@@ -1,20 +1,27 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { TokenStorage } from "@/modules/auth/utils/TokenStorage";
+import { authApi } from "@/modules/auth/authApi";
 
 export const useAuthStore = defineStore("authStore", () => {
-  const userEmail = ref<string>("test");
-  const userPassword = ref<string>("test");
+  const token = ref(TokenStorage.get());
 
-  function login(email: string, password: string) {
-    if (email === userEmail.value && password === userPassword.value)
-      return true;
-    return false;
+  const isAuthenticated = computed(() => !!token.value);
+
+  async function login(email: string, password: string) {
+    const loginResponse = await authApi.login({ email, password });
+    token.value = loginResponse.token;
+    TokenStorage.set(loginResponse.token);
+    return true;
   }
-  function logout(email: string, password: string) {}
-  function whoAmI(email: string, password: string) {}
-
-
+  async function logout() {
+    await authApi.logout();
+    token.value = null;
+    TokenStorage.clear();
+  }
   return {
-    login
-  }
+    isAuthenticated,
+    login,
+    logout,
+  };
 });
