@@ -9,16 +9,18 @@
       ]"
     >
       <div :class="$style.wrapper">
-        <div
-          v-for="layer in layers"
-          :key="PizzaIngredientEnum[layer.id]"
-          :class="[
-            $style.layer,
-            layer.count >= 1 && $style[PizzaIngredientEnum[layer.id]],
-            layer.count === 2 && $style['second'],
-            layer.count >= 3 && $style['third'],
-          ]"
-        ></div>
+        <TransitionGroup name="scale-layer">
+          <div
+            v-for="layer in layers"
+            :key="`${PizzaIngredientEnum[layer.id]}-${layer.count}`"
+            :class="[
+              $style.layer,
+              layer.count >= 1 && $style[PizzaIngredientEnum[layer.id]],
+              layer.count === 2 && $style['second'],
+              layer.count >= 3 && $style['third'],
+            ]"
+          ></div>
+        </TransitionGroup>
       </div>
     </div>
   </div>
@@ -170,5 +172,18 @@ const props = defineProps<{
 }
 .tomatoes {
   background-image: url("@/assets/img/filling-big/tomatoes.svg");
+}
+</style>
+<style scoped lang="scss">
+.scale-layer-enter-active,
+.scale-layer-leave-active {
+  transition:
+    transform 0.18s ease,
+    opacity 0.18s ease;
+}
+.scale-layer-enter-from,
+.scale-layer-leave-to {
+  transform: scale(0.92);
+  opacity: 0;
 }
 </style>
