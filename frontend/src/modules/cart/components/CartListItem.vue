@@ -22,8 +22,9 @@
     <div :class="$style.button">
       <ButtonComponent
         type="button"
+        variant="border"
         :class="$style.edit"
-        @click="$emit('edit')"
+        @click="emits('edit')"
       >
         Изменить
       </ButtonComponent>
@@ -41,7 +42,7 @@ import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
 const count = defineModel<number>("count");
 defineProps<{ item: IPizzaItem }>();
 
-defineEmits<{
+const emits = defineEmits<{
   edit: [];
 }>();
 </script>
@@ -55,7 +56,7 @@ defineEmits<{
   align-items: flex-start;
 
   margin-bottom: 15px;
-  padding: 15px;
+  padding: 0 15px;
 
   border-bottom: 1px solid rgba(ds-colors.$green-500, 0.1);
 

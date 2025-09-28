@@ -1,11 +1,17 @@
 <template>
-  <div class="container">
+  <div :class="$style.cartContainer">
     <TitleComponent :class="$style.title" tag="h1"> Корзина </TitleComponent>
 
-    <CartList :items="cartStore.cartItems" />
+    <CartList :items="cartStore.cartItems" @edit="onEdit" />
 
-    <div v-if="cartStore.isLoadingExtras" class="$style.empty">Загрузка товаров...</div>
-    <AdditionalList v-else :class="$style.additional" :items="cartStore.extras" />
+    <div v-if="cartStore.isLoadingExtras" class="$style.empty">
+      Загрузка товаров...
+    </div>
+    <AdditionalList
+      v-else
+      :class="$style.additional"
+      :items="cartStore.extras"
+    />
 
     <CartForm
       v-model:delivery="cartStore.currentDelivery"
@@ -25,15 +31,20 @@ import CartList from "@/modules/cart/components/CartList.vue";
 import AdditionalList from "@/modules/cart/components/AdditionalList.vue";
 import { useCartStore } from "@/modules/cart/cartStore";
 import { useProfileStore } from "@/modules/profile/profileStore";
-import { onMounted } from "vue";
+import { usePizzaStore } from "@/modules/pizza/pizzaStore";
+import router from "@/router";
 
 const cartStore = useCartStore();
 
 const profileStore = useProfileStore();
+const pizzaStore = usePizzaStore();
 
-onMounted(() => {
-  cartStore.init();
-});
+function onEdit(id: string) {
+  const item = cartStore.cartItems.find((i) => i.id === id);
+  if (!item) return;
+  pizzaStore.loadFromCart(item);
+  router.push("/");
+}
 </script>
 
 <style module lang="scss">
@@ -41,6 +52,9 @@ onMounted(() => {
 @use "@/assets/scss/ds-system/ds-colors";
 @use "@/assets/scss/ds-system/ds-typography";
 
+.cartContainer {
+  width: 100%;
+}
 .title {
   margin-bottom: 15px;
 }

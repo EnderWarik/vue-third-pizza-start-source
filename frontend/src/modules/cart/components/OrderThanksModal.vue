@@ -29,8 +29,12 @@ import ButtonComponent from "@/common/components/ButtonComponent.vue";
 
 const modelValue = defineModel<boolean>({ default: false });
 
+const emits = defineEmits<{
+  close: [];
+}>();
 function close() {
   modelValue.value = false;
+  emits("close");
 }
 </script>
 
@@ -51,9 +55,34 @@ function close() {
   position: relative;
   width: 480px;
   max-width: 90vw;
-  padding: 24px;
+  padding: 64px 95px;
   border-radius: 12px;
   background-color: ds-colors.$white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  width: 420px;
+
+  &::before,
+  &::after {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    content: "";
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+  &::before {
+    top: 15px;
+    left: 15px;
+    background-image: url("/api/public/img/filling/ananas.svg");
+  }
+
+  &::after {
+    right: 15px;
+    bottom: 15px;
+    background-image: url("/api/public/img/filling/tomatoes.svg");
+  }
 }
 
 .popupTitle {
@@ -61,12 +90,17 @@ function close() {
 }
 
 .text {
-  margin: 0 0 16px 0;
+  margin: 24px 0;
+  text-align: center;
 }
 
 .actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+}
+
+.actions button {
+  padding: 16px 14px;
 }
 </style>
 

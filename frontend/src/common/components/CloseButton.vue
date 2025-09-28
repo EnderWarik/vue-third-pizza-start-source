@@ -8,7 +8,7 @@
     ]"
     type="button"
     :aria-label="innerAriaLabel"
-    @click="$emit('close')"
+    @click="emits('close')"
   />
 </template>
 
@@ -19,7 +19,7 @@ defineProps<{
   white?: boolean;
   innerAriaLabel: string;
 }>();
-defineEmits<{ close: [] }>();
+const emits = defineEmits<{ close: [] }>();
 </script>
 
 <style module lang="scss">

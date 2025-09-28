@@ -1,6 +1,6 @@
 <template>
   <div :class="[$style.row, small && $style.small]">
-    <TextInput v-model="modelValue" :name="name">
+    <TextInput v-model="modelValue" :name="name" :readonly="readonly">
       <span>{{ label }}</span>
     </TextInput>
   </div>
@@ -15,6 +15,7 @@ defineProps<{
   name: string;
   label: string;
   small?: boolean;
+  readonly?: boolean;
 }>();
 </script>
 

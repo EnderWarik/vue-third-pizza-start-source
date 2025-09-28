@@ -22,18 +22,15 @@
 <script setup lang="ts">
 import { IUserData } from "@/modules/profile/types/IUserData";
 import { useAuthStore } from "@/modules/auth/authStore";
-import { useRouter } from "vue-router";
 
 const props = defineProps<{
   user: IUserData | null;
 }>();
 
 const authStore = useAuthStore();
-const router = useRouter();
 
 async function onLogout() {
   await authStore.logout();
-  await router.replace("/login");
 }
 </script>
 

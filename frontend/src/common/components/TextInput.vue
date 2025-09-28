@@ -13,6 +13,7 @@
       :type="type"
       :name="name"
       :placeholder="placeholder"
+      :readonly="readonly"
     />
   </label>
 </template>
@@ -28,6 +29,7 @@ const { type = "text" } = defineProps<{
   placeholder?: string;
   type?: InputType;
   isBig?: boolean;
+  readonly?: boolean;
 }>();
 </script>
 

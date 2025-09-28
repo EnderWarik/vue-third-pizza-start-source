@@ -68,19 +68,20 @@ export const useProfileStore = defineStore("profileStore", () => {
     return correctAddress;
   }
 
-  async function fetchUser() {
-    user.value = await authApi.me();
-    console.log(user.value);
-  }
-
   function clearUser() {
     user.value = null;
+    addresses.value = [];
   }
   async function init(): Promise<void> {
     try {
       isLoading.value = true;
-      const [fetchedAddresses] = await Promise.all([profileApi.getAddresses()]);
-      addresses.value = fetchedAddresses;
+      const [userData, fetchedAddresses] = await Promise.all([
+        authApi.me(),
+        profileApi.getAddresses(),
+      ]);
+      user.value = userData;
+      const uid = user.value?.id;
+      addresses.value = fetchedAddresses.filter((a) => a.userId === uid);
     } finally {
       isLoading.value = false;
     }
@@ -91,7 +92,6 @@ export const useProfileStore = defineStore("profileStore", () => {
     saveAddressFromForm,
     addressForm,
     clearAddressForm,
-    fetchUser,
     user,
     isLoading,
     init,

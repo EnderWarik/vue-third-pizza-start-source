@@ -1,8 +1,8 @@
 <template>
-  <div class="sign-form">
+  <div :class="$style['form']">
     <CloseButton inner-aria-label="Закрыть форму авторизации" white />
 
-    <TitleComponent class="sign-form__title" tag="h1">
+    <TitleComponent :class="$style['title']" tag="h1">
       Авторизуйтесь на сайте
     </TitleComponent>
 
@@ -17,6 +17,7 @@
           <span>E-mail</span>
         </TextInput>
       </FormLine>
+      <p v-if="errors.email" :class="$style.error">{{ errors.email }}</p>
 
       <FormLine>
         <TextInput
@@ -28,6 +29,9 @@
           <span>Пароль</span>
         </TextInput>
       </FormLine>
+      <p v-if="errors.password" :class="$style.error">{{ errors.password }}</p>
+
+      <p v-if="errors.general" :class="$style.error">{{ errors.general }}</p>
 
       <ButtonComponent type="submit" :disabled="loading">
         {{ loading ? "Авторизация..." : "Авторизоваться" }}
@@ -45,59 +49,70 @@ import CloseButton from "@/common/components/CloseButton.vue";
 import FormLine from "@/modules/auth/components/FormLine.vue";
 import { useAuthStore } from "@/modules/auth/authStore";
 import { useRouter } from "vue-router";
+import { useProfileStore } from "@/modules/profile/profileStore";
 
+const profileStore = useProfileStore();
 const authStore = useAuthStore();
 const router = useRouter();
 
 const email = ref("");
 const password = ref("");
 const loading = ref(false);
+const errors = ref<{ email: string; password: string; general: string }>({
+  email: "",
+  password: "",
+  general: "",
+});
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-function validate(): string | null {
+function validate(): boolean {
   const e = email.value.trim();
   const p = password.value;
 
-  if (!e) return "Введите e-mail.";
-  if (!emailRe.test(e)) return "Некорректный e-mail.";
-  if (!p) return "Введите пароль.";
-  if (p.length < 8) return "Пароль должен быть не короче 8 символов.";
+  errors.value.email = "";
+  errors.value.password = "";
+  errors.value.general = "";
 
-  return null;
+  if (!e) errors.value.email = "Введите e-mail.";
+  else if (!emailRe.test(e)) errors.value.email = "Некорректный e-mail.";
+
+  if (!p) errors.value.password = "Введите пароль.";
+  else if (p.length < 8)
+    errors.value.password = "Пароль должен быть не короче 8 символов.";
+
+  return !errors.value.email && !errors.value.password;
 }
 
 async function onLogin() {
-  const err = validate();
-  if (err) {
-    alert(err);
-    return;
-  }
+  const okLocal = validate();
+  if (!okLocal) return;
 
   if (loading.value) return;
   loading.value = true;
   try {
     const ok = await authStore.login(email.value.trim(), password.value);
     if (ok) {
+      await profileStore.init();
       await router.push("/");
     } else {
-      alert("Неверный e-mail или пароль.");
+      errors.value.general = "Неверный e-mail или пароль.";
     }
   } catch (e) {
     console.error(e);
-    alert("Ошибка входа. Попробуйте ещё раз.");
+    errors.value.general = "Ошибка входа. Попробуйте ещё раз.";
   } finally {
     loading.value = false;
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style module lang="scss">
 @use "@/assets/scss/ds-system/ds-colors";
 @use "@/assets/scss/ds-system/ds-shadows";
 @use "@/assets/scss/mixins/m_center";
 
-.sign-form {
+.form {
   @include m_center.pf_center-all;
   z-index: 10;
   display: block;
@@ -114,8 +129,13 @@ async function onLogin() {
   }
 }
 
-.sign-form__title {
+.title {
   margin-bottom: 24px;
   text-align: center;
+}
+
+.error {
+  margin: 4px 0 12px;
+  color: ds-colors.$orange-100;
 }
 </style>

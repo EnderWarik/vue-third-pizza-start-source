@@ -1,6 +1,6 @@
 <template>
   <li :class="$style.item">
-    <DragComponent :transfer-data="ingredient">
+    <DragComponent :transfer-data="ingredient" :disabled="modelValue >= 3">
       <span
         :class="$style.filling"
         :style="{
@@ -10,7 +10,12 @@
         {{ ingredient.name }}
       </span>
     </DragComponent>
-    <CounterComponent v-model="modelValue" :class="$style.counter" />
+    <CounterComponent
+      v-model="modelValue"
+      :class="$style.counter"
+      :max="3"
+      :min="0"
+    />
   </li>
 </template>
 
@@ -23,7 +28,7 @@ defineProps<{
   ingredient: IPizzaIngredient;
   image: string;
 }>();
-const modelValue = defineModel<number | undefined>({ default: 0 });
+const modelValue = defineModel<number>({ default: 0 });
 </script>
 
 <style module lang="scss">

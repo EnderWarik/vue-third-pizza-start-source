@@ -1,7 +1,7 @@
 <template>
   <div
-    :class="$style.draggable"
-    :draggable="true"
+    :class="[$style.draggable, disabled && $style.disabled]"
+    :draggable="!disabled"
     @dragstart.self="onDrag"
     @dragover.prevent
     @dragenter.prevent
@@ -15,10 +15,11 @@ import { DRAG_TRANSFER_PAYLOAD_KEY, DRAG_TYPE } from "@/common/constants";
 
 const props = defineProps<{
   transferData: unknown;
+  disabled?: boolean;
 }>();
 
 function onDrag({ dataTransfer }: DragEvent) {
-  if (!dataTransfer) return;
+  if (!dataTransfer || props.disabled) return;
   dataTransfer.effectAllowed = DRAG_TYPE;
   dataTransfer.dropEffect = DRAG_TYPE;
   dataTransfer.setData(
@@ -32,7 +33,11 @@ function onDrag({ dataTransfer }: DragEvent) {
   cursor: grab;
 }
 
-.draggable:active {
+.draggable:not(.disabled):active {
   cursor: grabbing;
+}
+
+.disabled {
+  cursor: default;
 }
 </style>

@@ -3,7 +3,7 @@
     <ButtonComponent
       type="button"
       :class="[$style.btn, $style.minus]"
-      :disabled="modelValue <= 0"
+      :disabled="modelValue <= min"
       @click="decrement"
     >
       <span class="visually-hidden">Меньше</span>
@@ -20,6 +20,7 @@
     <ButtonComponent
       type="button"
       :class="[$style.btn, $style.plus]"
+      :disabled="modelValue >= max"
       @click="increment"
     >
       <span class="visually-hidden">Больше</span>

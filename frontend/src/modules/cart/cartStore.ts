@@ -1,19 +1,28 @@
 import { defineStore } from "pinia";
 import { IPizzaItem } from "@/modules/pizza/types/IPizzaItem";
 import { IAdditionalCartItem } from "@/modules/cart/types/IAdditionalCartItem";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { mapWithCount } from "@/helpers/mappers";
 import { BaseDeliveryEnum } from "@/modules/cart/types/BaseDeliveryEnum";
 import { useProfileStore } from "@/modules/profile/profileStore";
-import { useOrderStore } from "@/modules/order/orderStore";
 import { cartApi } from "@/modules/cart/cartApi";
+import { IOrder } from "@/modules/order/types/IOrder";
 import { orderApi } from "@/modules/order/orderApi";
 
 export const useCartStore = defineStore("cartStore", () => {
   const profileStore = useProfileStore();
-  const orderStore = useOrderStore();
 
   const cartItems = ref<IPizzaItem[]>([]);
+  watch(
+    () => cartItems.value.map((item) => item.count),
+    () => {
+      const filtered = cartItems.value.filter((item) => item.count > 0);
+      if (filtered.length !== cartItems.value.length) {
+        cartItems.value = filtered;
+      }
+    },
+    { flush: "post" },
+  );
   const isLoadingExtras = ref<boolean>(false);
   const extras = ref<IAdditionalCartItem[]>([]);
 
@@ -31,6 +40,12 @@ export const useCartStore = defineStore("cartStore", () => {
     cartItems.value.push(item);
   }
   const userPhone = ref<string>(profileStore.user?.phone || "");
+  function resetCart(): void {
+    cartItems.value = [];
+    extras.value = extras.value.map((e) => ({ ...e, count: 0 }));
+    currentDelivery.value = BaseDeliveryEnum.new;
+    userPhone.value = profileStore.user?.phone || "";
+  }
 
   async function init(): Promise<void> {
     try {
@@ -46,12 +61,19 @@ export const useCartStore = defineStore("cartStore", () => {
   }
 
   async function orderPizzas() {
-    if (!profileStore.user?.id) throw new Error("userId is required");
-    const userId = profileStore.user.id;
+    let userId = profileStore.user?.id;
+    if (!userId) userId = "0";
 
-    let addressPayload = null;
+    const form = profileStore.addressForm;
+
+    let addressPayload: {
+      street: string;
+      building: string;
+      flat?: string;
+      comment?: string;
+    } = form;
+
     if (currentDelivery.value === BaseDeliveryEnum.new) {
-      const form = profileStore.addressForm;
       addressPayload = {
         street: form.street,
         building: form.building,
@@ -63,7 +85,12 @@ export const useCartStore = defineStore("cartStore", () => {
         (address) => address.id === parseFloat(currentDelivery.value),
       );
       if (selectedAddress) {
-        addressPayload = { id: selectedAddress.id } as any;
+        addressPayload = {
+          street: selectedAddress.street,
+          building: selectedAddress.building,
+          flat: selectedAddress.flat || "",
+          comment: selectedAddress.comment || "",
+        };
       }
     }
 
@@ -93,7 +120,23 @@ export const useCartStore = defineStore("cartStore", () => {
 
     cartItems.value = [];
     extras.value = extras.value.map((e) => ({ ...e, count: 0 }));
-    await orderStore.init();
+    // await orderStore.init();
+  }
+
+  function loadOrder(order: IOrder) {
+    cartItems.value = order.pizzas.map((p) => ({ ...p }));
+
+    const byId = new Map(
+      (order.extras ?? []).map((e) => [e.id, e.count] as const),
+    );
+    extras.value = extras.value.map((e) => ({
+      ...e,
+      count: byId.get(e.id) ?? 0,
+    }));
+
+    if (order.phone) {
+      userPhone.value = order.phone;
+    }
   }
 
   return {
@@ -104,7 +147,9 @@ export const useCartStore = defineStore("cartStore", () => {
     userPhone,
     addPizzaItem,
     orderPizzas,
+    loadOrder,
     isLoadingExtras,
     init,
+    resetCart,
   };
 });

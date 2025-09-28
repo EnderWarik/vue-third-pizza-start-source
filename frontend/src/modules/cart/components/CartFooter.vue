@@ -3,9 +3,10 @@ import ButtonComponent from "@/common/components/ButtonComponent.vue";
 
 defineProps<{
   total: number;
+  disabled?: boolean;
 }>();
 
-defineEmits<{
+const emits = defineEmits<{
   more: [];
   submit: [];
 }>();
@@ -17,8 +18,8 @@ defineEmits<{
       <ButtonComponent
         type="button"
         variant="border"
-        :class="$style.moreButton"
-        @click="$emit('more')"
+        :class="[$style.moreButton, $style.moreButtonArrow]"
+        @click="emits('more')"
       >
         Хочу еще одну
       </ButtonComponent>
@@ -34,7 +35,11 @@ defineEmits<{
     </div>
 
     <div :class="$style.submit">
-      <ButtonComponent type="submit" @click="$emit('submit')">
+      <ButtonComponent
+        type="submit"
+        :disabled="disabled"
+        @click="emits('submit')"
+      >
         Оформить заказ
       </ButtonComponent>
     </div>
@@ -58,8 +63,22 @@ defineEmits<{
   margin-right: 16px;
 }
 .moreButton {
-  padding-top: 16px;
-  padding-bottom: 16px;
+  padding: 16px 40px;
+}
+
+.moreButtonArrow {
+  position: relative;
+}
+.moreButtonArrow::before {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  width: 18px;
+  height: 18px;
+  content: "";
+  background: url("@/assets/img/button-arrow.svg") no-repeat center;
+  background-size: contain;
+  transform: translateY(-50%);
 }
 
 .text {

@@ -1,19 +1,21 @@
 <template>
   <SheetComponent tag="section" :class="$style.order">
-    <OrderHeader
-      :order-number="orderNumber"
-      :total="total"
-      @delete="$emit('delete')"
-      @repeat="$emit('repeat')"
-    />
+    <template #no-content>
+      <OrderHeader
+        :order-number="orderNumber"
+        :total="total"
+        @delete="$emit('delete')"
+        @repeat="$emit('repeat')"
+      />
 
-    <OrderList :items="products" />
+      <OrderList :items="products" />
 
-    <OrderAdditionalList v-if="additionals?.length" :items="additionals!" />
+      <OrderAdditionalList v-if="additionals?.length" :items="additionals" />
 
-    <p v-if="address" :class="$style.address">
-      {{ address }}
-    </p>
+      <p v-if="address" :class="$style.address">
+        {{ address }}
+      </p>
+    </template>
   </SheetComponent>
 </template>
 <script setup lang="ts">
@@ -32,7 +34,7 @@ defineProps<{
   address?: string | null;
 }>();
 
-defineEmits<{
+const emits = defineEmits<{
   delete: [];
   repeat: [];
 }>();
@@ -51,5 +53,12 @@ defineEmits<{
   margin: 0;
   padding: 16px 10px;
   border-top: 1px solid rgba(ds-colors.$green-500, 0.1);
+  position: relative;
+}
+
+.address::before {
+  content: "Адрес доставки: ";
+  font-weight: 400;
+  margin-right: 6px;
 }
 </style>
