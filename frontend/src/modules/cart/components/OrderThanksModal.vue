@@ -1,0 +1,82 @@
+<template>
+  <Transition name="fade">
+    <div v-if="modelValue" :class="$style.backdrop" @click.self="close">
+      <div :class="$style.popup">
+        <CloseButton inner-aria-label="Закрыть попап" @close="close" />
+
+        <div :class="$style.popupTitle">
+          <TitleComponent size="big" tag="h2">Спасибо за заказ</TitleComponent>
+        </div>
+
+        <p :class="$style.text">
+          Мы начали готовить Ваш заказ, скоро привезём его вам ;)
+        </p>
+
+        <div :class="$style.actions">
+          <ButtonComponent type="button" @click="close">
+            Отлично, я жду!
+          </ButtonComponent>
+        </div>
+      </div>
+    </div>
+  </Transition>
+</template>
+
+<script setup lang="ts">
+import CloseButton from "@/common/components/CloseButton.vue";
+import TitleComponent from "@/common/components/TitleComponent.vue";
+import ButtonComponent from "@/common/components/ButtonComponent.vue";
+
+const modelValue = defineModel<boolean>({ default: false });
+
+function close() {
+  modelValue.value = false;
+}
+</script>
+
+<style module lang="scss">
+@use "@/assets/scss/ds-system/ds-colors";
+
+.backdrop {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(ds-colors.$black, 0.5);
+}
+
+.popup {
+  position: relative;
+  width: 480px;
+  max-width: 90vw;
+  padding: 24px;
+  border-radius: 12px;
+  background-color: ds-colors.$white;
+}
+
+.popupTitle {
+  margin-bottom: 12px;
+}
+
+.text {
+  margin: 0 0 16px 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+</style>
+
+<style scoped lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

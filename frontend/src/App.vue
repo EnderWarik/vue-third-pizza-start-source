@@ -1,7 +1,9 @@
 <template>
   <RouterView v-slot="{ Component, route }">
     <component :is="route.meta.layout || 'div'">
-      <component :is="Component" />
+      <Transition name="slide" mode="out-in">
+        <component :is="Component" :key="route.fullPath" />
+      </Transition>
     </component>
   </RouterView>
 </template>
@@ -17,14 +19,31 @@ const authStore = useAuthStore();
 const profileStore = useProfileStore();
 const pizzaStore = usePizzaStore();
 const cartStore = useCartStore();
-onMounted(async () => {
+onMounted(() => {
   if (authStore.isAuthenticated) {
-    await profileStore.fetchUser();
+    profileStore.fetchUser();
   }
-  await pizzaStore.init();
-  await cartStore.init();
+  pizzaStore.init();
+  cartStore.init();
 });
 </script>
 <style lang="scss">
 @use "@/assets/scss/app" as *;
+</style>
+
+<style scoped lang="scss">
+.slide-enter-active,
+.slide-leave-active {
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+.slide-enter-from {
+  opacity: 0;
+  transform: translateX(10px);
+}
+.slide-leave-to {
+  opacity: 0;
+  transform: translateX(-10px);
+}
 </style>
