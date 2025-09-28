@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="$style.cartContainer">
     <TitleComponent :class="$style.title" tag="h1"> Корзина </TitleComponent>
 
     <CartList :items="cartStore.cartItems" @edit="onEdit" />
@@ -52,6 +52,9 @@ function onEdit(id: string) {
 @use "@/assets/scss/ds-system/ds-colors";
 @use "@/assets/scss/ds-system/ds-typography";
 
+.cartContainer {
+  width: 100%;
+}
 .title {
   margin-bottom: 15px;
 }

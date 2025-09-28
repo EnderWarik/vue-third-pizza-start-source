@@ -18,7 +18,7 @@
 
     <ContentResult
       :total="totalPrice"
-      :disabled="!pizzaName"
+      :disabled="!pizzaName?.trim()"
       button-text="Готовьте!"
       @submit="emits('submit')"
     />

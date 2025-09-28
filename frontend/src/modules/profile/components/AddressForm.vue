@@ -1,5 +1,5 @@
 <template>
-  <form :class="$style.form" @submit.prevent="emits('submit')">
+  <form :class="$style.form" @submit.prevent="onLocalSubmit">
     <div :class="$style.header">
       <b>{{ title ?? "Адрес" }}</b>
     </div>
@@ -13,6 +13,7 @@
       >
         <span>Название адреса*</span>
       </TextInput>
+      <p v-if="errors.name" :class="$style.error">{{ errors.name }}</p>
 
       <div :class="$style.row">
         <div :class="[$style.input, $style.normal]">
@@ -24,6 +25,7 @@
           >
             <span>Улица*</span>
           </TextInput>
+          <p v-if="errors.street" :class="$style.error">{{ errors.street }}</p>
         </div>
         <div :class="[$style.input, $style.small]">
           <TextInput
@@ -34,6 +36,9 @@
           >
             <span>Дом*</span>
           </TextInput>
+          <p v-if="errors.building" :class="$style.error">
+            {{ errors.building }}
+          </p>
         </div>
         <div :class="[$style.input, $style.small]">
           <TextInput
@@ -68,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineModel } from "vue";
+import { defineModel, ref } from "vue";
 import TextInput from "@/common/components/TextInput.vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
 
@@ -86,6 +91,24 @@ const emits = defineEmits<{
 }>();
 
 const model = defineModel<AddressDraftType>({ required: true });
+
+const errors = ref<{ name: string; street: string; building: string }>({
+  name: "",
+  street: "",
+  building: "",
+});
+
+function validate(): boolean {
+  errors.value.name = model.value.name?.trim() ? "" : "Введите название.";
+  errors.value.street = model.value.street?.trim() ? "" : "Введите улицу.";
+  errors.value.building = model.value.building?.trim() ? "" : "Введите дом.";
+  return !errors.value.name && !errors.value.street && !errors.value.building;
+}
+
+function onLocalSubmit(): void {
+  if (!validate()) return;
+  emits("submit");
+}
 </script>
 
 <style module lang="scss">
@@ -140,5 +163,9 @@ const model = defineModel<AddressDraftType>({ required: true });
     margin-left: 16px;
     padding: 16px 27px;
   }
+}
+
+.error {
+  color: ds-colors.$orange-100;
 }
 </style>

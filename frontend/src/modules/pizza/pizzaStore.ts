@@ -24,7 +24,7 @@ export const usePizzaStore = defineStore("pizzaStore", () => {
   const selectedPizzaSizeId = ref<number>(0);
   const selectedPizzaSauceId = ref<number>(0);
 
-  const pizzaName = ref<string>("Моя пицца");
+  const pizzaName = ref<string>("");
   const editingItemId = ref<string | null>(null);
 
   async function init(): Promise<void> {
@@ -114,9 +114,14 @@ export const usePizzaStore = defineStore("pizzaStore", () => {
   }
 
   function addToCart(): void {
+    const nameTrimmed = pizzaName.value.trim();
+    if (!nameTrimmed) {
+      alert("Введите название пиццы");
+      return;
+    }
     const pizza: IPizzaItem = {
       id: editingItemId.value ?? uuidv4(),
-      name: pizzaName.value,
+      name: nameTrimmed,
       size: currentSize.value,
       dough: currentDough.value,
       sauce: currentSauce.value,
@@ -125,7 +130,9 @@ export const usePizzaStore = defineStore("pizzaStore", () => {
       price: finalPrice.value,
     };
     if (editingItemId.value) {
-      const idx = cartStore.cartItems.findIndex((i) => i.id === editingItemId.value);
+      const idx = cartStore.cartItems.findIndex(
+        (i) => i.id === editingItemId.value,
+      );
       if (idx !== -1) {
         cartStore.cartItems[idx] = pizza;
       } else {
@@ -139,7 +146,7 @@ export const usePizzaStore = defineStore("pizzaStore", () => {
   }
 
   function loadFromCart(item: IPizzaItem): void {
-    editingItemId.value = item.id as string;
+    editingItemId.value = item.id;
     pizzaName.value = item.name;
     selectedPizzaDoughId.value =
       item.dough?.id ?? pizzaDoughs.value[0]?.id ?? 0;
@@ -153,7 +160,7 @@ export const usePizzaStore = defineStore("pizzaStore", () => {
   }
 
   function resetCurrentPizza(): void {
-    pizzaName.value = "Моя пицца";
+    pizzaName.value = "";
     selectedPizzaDoughId.value = pizzaDoughs.value[0]?.id ?? 0;
     selectedPizzaSizeId.value = pizzaSizes.value[0]?.id ?? 0;
     selectedPizzaSauceId.value = sauces.value[0]?.id ?? 0;

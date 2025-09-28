@@ -29,8 +29,12 @@ import ButtonComponent from "@/common/components/ButtonComponent.vue";
 
 const modelValue = defineModel<boolean>({ default: false });
 
+const emits = defineEmits<{
+  close: [];
+}>();
 function close() {
   modelValue.value = false;
+  emits("close");
 }
 </script>
 

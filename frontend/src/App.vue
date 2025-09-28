@@ -21,8 +21,9 @@ const pizzaStore = usePizzaStore();
 const cartStore = useCartStore();
 onMounted(() => {
   if (authStore.isAuthenticated) {
-    profileStore.fetchUser();
+    profileStore.init();
   }
+
   pizzaStore.init();
   cartStore.init();
 });

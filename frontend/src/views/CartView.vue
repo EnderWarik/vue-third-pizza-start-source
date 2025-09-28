@@ -9,7 +9,7 @@
       @more="router.push('/')"
       @submit="onSubmitCart"
     />
-    <OrderThanksModal v-model="isThanksOpen" />
+    <OrderThanksModal v-model="isThanksOpen" @close="onClose" />
   </form>
 </template>
 <script setup lang="ts">
@@ -20,12 +20,19 @@ import { useCartStore } from "@/modules/cart/cartStore";
 import { useRouter } from "vue-router";
 import { computed, ref } from "vue";
 import { useProfileStore } from "@/modules/profile/profileStore";
+import { useAuthStore } from "@/modules/auth/authStore";
+import { BaseDeliveryEnum } from "@/modules/cart/types/BaseDeliveryEnum";
+import { usePizzaStore } from "@/modules/pizza/pizzaStore";
 
 const cartStore = useCartStore();
 const profileStore = useProfileStore();
+const authStore = useAuthStore();
+const pizzaStore = usePizzaStore();
 const router = useRouter();
 const isThanksOpen = ref(false);
 const isSubmitDisabled = computed(() => {
+  if (cartStore.currentDelivery === BaseDeliveryEnum.self)
+    return !cartStore.userPhone?.trim();
   return (
     !cartStore.userPhone?.trim() ||
     !profileStore.addressForm.street?.trim() ||
@@ -37,6 +44,16 @@ function onSubmitCart() {
   cartStore.orderPizzas().then(() => {
     isThanksOpen.value = true;
   });
+}
+
+function onClose() {
+  pizzaStore.resetCurrentPizza();
+  cartStore.resetCart();
+  if (authStore.isAuthenticated) {
+    router.push("/orders");
+  } else {
+    router.push("/");
+  }
 }
 </script>
 

@@ -6,6 +6,7 @@
         v-model="delivery"
         name="delivery"
         :options="[
+          { value: BaseDeliveryEnum.self, text: 'Заберу сам' },
           { value: BaseDeliveryEnum.new, text: 'Новый адрес' },
           ...additionalAddresses,
         ]"
@@ -20,12 +21,29 @@
       <span>Контактный телефон:</span>
     </TextInput>
 
-    <div v-if="delivery === 'new'" :class="$style.address">
-      <span :class="$style.label">Новый адрес:</span>
+    <div v-if="delivery !== BaseDeliveryEnum.self" :class="$style.address">
+      <span :class="$style.label">Адрес:</span>
 
-      <FormLine v-model="street" name="street" label="Улица*" />
-      <FormLine v-model="house" name="house" label="Дом*" small />
-      <FormLine v-model="apartment" name="apartment" label="Квартира" small />
+      <FormLine
+        v-model="street"
+        name="street"
+        label="Улица*"
+        :readonly="isReadonly"
+      />
+      <FormLine
+        v-model="house"
+        name="house"
+        label="Дом*"
+        small
+        :readonly="isReadonly"
+      />
+      <FormLine
+        v-model="apartment"
+        name="apartment"
+        label="Квартира"
+        small
+        :readonly="isReadonly"
+      />
     </div>
   </div>
 </template>
@@ -35,7 +53,7 @@ import TextInput from "@/common/components/TextInput.vue";
 import DropdownComponent from "@/common/components/DropdownComponent.vue";
 import FormLine from "@/modules/cart/components/FormLine.vue";
 import { IUserAddress } from "@/modules/profile/types/IUserAddress";
-import { computed } from "vue";
+import { computed, watch } from "vue";
 import { BaseDeliveryEnum } from "@/modules/cart/types/BaseDeliveryEnum";
 
 const delivery = defineModel<string>("delivery");
@@ -54,6 +72,36 @@ const apartment = defineModel<string>("apartment", { default: "" });
 const props = defineProps<{
   addresses: IUserAddress[];
 }>();
+
+const selectedAddress = computed<IUserAddress | null>(() => {
+  const val = delivery.value;
+  if (!val || val === BaseDeliveryEnum.self || val === BaseDeliveryEnum.new)
+    return null;
+  return props.addresses.find((a) => String(a.id) === val) ?? null;
+});
+
+const isReadonly = computed(() => selectedAddress.value !== null);
+
+watch(
+  selectedAddress,
+  (addr) => {
+    if (addr) {
+      street.value = addr.street ?? "";
+      house.value = addr.building ?? "";
+      apartment.value = addr.flat ?? "";
+    } else {
+      if (
+        delivery.value === BaseDeliveryEnum.self ||
+        delivery.value === BaseDeliveryEnum.new
+      ) {
+        street.value = "";
+        house.value = "";
+        apartment.value = "";
+      }
+    }
+  },
+  { immediate: true },
+);
 </script>
 
 <style module lang="scss">

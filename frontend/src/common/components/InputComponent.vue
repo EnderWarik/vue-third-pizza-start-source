@@ -1,5 +1,6 @@
 <template>
   <input
+    v-bind="$attrs"
     v-model="modelValue"
     :type="type"
     :name="name"
@@ -9,7 +10,6 @@
     :placeholder="placeholder"
     :readonly="readonly"
     :disabled="disabled"
-    v-bind="$attrs"
   />
 </template>
 <script setup lang="ts">
