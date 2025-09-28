@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HeaderLayout from "@/layouts/HeaderLayout.vue";
 import SidebarLayout from "@/layouts/SidebarLayout.vue";
+import { authMiddleware } from "@/router/routerGuards";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -11,6 +12,7 @@ const router = createRouter({
       component: () => import("@/views/HomeView.vue"),
       meta: {
         layout: HeaderLayout,
+        public: true,
       },
     },
     {
@@ -27,6 +29,7 @@ const router = createRouter({
       component: () => import("@/views/CartView.vue"),
       meta: {
         layout: HeaderLayout,
+        public: true,
       },
     },
     {
@@ -61,3 +64,4 @@ const router = createRouter({
 });
 
 export default router;
+router.beforeEach(authMiddleware);

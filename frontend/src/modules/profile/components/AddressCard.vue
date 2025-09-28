@@ -3,12 +3,9 @@
     <SheetComponent :class="$style.card">
       <div :class="$style.header">
         <b>{{ title }}</b>
-        <div>
-          <ButtonComponent class="button" type="button" @click="$emit('edit')">
-            <span class="visually-hidden">Изменить адрес</span>
-            Изменить
-          </ButtonComponent>
-        </div>
+        <button type="button" :class="$style.icon" @click="$emit('edit')">
+          <span class="visually-hidden">Изменить адрес</span>
+        </button>
       </div>
 
       <p :class="$style.address">{{ address }}</p>
@@ -18,7 +15,6 @@
 </template>
 <script setup lang="ts">
 import SheetComponent from "@/common/components/SheetComponent.vue";
-import ButtonComponent from "@/common/components/ButtonComponent.vue";
 
 defineProps<{
   title: string;
@@ -59,5 +55,28 @@ defineEmits<{ edit: [] }>();
   @include ds-typography.l-s11-h13;
   display: block;
   padding: 0 16px;
+}
+
+.icon {
+  cursor: pointer;
+  display: block;
+  overflow: hidden;
+  width: 32px;
+  height: 32px;
+  transition: 0.3s;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  background-color: ds-colors.$white;
+  background-image: url("/api/public/img/edit.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* stack inner content like in reference card */
+.card :global(div[class*="content"]) {
+  display: block;
+  padding: 0;
+  border-top: none;
 }
 </style>

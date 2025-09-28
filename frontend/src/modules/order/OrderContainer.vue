@@ -8,6 +8,8 @@
         :products="order.pizzas"
         :additionals="order.extras"
         :address="getCorrectAddress(order)"
+        @delete="orderStore.deleteOrder(order.id)"
+        @repeat="repeatOrder(order)"
       />
     </template>
   </main>
@@ -18,16 +20,24 @@ import { useOrderStore } from "@/modules/order/orderStore";
 import concatAddress from "@/helpers/concatAddress";
 import { IOrder } from "@/modules/order/types/IOrder";
 import { onMounted } from "vue";
+import { useCartStore } from "@/modules/cart/cartStore";
+import router from "@/router";
 
 function getCorrectAddress(order: IOrder) {
   if (order.address) return concatAddress(order.address);
   return null;
 }
 const orderStore = useOrderStore();
+const cartStore = useCartStore();
 
 onMounted(() => {
   orderStore.init();
 });
+
+function repeatOrder(order: IOrder) {
+  cartStore.loadOrder(order);
+  router.push( '/cart' );
+}
 </script>
 <style scoped lang="scss">
 @use "@/assets/scss/ds-system/ds-colors";

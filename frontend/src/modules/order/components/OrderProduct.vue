@@ -11,10 +11,10 @@
       <h2 :class="$style.title">{{ name }}</h2>
 
       <p :class="$style.metaParagraph">
-        {{ size }}, на {{ dough }} тесте<br />
-        Соус: {{ sauce }}<br />
+        {{ size.name }}, на {{ dough.name }} тесте<br />
+        Соус: {{ sauce.name }}<br />
         <template v-if="fillings?.length">
-          Начинка: {{ fillings.join(", ") }}
+          Начинка: {{ fillings.map((f) => f.name).join(", ") }}
         </template>
       </p>
     </div>

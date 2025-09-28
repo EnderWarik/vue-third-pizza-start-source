@@ -29,17 +29,16 @@
       @cancel="closeEditor"
     />
 
-    <div>
+    <div :class="$style.addButton">
       <ButtonComponent type="button" variant="border" @click="openNew"
         >Добавить новый адрес</ButtonComponent
       >
     </div>
   </div>
-  
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useProfileStore } from "@/modules/profile/profileStore";
 import AddressLine from "@/modules/profile/components/AddressLine.vue";
 import UserInfo from "@/modules/profile/components/UserInfo.vue";
@@ -47,7 +46,6 @@ import AddressForm from "@/modules/profile/components/AddressForm.vue";
 import ButtonComponent from "@/common/components/ButtonComponent.vue";
 import { IUserAddress } from "@/modules/profile/types/IUserAddress";
 import { AddressDraftType } from "@/modules/profile/types/draft";
-import { onMounted } from "vue";
 
 const profileStore = useProfileStore();
 
@@ -92,3 +90,10 @@ onMounted(() => {
   profileStore.init();
 });
 </script>
+<style module lang="scss">
+.addButton :global(button) {
+  min-width: 220px;
+  margin-top: 20px;
+  padding: 16px 27px;
+}
+</style>

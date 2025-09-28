@@ -80,7 +80,8 @@ export const useProfileStore = defineStore("profileStore", () => {
     try {
       isLoading.value = true;
       const [fetchedAddresses] = await Promise.all([profileApi.getAddresses()]);
-      addresses.value = fetchedAddresses;
+      const uid = user.value?.id;
+      addresses.value = fetchedAddresses.filter((a) => a.userId === uid);
     } finally {
       isLoading.value = false;
     }

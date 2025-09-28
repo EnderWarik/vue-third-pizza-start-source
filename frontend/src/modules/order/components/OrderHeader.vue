@@ -12,14 +12,14 @@
       <ButtonComponent
         type="button"
         :class="[$style.btn, $style.btnBorder]"
-        @click="$emit('delete')"
+        @click="emits('delete')"
       >
         Удалить
       </ButtonComponent>
       <ButtonComponent
         type="button"
         :class="$style.btn"
-        @click="$emit('repeat')"
+        @click="emits('repeat')"
       >
         Повторить
       </ButtonComponent>
@@ -34,7 +34,7 @@ defineProps<{
   total: number;
 }>();
 
-defineEmits<{
+const emits = defineEmits<{
   delete: [];
   repeat: [];
 }>();

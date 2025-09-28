@@ -56,7 +56,7 @@ class HttpClient {
       (error: AxiosError) => {
         if (error.response?.status === 401) {
           const authStore = useAuthStore();
-          authStore.logout();
+          authStore.clearToken();
         }
 
         const dataAny = error.response?.data as any;

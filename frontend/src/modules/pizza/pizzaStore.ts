@@ -25,16 +25,18 @@ export const usePizzaStore = defineStore("pizzaStore", () => {
   const selectedPizzaSauceId = ref<number>(0);
 
   const pizzaName = ref<string>("Моя пицца");
+  const editingItemId = ref<string | null>(null);
 
   async function init(): Promise<void> {
     try {
       isLoading.value = true;
-      const [doughs, ingredientsResp, saucesResp, sizesResp] = await Promise.all([
-        pizzaApi.getDoughs(),
-        pizzaApi.getIngredients(),
-        pizzaApi.getSauces(),
-        pizzaApi.getSizes(),
-      ]);
+      const [doughs, ingredientsResp, saucesResp, sizesResp] =
+        await Promise.all([
+          pizzaApi.getDoughs(),
+          pizzaApi.getIngredients(),
+          pizzaApi.getSauces(),
+          pizzaApi.getSizes(),
+        ]);
 
       pizzaDoughs.value = doughs;
       ingredients.value = mapWithCount(ingredientsResp);
@@ -49,11 +51,11 @@ export const usePizzaStore = defineStore("pizzaStore", () => {
     }
   }
 
-  const currentDough = computed<IPizzaDough | null>(() => {
+  const currentDough = computed<IPizzaDough>(() => {
     return (
       pizzaDoughs.value.find(
         (item) => item.id === selectedPizzaDoughId.value,
-      ) || null
+      ) || pizzaDoughs.value[0]
     );
   });
 
@@ -61,20 +63,20 @@ export const usePizzaStore = defineStore("pizzaStore", () => {
     return currentDough.value?.price || 0;
   });
 
-  const currentSize = computed<IPizzaSize | null>(() => {
+  const currentSize = computed<IPizzaSize>(() => {
     return (
       pizzaSizes.value.find((item) => item.id === selectedPizzaSizeId.value) ||
-      null
+      pizzaSizes.value[0]
     );
   });
   const sizePrice = computed(() => {
     return currentSize.value?.multiplier || 0;
   });
 
-  const currentSauce = computed<IPizzaSauce | null>(() => {
+  const currentSauce = computed<IPizzaSauce>(() => {
     return (
       sauces.value.find((item) => item.id === selectedPizzaSauceId.value) ||
-      null
+      sauces.value[0]
     );
   });
   const saucePrice = computed(() => {
@@ -113,7 +115,7 @@ export const usePizzaStore = defineStore("pizzaStore", () => {
 
   function addToCart(): void {
     const pizza: IPizzaItem = {
-      id: uuidv4(),
+      id: editingItemId.value ?? uuidv4(),
       name: pizzaName.value,
       size: currentSize.value,
       dough: currentDough.value,
@@ -122,7 +124,40 @@ export const usePizzaStore = defineStore("pizzaStore", () => {
       count: 1,
       price: finalPrice.value,
     };
-    cartStore.addPizzaItem(pizza);
+    if (editingItemId.value) {
+      const idx = cartStore.cartItems.findIndex((i) => i.id === editingItemId.value);
+      if (idx !== -1) {
+        cartStore.cartItems[idx] = pizza;
+      } else {
+        cartStore.addPizzaItem(pizza);
+      }
+      editingItemId.value = null;
+    } else {
+      cartStore.addPizzaItem(pizza);
+    }
+    resetCurrentPizza();
+  }
+
+  function loadFromCart(item: IPizzaItem): void {
+    editingItemId.value = item.id as string;
+    pizzaName.value = item.name;
+    selectedPizzaDoughId.value =
+      item.dough?.id ?? pizzaDoughs.value[0]?.id ?? 0;
+    selectedPizzaSizeId.value = item.size?.id ?? pizzaSizes.value[0]?.id ?? 0;
+    selectedPizzaSauceId.value = item.sauce?.id ?? sauces.value[0]?.id ?? 0;
+    const countById = new Map(item.fillings.map((f) => [f.id, f.count]));
+    ingredients.value = ingredients.value.map((ing) => ({
+      ...ing,
+      count: countById.get(ing.id) ?? 0,
+    }));
+  }
+
+  function resetCurrentPizza(): void {
+    pizzaName.value = "Моя пицца";
+    selectedPizzaDoughId.value = pizzaDoughs.value[0]?.id ?? 0;
+    selectedPizzaSizeId.value = pizzaSizes.value[0]?.id ?? 0;
+    selectedPizzaSauceId.value = sauces.value[0]?.id ?? 0;
+    ingredients.value = ingredients.value.map((ing) => ({ ...ing, count: 0 }));
   }
 
   return {
@@ -139,6 +174,8 @@ export const usePizzaStore = defineStore("pizzaStore", () => {
     pizzaFillings,
     updateFillings,
     addToCart,
+    loadFromCart,
+    resetCurrentPizza,
     init,
   };
 });

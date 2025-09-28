@@ -15,34 +15,44 @@
       </TextInput>
 
       <div :class="$style.row">
-        <TextInput
-          v-model="model.street"
-          name="addr-street"
-          placeholder="Улица"
-          required
-        >
-          <span>Улица*</span>
-        </TextInput>
+        <div :class="[$style.input, $style.normal]">
+          <TextInput
+            v-model="model.street"
+            name="addr-street"
+            placeholder="Улица"
+            required
+          >
+            <span>Улица*</span>
+          </TextInput>
+        </div>
+        <div :class="[$style.input, $style.small]">
+          <TextInput
+            v-model="model.building"
+            name="addr-building"
+            placeholder="Дом"
+            required
+          >
+            <span>Дом*</span>
+          </TextInput>
+        </div>
+        <div :class="[$style.input, $style.small]">
+          <TextInput
+            v-model="model.flat"
+            name="addr-flat"
+            placeholder="Кв. (необязательно)"
+          >
+            <span>Квартира</span>
+          </TextInput>
+        </div>
       </div>
 
-      <div :class="$style.row">
-        <TextInput
-          v-model="model.building"
-          name="addr-building"
-          placeholder="Дом"
-          required
-        >
-          <span>Дом*</span>
-        </TextInput>
-
-        <TextInput
-          v-model="model.flat"
-          name="addr-flat"
-          placeholder="Кв. (необязательно)"
-        >
-          <span>Квартира</span>
-        </TextInput>
-      </div>
+      <TextInput
+        v-model="model.comment"
+        name="addr-comment"
+        placeholder="Введите комментарий"
+      >
+        <span>Комментарий</span>
+      </TextInput>
     </div>
 
     <div :class="$style.actions">
@@ -103,10 +113,7 @@ const model = defineModel<AddressDraftType>({ required: true });
 }
 
 .body {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 80%;
+  display: block;
   padding: 16px;
 }
 
@@ -114,11 +121,15 @@ const model = defineModel<AddressDraftType>({ required: true });
   width: 100%;
   margin-bottom: 16px;
 }
+.row {
+  display: flex;
+  gap: 16px;
+}
 .normal {
-  width: 60.5%;
+  flex: 1 1 60.5%;
 }
 .small {
-  width: 18%;
+  flex: 0 0 18%;
 }
 
 .actions {

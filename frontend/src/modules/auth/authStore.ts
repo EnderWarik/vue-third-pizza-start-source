@@ -18,6 +18,10 @@ export const useAuthStore = defineStore("authStore", () => {
   }
   async function logout() {
     await authApi.logout();
+    clearToken();
+  }
+
+  function clearToken() {
     token.value = null;
     TokenStorage.clear();
     profileStore.clearUser();
@@ -26,5 +30,6 @@ export const useAuthStore = defineStore("authStore", () => {
     isAuthenticated,
     login,
     logout,
+    clearToken,
   };
 });

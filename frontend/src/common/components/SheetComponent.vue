@@ -29,7 +29,6 @@ defineProps<{
 @use "@/assets/scss/ds-system/ds-shadows";
 
 .sheet {
-  padding-top: 15px;
   border-radius: 8px;
   background-color: ds-colors.$white;
   box-shadow: ds-shadows.$shadow-light;
