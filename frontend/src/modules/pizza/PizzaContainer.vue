@@ -2,6 +2,7 @@
   <form action="#" method="post">
     <div :class="$style.wrapper">
       <TitleComponent size="big" tag="h1">Конструктор пиццы</TitleComponent>
+      <div v-if="pizzaStore.isLoading">Загрузка...</div>
       <DoughSelector
         v-model="pizzaStore.selectedPizzaDoughId"
         :pizza-doughs="pizzaStore.pizzaDoughs"
@@ -36,8 +37,13 @@ import SizeSelector from "@/modules/pizza/size/SizeSelector.vue";
 import IngredientsSelector from "@/modules/pizza/ingredient/IngredientsSelector.vue";
 import { usePizzaStore } from "@/modules/pizza/pizzaStore";
 import ContentPizza from "@/modules/pizza/content/ContentPizza.vue";
+import { onMounted } from "vue";
 
 const pizzaStore = usePizzaStore();
+
+onMounted(() => {
+  pizzaStore.init();
+});
 </script>
 
 <style module lang="scss">

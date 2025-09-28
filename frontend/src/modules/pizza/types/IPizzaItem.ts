@@ -6,9 +6,9 @@ import { IPizzaSauce } from "@/modules/pizza/types/IPizzaSauce";
 export type IPizzaItem = {
   id: string;
   name: string;
-  size: IPizzaSize | null;
-  dough: IPizzaDough | null;
-  sauce: IPizzaSauce | null;
+  size: IPizzaSize;
+  dough: IPizzaDough;
+  sauce: IPizzaSauce;
   fillings: IPizzaIngredient[] | [];
   count: number;
   price: number;

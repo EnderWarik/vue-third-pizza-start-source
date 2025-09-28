@@ -6,13 +6,11 @@
         v-model="delivery"
         name="delivery"
         :options="[
-          { value: BaseDeliveryEnum.self, text: 'Заберу сам' },
           { value: BaseDeliveryEnum.new, text: 'Новый адрес' },
           ...additionalAddresses,
         ]"
       />
     </label>
-
     <TextInput
       v-model="phone"
       name="tel"

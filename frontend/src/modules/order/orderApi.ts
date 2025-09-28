@@ -3,7 +3,7 @@ import { IApiOrderCreateResponse } from "@/modules/order/types/api/IApiOrderCrea
 import { IApiOrderCreateRequest } from "@/modules/order/types/api/IApiOrderCreateRequest";
 import { IApiOrderGetResponse } from "@/modules/order/types/api/IApiOrderGetResponse";
 
-export const pizzaApi = {
+export const orderApi = {
   async deleteOrder(id: number): Promise<void> {
     return httpClient.delete<void>(`/orders/${id}`);
   },
