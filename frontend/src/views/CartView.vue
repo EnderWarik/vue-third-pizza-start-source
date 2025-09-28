@@ -8,20 +8,26 @@
       @more="router.push('/')"
       @submit="onSubmitCart"
     />
+    <OrderThanksModal v-model="isThanksOpen" />
   </form>
 </template>
 <script setup lang="ts">
 import CartContainer from "@/modules/cart/CartContainer.vue";
 import CartFooter from "@/modules/cart/components/CartFooter.vue";
+import OrderThanksModal from "@/modules/cart/components/OrderThanksModal.vue";
 import { useCartStore } from "@/modules/cart/cartStore";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 const cartStore = useCartStore();
 
 const router = useRouter();
+const isThanksOpen = ref(false);
 
 function onSubmitCart() {
-  cartStore.orderPizzas();
+  cartStore.orderPizzas().then(() => {
+    isThanksOpen.value = true;
+  });
 }
 </script>
 

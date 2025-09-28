@@ -1,38 +1,41 @@
 <template>
-  <div v-if="profileStore.isLoading">Загрузка профиля...</div>
-  <UserInfo
-    v-else-if="profileStore.user"
-    :name="profileStore.user.name"
-    :phone="profileStore.user.phone"
-    :avatar="profileStore.user.avatar"
-  />
+  <div>
+    <div v-if="profileStore.isLoading">Загрузка профиля...</div>
+    <UserInfo
+      v-else-if="profileStore.user"
+      :name="profileStore.user.name"
+      :phone="profileStore.user.phone"
+      :avatar="profileStore.user.avatar"
+    />
 
-  <template v-for="address in profileStore.addresses" :key="address.id">
-    <AddressLine
-      :address="address"
-      :is-open="openId === address.id"
-      form-title="Изменить адрес"
-      @edit="openEdit"
-      @save="saveAddress"
-      @remove="removeAddress"
+    <template v-for="address in profileStore.addresses" :key="address.id">
+      <AddressLine
+        :address="address"
+        :is-open="openId === address.id"
+        form-title="Изменить адрес"
+        @edit="openEdit"
+        @save="saveAddress"
+        @remove="removeAddress"
+        @cancel="closeEditor"
+      />
+    </template>
+
+    <AddressForm
+      v-if="openId === -1"
+      v-model="newDraft"
+      :is-new="true"
+      title="Новый адрес"
+      @submit="saveAddress({ id: null, form: newDraft })"
       @cancel="closeEditor"
     />
-  </template>
 
-  <AddressForm
-    v-if="openId === -1"
-    v-model="newDraft"
-    :is-new="true"
-    title="Новый адрес"
-    @submit="saveAddress({ id: null, form: newDraft })"
-    @cancel="closeEditor"
-  />
-
-  <div>
-    <ButtonComponent type="button" variant="border" @click="openNew"
-      >Добавить новый адрес</ButtonComponent
-    >
+    <div>
+      <ButtonComponent type="button" variant="border" @click="openNew"
+        >Добавить новый адрес</ButtonComponent
+      >
+    </div>
   </div>
+  
 </template>
 
 <script setup lang="ts">

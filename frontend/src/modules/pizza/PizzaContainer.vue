@@ -37,13 +37,8 @@ import SizeSelector from "@/modules/pizza/size/SizeSelector.vue";
 import IngredientsSelector from "@/modules/pizza/ingredient/IngredientsSelector.vue";
 import { usePizzaStore } from "@/modules/pizza/pizzaStore";
 import ContentPizza from "@/modules/pizza/content/ContentPizza.vue";
-import { onMounted } from "vue";
 
 const pizzaStore = usePizzaStore();
-
-onMounted(() => {
-  pizzaStore.init();
-});
 </script>
 
 <style module lang="scss">
