@@ -1,7 +1,12 @@
 <template>
   <li :class="$style.item">
     <DragComponent :transfer-data="ingredient">
-      <span :class="[$style.filling, $style[modifier]]">
+      <span
+        :class="$style.filling"
+        :style="{
+          '--icon-url': `url(${image})`,
+        }"
+      >
         {{ ingredient.name }}
       </span>
     </DragComponent>
@@ -16,7 +21,7 @@ import DragComponent from "@/common/components/DragComponent.vue";
 
 defineProps<{
   ingredient: IPizzaIngredient;
-  modifier: string;
+  image: string;
 }>();
 const modelValue = defineModel<number | undefined>({ default: 0 });
 </script>
@@ -41,6 +46,7 @@ const modelValue = defineModel<number | undefined>({ default: 0 });
 
   &::before {
     @include m_center.p_center-v;
+    background-image: var(--icon-url);
 
     display: block;
     width: 32px;
@@ -53,51 +59,5 @@ const modelValue = defineModel<number | undefined>({ default: 0 });
     background-position: center;
     background-size: 80% 80%;
   }
-}
-
-.tomatoes::before {
-  background-image: url("@/assets/img/filling/tomatoes.svg");
-}
-.ananas::before {
-  background-image: url("@/assets/img/filling/ananas.svg");
-}
-.bacon::before {
-  background-image: url("@/assets/img/filling/bacon.svg");
-}
-.blue_cheese::before {
-  background-image: url("@/assets/img/filling/blue_cheese.svg");
-}
-.cheddar::before {
-  background-image: url("@/assets/img/filling/cheddar.svg");
-}
-.chile::before {
-  background-image: url("@/assets/img/filling/chile.svg");
-}
-.ham::before {
-  background-image: url("@/assets/img/filling/ham.svg");
-}
-.jalapeno::before {
-  background-image: url("@/assets/img/filling/jalapeno.svg");
-}
-.mozzarella::before {
-  background-image: url("@/assets/img/filling/mozzarella.svg");
-}
-.mushrooms::before {
-  background-image: url("@/assets/img/filling/mushrooms.svg");
-}
-.olives::before {
-  background-image: url("@/assets/img/filling/olives.svg");
-}
-.onion::before {
-  background-image: url("@/assets/img/filling/onion.svg");
-}
-.parmesan::before {
-  background-image: url("@/assets/img/filling/parmesan.svg");
-}
-.salami::before {
-  background-image: url("@/assets/img/filling/salami.svg");
-}
-.salmon::before {
-  background-image: url("@/assets/img/filling/salmon.svg");
 }
 </style>

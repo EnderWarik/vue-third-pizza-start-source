@@ -24,7 +24,6 @@ export const useCartStore = defineStore("cartStore", () => {
 
     extras.value.forEach((item) => (result += item.price * item.count));
 
-    console.log(result);
     return result;
   });
 
@@ -37,7 +36,6 @@ export const useCartStore = defineStore("cartStore", () => {
     try {
       isLoadingExtras.value = true;
       const extrasResp = await cartApi.getExtras();
-      console.log(extrasResp);
       extras.value = mapWithCount(extrasResp).map((item) => ({
         ...item,
         count: 0,

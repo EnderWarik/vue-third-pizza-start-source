@@ -8,7 +8,7 @@
         :key="ingredient.id"
         v-model="ingredient.count"
         :class="$style.item"
-        :modifier="PizzaIngredientEnum[ingredient.id]"
+        :image="ingredient.image"
         :ingredient="ingredient"
       />
     </ul>
@@ -16,7 +16,6 @@
 </template>
 <script setup lang="ts">
 import { IPizzaIngredient } from "@/modules/pizza/types/IPizzaIngredient";
-import { PizzaIngredientEnum } from "@/types/enums/PizzaIngredientEnum";
 import IngredientItem from "@/modules/pizza/ingredient/components/IngredientItem.vue";
 
 const ingredients = defineModel<IPizzaIngredient[]>("ingredients", {
